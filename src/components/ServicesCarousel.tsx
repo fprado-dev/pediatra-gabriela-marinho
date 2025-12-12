@@ -119,32 +119,32 @@ export default function ServicesCarousel({ services }: { services: ServiceItem[]
               className="flex-shrink-0 relative"
               style={{ width: getItemWidth() }}
             >
-              <div className="h-full bg-white rounded-2xl p-6 lg:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-brand/10 hover:border-brand hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:-translate-y-2 transition-all duration-300 group/card flex flex-col">
-
+              <div className="h-full bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/20 hover:bg-white/20 hover:border-white/40 transition-all duration-300 group/card flex flex-col hover:-translate-y-2">
+                
                 {/* Icon Header */}
                 <div className="mb-6 relative">
-                  <div className="w-16 h-16 rounded-2xl bg-brand-soft flex items-center justify-center text-brand group-hover/card:bg-brand group-hover/card:text-white transition-colors duration-300 shadow-sm">
+                  <div className="w-16 h-16 rounded-2xl bg-white/20 flex items-center justify-center text-white group-hover/card:scale-110 transition-transform duration-300 shadow-sm">
                     <service.icon className="w-8 h-8" />
                   </div>
                 </div>
 
                 {/* Content */}
                 <div className="flex-grow">
-                  <h3 className="text-xl font-bold text-text-details mb-3 group-hover/card:text-brand transition-colors">
+                  <h3 className="text-xl font-bold text-white mb-3 transition-colors">
                     {service.title}
                   </h3>
-                  <p className="text-text-details leading-relaxed mb-6 text-sm lg:text-base">
+                  <p className="text-white/90 leading-relaxed mb-6 text-sm lg:text-base">
                     {service.description}
                   </p>
 
                   {/* Features */}
                   <div className="space-y-3">
                     {service.features.slice(0, 3).map((feature, idx) => (
-                      <div key={idx} className="flex items-start gap-2 text-sm text-text-details/80">
-                        <div className="mt-1 w-4 h-4 rounded-full bg-brand-soft flex items-center justify-center flex-shrink-0">
-                          <Check className="w-2.5 h-2.5 text-brand" />
+                      <div key={idx} className="flex items-start gap-2 text-sm text-white/80">
+                        <div className="mt-1 w-4 h-4 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
+                          <Check className="w-2.5 h-2.5 text-white" />
                         </div>
-                        <span className="group-hover/card:text-text-details transition-colors">{feature}</span>
+                        <span className="group-hover/card:text-white transition-colors">{feature}</span>
                       </div>
                     ))}
                   </div>
@@ -158,7 +158,7 @@ export default function ServicesCarousel({ services }: { services: ServiceItem[]
       {/* Navigation Buttons - Desktop/Tablet */}
       <button
         onClick={prevSlide}
-        className={`absolute top-1/2 -translate-y-1/2 -left-4 lg:-left-6 w-12 h-12 rounded-full bg-white shadow-lg border border-gray-100 flex items-center justify-center text-text-details hover:text-brand hover:border-brand/30 transition-all z-10 hidden md:flex hover:scale-110 active:scale-95 ${currentIndex === 0 ? 'opacity-50 cursor-not-allowed' : ''
+        className={`absolute top-1/2 -translate-y-1/2 -left-4 lg:-left-6 w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white/20 hover:border-white/40 transition-all z-10 hidden md:flex hover:scale-110 active:scale-95 ${currentIndex === 0 ? 'opacity-50 cursor-not-allowed' : ''
           }`}
         disabled={currentIndex === 0}
         aria-label="Serviço anterior"
@@ -168,7 +168,7 @@ export default function ServicesCarousel({ services }: { services: ServiceItem[]
 
       <button
         onClick={nextSlide}
-        className={`absolute top-1/2 -translate-y-1/2 -right-4 lg:-right-6 w-12 h-12 rounded-full bg-white shadow-lg border border-gray-100 flex items-center justify-center text-text-details hover:text-brand hover:border-brand/30 transition-all z-10 hidden md:flex hover:scale-110 active:scale-95 ${currentIndex === maxIndex ? 'opacity-50 cursor-not-allowed' : ''
+        className={`absolute top-1/2 -translate-y-1/2 -right-4 lg:-right-6 w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white/20 hover:border-white/40 transition-all z-10 hidden md:flex hover:scale-110 active:scale-95 ${currentIndex === maxIndex ? 'opacity-50 cursor-not-allowed' : ''
           }`}
         disabled={currentIndex === maxIndex}
         aria-label="Próximo serviço"
@@ -183,8 +183,8 @@ export default function ServicesCarousel({ services }: { services: ServiceItem[]
             key={idx}
             onClick={() => setCurrentIndex(idx)}
             className={`h-2 rounded-full transition-all duration-300 ${idx === currentIndex
-              ? 'w-8 bg-brand'
-              : 'w-2 bg-gray-300 hover:bg-brand/50'
+              ? 'w-8 bg-white'
+              : 'w-2 bg-white/30 hover:bg-white/50'
               }`}
             aria-label={`Ir para página ${idx + 1}`}
           />

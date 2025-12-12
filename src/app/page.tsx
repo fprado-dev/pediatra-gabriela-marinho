@@ -1,4 +1,5 @@
 import AboutSection from '@/components/AboutSection';
+import ConsultationModalitiesSection from '@/components/ConsultationModalitiesSection';
 import ConsultationProcessSection from '@/components/ConsultationProcessSection';
 import ContactSection from '@/components/ContactSection';
 import FAQSection from '@/components/FAQSection';
@@ -21,6 +22,7 @@ export default function Home() {
       <ServicesSection />
       <SpecializedCareSection />
       <ConsultationProcessSection />
+      <ConsultationModalitiesSection />
       <TestimonialsSection />
       <FAQSection />
       <ContactSection />
