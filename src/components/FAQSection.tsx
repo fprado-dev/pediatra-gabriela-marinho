@@ -2,22 +2,18 @@
 
 import { faqs } from '@/data/faq';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ChevronDown, ChevronUp } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 
 export default function FAQSection() {
-  const [openItems, setOpenItems] = useState<number[]>([1]);
+  const [openItemId, setOpenItemId] = useState<number | null>(1);
 
   const toggleItem = (id: number) => {
-    setOpenItems(prev =>
-      prev.includes(id)
-        ? prev.filter(item => item !== id)
-        : [...prev, id]
-    );
+    setOpenItemId(prevId => (prevId === id ? null : id));
   };
 
   return (
-    <section id="faq" className="py-20 bg-gray-50 min-h-screen-offset pt-nav scroll-margin-nav">
+    <section id="faq" className="py-20 bg-white bg-home-pattern min-h-screen-offset pt-nav scroll-margin-nav">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -26,7 +22,7 @@ export default function FAQSection() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-brand mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-details mb-4">
             Perguntas Frequentes
           </h2>
           <p className="text-xl text-text-details">
@@ -42,34 +38,38 @@ export default function FAQSection() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
-              className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden"
+              className="bg-white rounded-2xl shadow-sm border border-details/10 overflow-hidden hover:shadow-md transition-shadow duration-300"
             >
               <button
                 onClick={() => toggleItem(faq.id)}
-                className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors duration-200"
+                className="w-full px-6 py-5 text-left flex items-center justify-between hover:bg-details/5 transition-colors duration-200 group"
+                aria-expanded={openItemId === faq.id}
+                aria-controls={`faq-answer-${faq.id}`}
               >
-                <h3 className="text-lg font-semibold text-details pr-4">
+                <h3 className="text-lg font-bold text-details pr-4 group-hover:text-details/80 transition-colors">
                   {faq.question}
                 </h3>
-                <div className="flex-shrink-0">
-                  {openItems.includes(faq.id) ? (
-                    <ChevronUp className="w-5 h-5 text-brand" />
-                  ) : (
-                    <ChevronDown className="w-5 h-5 text-gray-400" />
-                  )}
+                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-details/10 flex items-center justify-center group-hover:bg-details/20 transition-colors">
+                  <motion.div
+                    animate={{ rotate: openItemId === faq.id ? 180 : 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <ChevronDown className="w-5 h-5 text-details" />
+                  </motion.div>
                 </div>
               </button>
 
               <AnimatePresence>
-                {openItems.includes(faq.id) && (
+                {openItemId === faq.id && (
                   <motion.div
+                    id={`faq-answer-${faq.id}`}
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: 'auto', opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
                     className="overflow-hidden"
                   >
-                    <div className="px-6 pb-4">
+                    <div className="px-6 pb-6 pt-2">
                       <p className="text-text-details leading-relaxed">
                         {faq.answer}
                       </p>
@@ -100,7 +100,7 @@ export default function FAQSection() {
                 element.scrollIntoView({ behavior: 'smooth' });
               }
             }}
-            className="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-brand hover:bg-brand/90 transition-colors shadow-lg"
+            className="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-details hover:bg-details/90 transition-colors shadow-lg"
           >
             Falar comigo
           </motion.button>
