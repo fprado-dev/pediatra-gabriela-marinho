@@ -1,113 +1,74 @@
 'use client';
 
 import { testimonials } from '@/data/testimonials';
-import { AnimatePresence, motion } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
-import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { Heart, Quote, Star } from 'lucide-react';
+import Marquee from './Marquee';
 
 export default function TestimonialsSection() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const nextTestimonial = () => {
-    setCurrentIndex((prev) => (prev + 1) % testimonials.length);
-  };
-
-  const prevTestimonial = () => {
-    setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
-  };
-
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, index) => (
       <Star
         key={index}
-        className={`w-4 h-4 ${index < rating ? 'text-yellow-400 fill-current' : 'text-gray-300'
-          }`}
+        className={`w-4 h-4 ${index < rating ? 'text-yellow-400 fill-current' : 'text-white/30'}`}
       />
     ));
   };
 
   return (
-    <section id="depoimentos" className="py-20 bg-white min-h-screen-offset pt-nav scroll-margin-nav flex items-center">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="depoimentos" className="py-20 bg-brand min-h-screen pt-nav scroll-margin-nav flex flex-col justify-center overflow-hidden">
+      <div className="w-full">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-brand mb-4">
+          <div className="inline-flex items-center justify-center p-3 bg-white/10 backdrop-blur-sm rounded-full mb-6">
+            <Heart className="w-6 h-6 text-white fill-current animate-pulse" />
+          </div>
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
             O que dizem as famílias
           </h2>
-          <p className="text-xl text-text-details max-w-3xl mx-auto">
-            Depoimentos de pais e responsáveis que confiam no meu trabalho
+          <p className="text-xl text-white/90 max-w-2xl mx-auto leading-relaxed">
+            A confiança é a base do meu trabalho. Veja o relato de quem já confia a saúde dos seus filhos aos meus cuidados.
           </p>
         </motion.div>
 
-        <div className="relative max-w-4xl mx-auto overflow-hidden">
-          <div className="relative overflow-hidden rounded-2xl">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={currentIndex}
-                initial={{ opacity: 0, x: 100 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -100 }}
-                transition={{ duration: 0.3 }}
-                className="p-8 md:p-12 rounded-2xl"
-                style={{ backgroundColor: 'rgba(168, 201, 245, 0.25)' }}
+        <div className="mb-16">
+          <Marquee speed={50} pauseOnHover={true}>
+            {testimonials.map((testimonial, index) => (
+              <div
+                key={index}
+                className="bg-white/10 backdrop-blur-md rounded-[2rem] p-8 border border-white/20 hover:bg-white/20 hover:border-white/40 transition-all duration-300 relative group w-[350px] md:w-[400px] flex-shrink-0"
               >
-                <div className="text-center">
-                  <div className="flex justify-center mb-4">
-                    {renderStars(testimonials[currentIndex].rating)}
+                <Quote className="absolute top-8 right-8 w-10 h-10 text-white/10 group-hover:text-white/20 transition-colors duration-300" />
+
+                <div className="flex mb-4">
+                  {renderStars(testimonial.rating)}
+                </div>
+
+                <blockquote className="text-white/90 text-lg leading-relaxed mb-6 min-h-[120px]">
+                  &quot;{testimonial.content}&quot;
+                </blockquote>
+
+                <div className="flex items-center gap-4 border-t border-white/10 pt-6">
+                  <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center text-white font-bold text-lg">
+                    {testimonial.name.charAt(0)}
                   </div>
-
-                  <blockquote className="text-lg md:text-xl text-text-details mb-8 leading-relaxed italic">
-                    "{testimonials[currentIndex].content}"
-                  </blockquote>
-
-                  <div className="border-t pt-6" style={{ borderColor: 'var(--brand)' }}>
-                    <h4 className="font-semibold text-brand">
-                      {testimonials[currentIndex].name}
+                  <div>
+                    <h4 className="font-bold text-white text-lg">
+                      {testimonial.name}
                     </h4>
-                    <p className="text-brand font-medium">
-                      {testimonials[currentIndex].role}
+                    <p className="text-white/70 text-sm font-medium">
+                      {testimonial.role}
                     </p>
                   </div>
                 </div>
-              </motion.div>
-            </AnimatePresence>
-          </div>
-
-          <button
-            onClick={prevTestimonial}
-            className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-12 bg-white rounded-full p-3 shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-110"
-            aria-label="Depoimento anterior"
-          >
-            <ChevronLeft className="w-6 h-6 text-gray-600" />
-          </button>
-
-          <button
-            onClick={nextTestimonial}
-            className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-12 bg-white rounded-full p-3 shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-110"
-            aria-label="Próximo depoimento"
-          >
-            <ChevronRight className="w-6 h-6 text-gray-600" />
-          </button>
-        </div>
-
-        <div className="flex justify-center mt-8 space-x-2">
-          {testimonials.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentIndex(index)}
-              className={`w-3 h-3 rounded-full transition-all duration-200 ${index === currentIndex
-                ? 'w-8'
-                : ''
-                }`}
-              style={{ backgroundColor: index === currentIndex ? 'var(--brand)' : '#d1d5db' }}
-              aria-label={`Ir para depoimento ${index + 1}`}
-            />
-          ))}
+              </div>
+            ))}
+          </Marquee>
         </div>
 
         <motion.div
@@ -115,24 +76,9 @@ export default function TestimonialsSection() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
           viewport={{ once: true }}
-          className="text-center mt-12"
+          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
         >
-          <p className="text-lg text-text-details mb-6">
-            Junte-se a mais de 500 famílias que confiam no meu trabalho
-          </p>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => {
-              const element = document.getElementById('contato');
-              if (element) {
-                element.scrollIntoView({ behavior: 'smooth' });
-              }
-            }}
-            className="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-green-600 hover:bg-green-700 transition-colors shadow-lg"
-          >
-            Agendar Consulta
-          </motion.button>
+
         </motion.div>
       </div>
     </section>

@@ -205,14 +205,18 @@ select:focus {
   border-color: var(--brand);
 }
 
-/* Vertical marquee for carousel columns */
-@keyframes marqueeY {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-50%); }
+/* Horizontal marquee */
+@keyframes marqueeX {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
-.marquee-vertical {
-  animation: marqueeY linear infinite;
+.animate-marquee {
+  animation: marqueeX var(--marquee-duration, 30s) linear infinite;
+}
+
+.pause-on-hover:hover {
+  animation-play-state: paused;
 }
 
 /* Bouncing vertical animation */
