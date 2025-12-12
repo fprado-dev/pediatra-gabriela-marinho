@@ -1,20 +1,20 @@
-'use client'
+'use client';
 
-import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronDown, ChevronUp } from 'lucide-react'
-import { faqs } from '@/data/faq'
+import { faqs } from '@/data/faq';
+import { AnimatePresence, motion } from 'framer-motion';
+import { ChevronDown, ChevronUp } from 'lucide-react';
+import { useState } from 'react';
 
 export default function FAQSection() {
-  const [openItems, setOpenItems] = useState<number[]>([1])
+  const [openItems, setOpenItems] = useState<number[]>([1]);
 
   const toggleItem = (id: number) => {
-    setOpenItems(prev => 
-      prev.includes(id) 
+    setOpenItems(prev =>
+      prev.includes(id)
         ? prev.filter(item => item !== id)
         : [...prev, id]
-    )
-  }
+    );
+  };
 
   return (
     <section id="faq" className="py-20 bg-gray-50 min-h-screen-offset pt-nav scroll-margin-nav">
@@ -26,10 +26,10 @@ export default function FAQSection() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-brand mb-4">
             Perguntas Frequentes
           </h2>
-          <p className="text-xl text-gray-600">
+          <p className="text-xl text-text-details">
             Tire suas dúvidas sobre consultas pediátricas e cuidados infantis
           </p>
         </motion.div>
@@ -48,7 +48,7 @@ export default function FAQSection() {
                 onClick={() => toggleItem(faq.id)}
                 className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors duration-200"
               >
-                <h3 className="text-lg font-semibold text-gray-900 pr-4">
+                <h3 className="text-lg font-semibold text-details pr-4">
                   {faq.question}
                 </h3>
                 <div className="flex-shrink-0">
@@ -59,7 +59,7 @@ export default function FAQSection() {
                   )}
                 </div>
               </button>
-              
+
               <AnimatePresence>
                 {openItems.includes(faq.id) && (
                   <motion.div
@@ -70,7 +70,7 @@ export default function FAQSection() {
                     className="overflow-hidden"
                   >
                     <div className="px-6 pb-4">
-                      <p className="text-gray-600 leading-relaxed">
+                      <p className="text-text-details leading-relaxed">
                         {faq.answer}
                       </p>
                     </div>
@@ -95,9 +95,9 @@ export default function FAQSection() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => {
-              const element = document.getElementById('contato')
+              const element = document.getElementById('contato');
               if (element) {
-                element.scrollIntoView({ behavior: 'smooth' })
+                element.scrollIntoView({ behavior: 'smooth' });
               }
             }}
             className="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-brand hover:bg-brand/90 transition-colors shadow-lg"
@@ -107,5 +107,5 @@ export default function FAQSection() {
         </motion.div>
       </div>
     </section>
-  )
+  );
 }

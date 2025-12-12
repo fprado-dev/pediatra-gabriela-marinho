@@ -2,7 +2,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Award, BookOpen, Heart, Users } from 'lucide-react';
+import { Award, BookOpen, Heart } from 'lucide-react';
 
 export default function AboutSection() {
   const credentials = [
@@ -21,8 +21,8 @@ export default function AboutSection() {
   return (
     <section id="sobre" className="py-20 bg-white bg-home-pattern min-h-screen-offset pt-nav scroll-margin-nav">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -41,7 +41,7 @@ export default function AboutSection() {
               <div className="absolute inset-0 bg-gradient-to-t from-blue-900/20 to-transparent"></div>
             </div>
 
-            <div className="absolute -top-6 -right-6 bg-brand text-white rounded-full p-4 shadow-lg">
+            <div className="hidden sm:block absolute -top-6 -right-6 bg-brand text-white rounded-full p-4 shadow-lg">
               <Heart className="w-8 h-8" />
             </div>
           </motion.div>
@@ -54,25 +54,25 @@ export default function AboutSection() {
             className="space-y-6"
           >
             <div className="space-y-2">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-brand">
                 Sobre a Dra. Gabriela Marinho
               </h2>
             </div>
             <div className="space-y-4">
-              <h3 className="text-2xl font-bold text-gray-900">
+              <h3 className="text-xl md:text-2xl font-bold text-details">
                 Minha missão é cuidar da saúde e bem-estar das crianças
               </h3>
 
-              <p className="text-gray-600 leading-relaxed">
+              <p className="text-text-details leading-relaxed max-w-xl">
                 Sou médica pediatra formada pela Universidade Federal de São Paulo, com anos de experiência no acompanhamento de crianças e adolescentes. Minha abordagem combina conhecimento médico atualizado com atendimento humanizado e acolhedor.
               </p>
 
-              <p className="text-gray-600 leading-relaxed">
+              <p className="text-text-details leading-relaxed max-w-xl">
                 Acredito que cada criança é única e merece cuidado individualizado. Busco construir uma relação de confiança com as famílias, orientando os pais sobre os cuidados necessários para o desenvolvimento saudável dos seus filhos.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               {credentials.map((credential, index) => (
                 <motion.div
                   key={index}
@@ -85,8 +85,8 @@ export default function AboutSection() {
                 >
                   <credential.icon className="w-6 h-6 text-brand flex-shrink-0 mt-1" />
                   <div>
-                    <h4 className="font-semibold text-gray-900">{credential.title}</h4>
-                    <p className="text-sm text-gray-600">{credential.description}</p>
+                    <h4 className="font-semibold text-brand">{credential.title}</h4>
+                    <p className="text-sm text-text-details">{credential.description}</p>
                   </div>
                 </motion.div>
               ))}

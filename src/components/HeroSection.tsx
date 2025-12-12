@@ -35,26 +35,26 @@ export default function HeroSection() {
             className="text-center flex flex-col items-center"
           >
 
-            <div className="flex items-center justify-center mb-15">
+            <div className="flex items-center justify-center mb-8 sm:mb-12">
               <img
                 src="/brand/logo-gabriela-marinho.svg"
                 alt="Gabriela Marinho - Pediatra"
-                className="w-auto max-w-3xl"
+                className="w-auto max-w-xs sm:max-w-md md:max-w-3xl"
               />
             </div>
-            <p className="text-xl text-center text-text-details mb-8 leading-relaxed max-w-2xl">
-              Gabriela Marinho - Pediatra especializada em acompanhamento infantil. Oferecemos consultas presenciais e online com foco no bem-estar e desenvolvimento saudável da sua criança.
+            <p className="text-base md:text-xl text-center text-text-details mb-6 md:mb-8 leading-relaxed max-w-xl md:max-w-2xl px-4">
+              Pediatra especializada em acompanhamento infantil. Oferecemos consultas presenciais e online com foco no bem-estar e desenvolvimento saudável da sua criança.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-center">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-center w-full max-w-xl">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={handleWhatsAppClick}
                 className="
-                cursor-pointer
-                inline-flex items-center justify-center px-8 py-4 
-                border border-transparent text-base font-medium rounded-full
+                cursor-pointer w-full sm:w-auto
+                inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 
+                border border-transparent text-sm sm:text-base font-medium rounded-full
                  text-white bg-details transition-colors shadow-lg"
               >
                 <Calendar className="w-5 h-5 mr-2" />
@@ -72,12 +72,12 @@ export default function HeroSection() {
       <motion.button
         onClick={handleScrollDown}
         aria-label="Role para ver mais"
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 inline-flex items-center justify-center w-11 h-11 rounded-full border border-brand bg-white/80 backdrop-blur-sm text-brand shadow-custom cursor-pointer"
+        className="absolute bottom-4 md:bottom-6 left-1/2 -translate-x-1/2 inline-flex items-center justify-center w-9 h-9 md:w-11 md:h-11 rounded-full border border-brand bg-white/80 backdrop-blur-sm text-brand shadow-custom cursor-pointer md:hover:scale-105 md:transition-transform"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: [0, 6, 0] }}
         transition={{ duration: 1.2, repeat: Infinity, ease: 'easeInOut' }}
       >
-        <ChevronDown className="w-5 h-5" />
+        <ChevronDown className="w-4 h-4 md:w-5 md:h-5" />
       </motion.button>
     </section>
 

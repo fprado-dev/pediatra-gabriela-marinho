@@ -1,7 +1,7 @@
-'use client'
+'use client';
 
-import { motion } from 'framer-motion'
-import { CheckCircle, Heart, Star, Shield } from 'lucide-react'
+import { motion } from 'framer-motion';
+import { CheckCircle, Heart, Shield, Star } from 'lucide-react';
 
 export default function SpecializedCareSection() {
   const differentials = [
@@ -20,7 +20,7 @@ export default function SpecializedCareSection() {
       title: 'Ambiente Seguro',
       description: 'Consultório preparado para receber crianças com segurança e conforto'
     }
-  ]
+  ];
 
   const careSteps = [
     'Avaliação completa do desenvolvimento infantil',
@@ -29,7 +29,7 @@ export default function SpecializedCareSection() {
     'Orientações personalizadas para cada família',
     'Plano de cuidados específico para cada criança',
     'Acompanhamento contínuo e suporte aos pais'
-  ]
+  ];
 
   return (
     <section id="atendimento" className="py-20 bg-brand-soft min-h-screen-offset pt-nav scroll-margin-nav flex items-center">
@@ -41,10 +41,10 @@ export default function SpecializedCareSection() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-brand mb-4">
             Atendimento Especializado
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-text-details max-w-3xl mx-auto">
             Um atendimento diferenciado, focado na individualidade de cada criança e nas necessidades específicas de cada família
           </p>
         </motion.div>
@@ -56,10 +56,10 @@ export default function SpecializedCareSection() {
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">
+            <h3 className="text-2xl font-bold text-details mb-6">
               Por que escolher meu atendimento?
             </h3>
-            
+
             <div className="space-y-6">
               {differentials.map((differential, index) => (
                 <motion.div
@@ -76,10 +76,10 @@ export default function SpecializedCareSection() {
                     </div>
                   </div>
                   <div>
-                    <h4 className="text-lg font-semibold text-gray-900 mb-2">
+                    <h4 className="text-lg font-semibold text-brand mb-2">
                       {differential.title}
                     </h4>
-                    <p className="text-gray-600">
+                    <p className="text-text-details">
                       {differential.description}
                     </p>
                   </div>
@@ -115,10 +115,10 @@ export default function SpecializedCareSection() {
           viewport={{ once: true }}
           className="rounded-2xl p-8" style={{ backgroundColor: 'rgba(168, 201, 245, 0.25)' }}
         >
-          <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+          <h3 className="text-2xl font-bold text-details mb-6 text-center">
             Como funciona meu atendimento
           </h3>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {careSteps.map((step, index) => (
               <motion.div
@@ -132,12 +132,12 @@ export default function SpecializedCareSection() {
                 <div className="flex-shrink-0">
                   <CheckCircle className="w-5 h-5 text-green-500 mt-1" />
                 </div>
-                <p className="text-gray-700">{step}</p>
+                <p className="text-text-details">{step}</p>
               </motion.div>
             ))}
           </div>
         </motion.div>
       </div>
     </section>
-  )
+  );
 }

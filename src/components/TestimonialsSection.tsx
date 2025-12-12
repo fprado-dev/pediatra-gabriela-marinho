@@ -1,31 +1,30 @@
-'use client'
+'use client';
 
-import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronLeft, ChevronRight, Star } from 'lucide-react'
-import { testimonials } from '@/data/testimonials'
+import { testimonials } from '@/data/testimonials';
+import { AnimatePresence, motion } from 'framer-motion';
+import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
+import { useState } from 'react';
 
 export default function TestimonialsSection() {
-  const [currentIndex, setCurrentIndex] = useState(0)
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const nextTestimonial = () => {
-    setCurrentIndex((prev) => (prev + 1) % testimonials.length)
-  }
+    setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+  };
 
   const prevTestimonial = () => {
-    setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length)
-  }
+    setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+  };
 
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, index) => (
       <Star
         key={index}
-        className={`w-4 h-4 ${
-          index < rating ? 'text-yellow-400 fill-current' : 'text-gray-300'
-        }`}
+        className={`w-4 h-4 ${index < rating ? 'text-yellow-400 fill-current' : 'text-gray-300'
+          }`}
       />
-    ))
-  }
+    ));
+  };
 
   return (
     <section id="depoimentos" className="py-20 bg-white min-h-screen-offset pt-nav scroll-margin-nav flex items-center">
@@ -37,15 +36,15 @@ export default function TestimonialsSection() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-brand mb-4">
             O que dizem as famílias
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-text-details max-w-3xl mx-auto">
             Depoimentos de pais e responsáveis que confiam no meu trabalho
           </p>
         </motion.div>
 
-        <div className="relative max-w-4xl mx-auto">
+        <div className="relative max-w-4xl mx-auto overflow-hidden">
           <div className="relative overflow-hidden rounded-2xl">
             <AnimatePresence mode="wait">
               <motion.div
@@ -61,13 +60,13 @@ export default function TestimonialsSection() {
                   <div className="flex justify-center mb-4">
                     {renderStars(testimonials[currentIndex].rating)}
                   </div>
-                  
-                  <blockquote className="text-lg md:text-xl text-gray-700 mb-8 leading-relaxed italic">
+
+                  <blockquote className="text-lg md:text-xl text-text-details mb-8 leading-relaxed italic">
                     "{testimonials[currentIndex].content}"
                   </blockquote>
-                  
+
                   <div className="border-t pt-6" style={{ borderColor: 'var(--brand)' }}>
-                    <h4 className="font-semibold text-gray-900">
+                    <h4 className="font-semibold text-brand">
                       {testimonials[currentIndex].name}
                     </h4>
                     <p className="text-brand font-medium">
@@ -101,11 +100,10 @@ export default function TestimonialsSection() {
             <button
               key={index}
               onClick={() => setCurrentIndex(index)}
-              className={`w-3 h-3 rounded-full transition-all duration-200 ${
-                index === currentIndex
-                  ? 'w-8'
-                  : ''
-              }`}
+              className={`w-3 h-3 rounded-full transition-all duration-200 ${index === currentIndex
+                ? 'w-8'
+                : ''
+                }`}
               style={{ backgroundColor: index === currentIndex ? 'var(--brand)' : '#d1d5db' }}
               aria-label={`Ir para depoimento ${index + 1}`}
             />
@@ -119,16 +117,16 @@ export default function TestimonialsSection() {
           viewport={{ once: true }}
           className="text-center mt-12"
         >
-          <p className="text-lg text-gray-600 mb-6">
+          <p className="text-lg text-text-details mb-6">
             Junte-se a mais de 500 famílias que confiam no meu trabalho
           </p>
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => {
-              const element = document.getElementById('contato')
+              const element = document.getElementById('contato');
               if (element) {
-                element.scrollIntoView({ behavior: 'smooth' })
+                element.scrollIntoView({ behavior: 'smooth' });
               }
             }}
             className="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-green-600 hover:bg-green-700 transition-colors shadow-lg"
@@ -138,5 +136,5 @@ export default function TestimonialsSection() {
         </motion.div>
       </div>
     </section>
-  )
+  );
 }
