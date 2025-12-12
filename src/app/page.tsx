@@ -8,12 +8,14 @@ import SchemaMarkup from '@/components/SchemaMarkup';
 import ServicesSection from '@/components/ServicesSection';
 import SpecializedCareSection from '@/components/SpecializedCareSection';
 import TestimonialsSection from '@/components/TestimonialsSection';
+import FullpageScroll from '@/components/FullpageScroll';
 
 export default function Home() {
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen overscroll-y-contain">
       <SchemaMarkup />
       <Navigation />
+      <FullpageScroll />
       <HeroSection />
       <AboutSection />
       <ServicesSection />

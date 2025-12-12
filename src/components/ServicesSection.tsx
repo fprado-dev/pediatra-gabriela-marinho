@@ -5,7 +5,7 @@ import { services } from '@/data/services'
 
 export default function ServicesSection() {
   return (
-    <section id="servicos" className="py-20 bg-gray-50">
+    <section id="servicos" className="py-20 bg-gray-50 min-h-screen-offset pt-nav scroll-margin-nav flex items-center">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

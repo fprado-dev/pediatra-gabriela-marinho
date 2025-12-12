@@ -63,7 +63,7 @@ export default function ConsultationProcessSection() {
   ]
 
   return (
-    <section id="consultas" className="py-20 bg-gray-50">
+    <section id="consultas" className="py-20 bg-gray-50 min-h-screen-offset pt-nav scroll-margin-nav">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

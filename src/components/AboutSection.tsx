@@ -15,50 +15,26 @@ export default function AboutSection() {
       icon: BookOpen,
       title: 'Universidade Federal de São Paulo',
       description: 'Graduação em Medicina com especialização em Pediatria'
-    },
-    {
-      icon: Heart,
-      title: '10+ Anos de Experiência',
-      description: 'Atendendo crianças e adolescentes com dedicação'
-    },
-    {
-      icon: Users,
-      title: '500+ Famílias Atendidas',
-      description: 'Construindo relacionamentos de confiança'
     }
   ];
 
   return (
-    <section id="sobre" className="py-20 bg-white">
+    <section id="sobre" className="py-20 bg-white bg-home-pattern min-h-screen-offset pt-nav scroll-margin-nav">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Sobre a Dra. Gabriela Marinho
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Conheça a profissional que cuidará da saúde do seu filho com amor, dedicação e excelência médica
-          </p>
-        </motion.div>
-
+        
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="relative"
+            className="relative flex items-center max-h-section-content"
           >
-            <div className="relative rounded-2xl overflow-hidden shadow-xl">
+            <div className="relative rounded-2xl overflow-hidden shadow-xl w-full max-h-section-content">
               <img
                 src="/photos/sobre.JPG"
                 alt="Dra. Gabriela Marinho"
-                className="w-full h-auto object-cover"
+                className="w-full h-full md:object-cover object-contain"
                 width={600}
                 height={800}
               />
@@ -77,21 +53,22 @@ export default function AboutSection() {
             viewport={{ once: true }}
             className="space-y-6"
           >
+            <div className="space-y-2">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+                Sobre a Dra. Gabriela Marinho
+              </h2>
+            </div>
             <div className="space-y-4">
               <h3 className="text-2xl font-bold text-gray-900">
                 Minha missão é cuidar da saúde e bem-estar das crianças
               </h3>
 
               <p className="text-gray-600 leading-relaxed">
-                Sou médica pediatra formada pela Universidade Federal de São Paulo, com mais de 10 anos de experiência no acompanhamento de crianças e adolescentes. Minha abordagem combina conhecimento médico atualizado com atendimento humanizado e acolhedor.
+                Sou médica pediatra formada pela Universidade Federal de São Paulo, com anos de experiência no acompanhamento de crianças e adolescentes. Minha abordagem combina conhecimento médico atualizado com atendimento humanizado e acolhedor.
               </p>
 
               <p className="text-gray-600 leading-relaxed">
-                Acredito que cada criança é única e merece cuidado individualizado. Meu objetivo é construir uma relação de confiança com as famílias, orientando os pais sobre os cuidados necessários para o desenvolvimento saudável dos seus filhos.
-              </p>
-
-              <p className="text-gray-600 leading-relaxed">
-                Estou constantemente me atualizando através de cursos e congressos para oferecer o melhor tratamento baseado em evidências científicas, sempre com muito amor e dedicação.
+                Acredito que cada criança é única e merece cuidado individualizado. Busco construir uma relação de confiança com as famílias, orientando os pais sobre os cuidados necessários para o desenvolvimento saudável dos seus filhos.
               </p>
             </div>
 

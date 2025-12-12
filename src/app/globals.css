@@ -6,6 +6,7 @@
   --brand: #A8C9F5;
   --details: #F7567C;
   --text-details: #5D576B;
+  --nav-height: 64px;
 }
 
 @theme inline {
@@ -148,6 +149,27 @@ select:focus {
   background-repeat: repeat;
   background-size: 160px 160px;
   background-position: center;
+}
+
+.min-h-screen-offset {
+  min-height: calc(100vh - var(--nav-height));
+}
+
+.max-h-screen-offset {
+  max-height: calc(100vh - var(--nav-height));
+}
+
+/* Para seções com py-20 (10rem total) */
+.max-h-section-content {
+  max-height: calc(100vh - var(--nav-height) - 10rem);
+}
+
+.pt-nav {
+  padding-top: var(--nav-height);
+}
+
+.scroll-margin-nav {
+  scroll-margin-top: var(--nav-height);
 }
 
 /* Brand utility classes */

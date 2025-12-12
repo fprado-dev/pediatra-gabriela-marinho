@@ -46,7 +46,7 @@ export default function ContactSection() {
   }
 
   return (
-    <section id="contato" className="py-20 bg-brand-soft">
+    <section id="contato" className="py-20 bg-brand-soft min-h-screen-offset pt-nav scroll-margin-nav flex items-center">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

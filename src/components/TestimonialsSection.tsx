@@ -28,7 +28,7 @@ export default function TestimonialsSection() {
   }
 
   return (
-    <section id="depoimentos" className="py-20 bg-white">
+    <section id="depoimentos" className="py-20 bg-white min-h-screen-offset pt-nav scroll-margin-nav flex items-center">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
