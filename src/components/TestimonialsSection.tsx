@@ -1,11 +1,14 @@
 'use client';
 
 import { testimonials } from '@/data/testimonials';
+import { getContent } from '@/lib/content';
 import { motion } from 'framer-motion';
 import { Heart, Quote, Star } from 'lucide-react';
 import Marquee from './Marquee';
 
 export default function TestimonialsSection() {
+  const { testimonials: testimonialsContent } = getContent();
+
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, index) => (
       <Star
@@ -29,10 +32,10 @@ export default function TestimonialsSection() {
             <Heart className="w-6 h-6 text-white fill-current animate-pulse" />
           </div>
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-            O que dizem as famílias
+            {testimonialsContent.title}
           </h2>
           <p className="text-xl text-white/90 max-w-2xl mx-auto leading-relaxed">
-            A confiança é a base do meu trabalho. Veja o relato de quem já confia a saúde dos seus filhos aos meus cuidados.
+            {testimonialsContent.subtitle}
           </p>
         </motion.div>
 

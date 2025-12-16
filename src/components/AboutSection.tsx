@@ -1,20 +1,23 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
 
+import { getContent } from '@/lib/content';
 import { motion } from 'framer-motion';
-import { Award, BookOpen, Heart } from 'lucide-react';
+import { Award, BookOpen } from 'lucide-react';
 
 export default function AboutSection() {
+  const { about } = getContent();
+
   const credentials = [
     {
       icon: Award,
-      title: 'CRM-SP 123.456',
-      description: 'Registro no Conselho Regional de Medicina'
+      title: about.credentials[0].title,
+      description: about.credentials[0].description
     },
     {
       icon: BookOpen,
-      title: 'Universidade Federal de São Paulo',
-      description: 'Graduação em Medicina com especialização em Pediatria'
+      title: about.credentials[1].title,
+      description: about.credentials[1].description
     }
   ];
 
@@ -33,12 +36,12 @@ export default function AboutSection() {
             <div className="relative rounded-2xl overflow-hidden shadow-xl w-full max-h-section-content border border-details/10">
               <img
                 src="/photos/sobre.JPG"
-                alt="Dra. Gabriela Marinho"
+                alt={about.imageAlt}
                 className="w-full h-full md:object-cover object-contain"
                 width={600}
                 height={800}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-details/20 to-transparent pointer-events-none"></div>
+              <div className="absolute inset-0 bg-linear-to-t from-details/20 to-transparent pointer-events-none"></div>
             </div>
           </motion.div>
 
@@ -51,20 +54,20 @@ export default function AboutSection() {
           >
             <div className="space-y-2">
               <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-details">
-                Sobre a Dra. Gabriela Marinho
+                {about.title}
               </h2>
             </div>
             <div className="space-y-4">
               <h3 className="text-xl md:text-2xl font-bold text-details/90">
-                Minha missão é cuidar da saúde e bem-estar das crianças
+                {about.subtitle}
               </h3>
 
               <p className="text-text-details leading-relaxed max-w-xl">
-                Sou médica pediatra formada pela Universidade Federal de São Paulo, com anos de experiência no acompanhamento de crianças e adolescentes. Minha abordagem combina conhecimento médico atualizado com atendimento humanizado e acolhedor.
+                {about.description1}
               </p>
 
               <p className="text-text-details leading-relaxed max-w-xl">
-                Acredito que cada criança é única e merece cuidado individualizado. Busco construir uma relação de confiança com as famílias, orientando os pais sobre os cuidados necessários para o desenvolvimento saudável dos seus filhos.
+                {about.description2}
               </p>
             </div>
 

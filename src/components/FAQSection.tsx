@@ -1,11 +1,13 @@
 'use client';
 
 import { faqs } from '@/data/faq';
+import { getContent } from '@/lib/content';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 
 export default function FAQSection() {
+  const { faq: faqContent } = getContent();
   const [openItemId, setOpenItemId] = useState<number | null>(1);
 
   const toggleItem = (id: number) => {
@@ -23,10 +25,10 @@ export default function FAQSection() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-details mb-4">
-            Perguntas Frequentes
+            {faqContent.title}
           </h2>
           <p className="text-xl text-text-details">
-            Tire suas dúvidas sobre consultas pediátricas e cuidados infantis
+            {faqContent.subtitle}
           </p>
         </motion.div>
 
@@ -89,7 +91,7 @@ export default function FAQSection() {
           className="text-center mt-12"
         >
           <p className="text-lg text-gray-600 mb-6">
-            Ainda tem dúvidas? Entre em contato comigo!
+            {faqContent.ctaText}
           </p>
           <motion.button
             whileHover={{ scale: 1.05 }}
@@ -102,7 +104,7 @@ export default function FAQSection() {
             }}
             className="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-details hover:bg-details/90 transition-colors shadow-lg"
           >
-            Falar comigo
+            {faqContent.ctaButton}
           </motion.button>
         </motion.div>
       </div>

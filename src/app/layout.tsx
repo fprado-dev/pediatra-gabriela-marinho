@@ -9,15 +9,20 @@ const montserrat = Montserrat({ subsets: ['latin'] });
 export const metadata: Metadata = {
   title: 'Pediatra Gabriela Marinho - Consultas Online e Presenciais',
   description: 'Pediatra especializada em acompanhamento infantil. Consultas online e presenciais. Agende sua consulta com quem entende de crianças.',
-  keywords: ['pediatra', 'pediatra online', 'consulta pediatra', 'gabriela marinho', 'pediatra sp'],
+  keywords: ['pediatra', 'pediatra online', 'consulta pediatra', 'gabriela marinho', 'pediatra mg', 'mg', 'ouro branco'],
   authors: [{ name: 'Pediatra Gabriela Marinho' }],
   viewport: 'width=device-width, initial-scale=1',
   robots: 'index, follow',
+  icons: {
+    icon: '/icon1.png',
+    shortcut: '/icon1.png',
+    apple: '/apple-icon.png',
+  },
   openGraph: {
     type: 'website',
     locale: 'pt_BR',
     url: 'https://pediatragabrielamarinho.com.br',
-    siteName: 'Pediatra Gabriela Marinho - Pediatra',
+    siteName: 'Pediatra Gabriela Marinho',
     title: 'Pediatra Gabriela Marinho - Consultas Online e Presenciais',
     description: 'Pediatra especializada em acompanhamento infantil. Consultas online e presenciais.',
     images: [
@@ -25,7 +30,7 @@ export const metadata: Metadata = {
         url: 'https://pediatragabrielamarinho.com.br/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Pediatra Gabriela Marinho - Pediatra',
+        alt: 'Pediatra Gabriela Marinho',
       }
     ]
   },
@@ -36,6 +41,9 @@ export const metadata: Metadata = {
     description: 'Pediatra especializada em acompanhamento infantil. Consultas online e presenciais.',
     images: ['https://pediatragabrielamarinho.com.br/og-image.jpg'],
   },
+  alternates: {
+    canonical: 'https://pediatragabrielamarinho.com.br',
+  },
 };
 
 export default function RootLayout({
@@ -45,10 +53,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR">
-      <head>
-        <link rel="icon" href="/favicon.ico" />
-        <link rel="canonical" href="https://pediatragabrielamarinho.com.br" />
-      </head>
       <body className={montserrat.className}>
         <SchemaMarkup />
         {children}

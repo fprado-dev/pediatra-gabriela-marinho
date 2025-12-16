@@ -1,24 +1,25 @@
 'use client';
 
+import { getContent } from '@/lib/content';
 import { motion } from 'framer-motion';
-import { Clock, Instagram, Linkedin, Mail, MapPin, MessageCircle, Phone } from 'lucide-react';
+import { Clock, Instagram, Linkedin, Mail, MapPin, MessageCircle } from 'lucide-react';
 
 export default function ContactSection() {
+  const { contact } = getContent();
+
   const handleWhatsAppClick = () => {
-    window.open('https://wa.me/5511999999999?text=Olá! Gostaria de agendar uma consulta.', '_blank');
+    window.open('https://wa.me/5531994766307?text=Olá! Gostaria de agendar uma consulta com a Pediatra Gabriela Marinho', '_blank');
   };
 
-  const handlePhoneClick = () => {
-    window.location.href = 'tel:+5511999999999';
-  };
+
 
   const handleEmailClick = () => {
-    window.location.href = 'mailto:contato@gabrielamartinho.com.br';
+    window.location.href = 'mailto:contato@pediatragabrielamarinho.com.br';
   };
 
   const socialLinks = [
-    { icon: Instagram, href: 'https://instagram.com', label: 'Instagram' },
-    { icon: Linkedin, href: 'https://linkedin.com', label: 'LinkedIn' },
+    { icon: Instagram, href: 'https://instagram.com', label: contact.social.instagram },
+    { icon: Linkedin, href: 'https://linkedin.com', label: contact.social.linkedin },
   ];
 
   return (
@@ -41,10 +42,11 @@ export default function ContactSection() {
                     <MapPin className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h4 className="text-lg font-bold text-white mb-1">Endereço</h4>
+                    <h4 className="text-lg font-bold text-white mb-1">{contact.address.title}</h4>
                     <p className="text-white/80 leading-relaxed">
-                      Rua das Flores, 123 - Jardim Paulista<br />
-                      São Paulo - SP, 01415-000
+                      {contact.address.lines[0]}<br />
+                      {contact.address.lines[1]}<br />
+                      {contact.address.lines[2]}
                     </p>
                   </div>
                 </div>
@@ -54,10 +56,10 @@ export default function ContactSection() {
                     <Clock className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h4 className="text-lg font-bold text-white mb-1">Horário de Atendimento</h4>
+                    <h4 className="text-lg font-bold text-white mb-1">{contact.hours.title}</h4>
                     <p className="text-white/80 leading-relaxed">
-                      Segunda a Sexta: 8h às 18h<br />
-                      Sábado: 8h às 12h
+                      {contact.hours.lines[0]}<br />
+                      {contact.hours.lines[1]}
                     </p>
                   </div>
                 </div>
@@ -85,21 +87,13 @@ export default function ContactSection() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={handleWhatsAppClick}
-                className="w-full flex items-center justify-center px-8 py-5 bg-white text-brand rounded-2xl font-bold text-lg hover:bg-white/90 transition-all shadow-lg group"
+                className="w-full flex items-center justify-center px-8 py-5 bg-white text-brand rounded-2xl font-bold text-base hover:bg-white/90 transition-all shadow-lg group"
               >
                 <MessageCircle className="w-6 h-6 mr-3 group-hover:scale-110 transition-transform" />
-                Agendar pelo WhatsApp
+                {contact.actions.whatsapp}
               </motion.button>
 
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={handlePhoneClick}
-                className="w-full flex items-center justify-center px-8 py-5 bg-white/10 text-white border border-white/20 rounded-2xl font-semibold text-lg hover:bg-white/20 transition-all"
-              >
-                <Phone className="w-6 h-6 mr-3" />
-                (11) 99999-9999
-              </motion.button>
+
 
               <motion.button
                 whileHover={{ scale: 1.02 }}
@@ -108,7 +102,7 @@ export default function ContactSection() {
                 className="w-full flex items-center justify-center px-8 py-5 bg-transparent text-white/80 hover:text-white rounded-2xl font-medium text-base hover:bg-white/5 transition-all"
               >
                 <Mail className="w-5 h-5 mr-3" />
-                contato@gabrielamartinho.com.br
+                {contact.actions.email}
               </motion.button>
             </div>
 

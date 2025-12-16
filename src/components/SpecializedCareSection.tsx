@@ -1,35 +1,31 @@
 'use client';
 
+import { getContent } from '@/lib/content';
 import { motion } from 'framer-motion';
-import { CheckCircle, Heart, Shield, Star } from 'lucide-react';
+import { Heart, Shield, Star } from 'lucide-react';
+import Image from 'next/image';
 
 export default function SpecializedCareSection() {
+  const { specializedCare } = getContent();
+
   const differentials = [
     {
       icon: Heart,
-      title: 'Atendimento Humanizado',
-      description: 'Cada criança é única e merece cuidado individualizado com amor e dedicação'
+      title: specializedCare.differentials[0].title,
+      description: specializedCare.differentials[0].description
     },
     {
       icon: Star,
-      title: 'Excelência Médica',
-      description: 'Conhecimento atualizado baseado em evidências científicas e práticas médicas modernas'
+      title: specializedCare.differentials[1].title,
+      description: specializedCare.differentials[1].description
     },
     {
       icon: Shield,
-      title: 'Ambiente Seguro',
-      description: 'Consultório preparado para receber crianças com segurança e conforto'
+      title: specializedCare.differentials[2].title,
+      description: specializedCare.differentials[2].description
     }
   ];
 
-  const careSteps = [
-    'Avaliação completa do desenvolvimento infantil',
-    'Anamnese detalhada com os pais',
-    'Exame físico cuidadoso e minucioso',
-    'Orientações personalizadas para cada família',
-    'Plano de cuidados específico para cada criança',
-    'Acompanhamento contínuo e suporte aos pais'
-  ];
 
   return (
     <section id="atendimento" className="py-20 bg-white min-h-screen-offset pt-nav scroll-margin-nav flex flex-col justify-center overflow-hidden bg-home-pattern">
@@ -42,10 +38,10 @@ export default function SpecializedCareSection() {
           className="text-center mb-12"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-details mb-4">
-            Atendimento Especializado
+            {specializedCare.title}
           </h2>
           <p className="text-xl text-text-details max-w-3xl mx-auto">
-            Um atendimento diferenciado, focado na individualidade de cada criança e nas necessidades específicas de cada família
+            {specializedCare.subtitle}
           </p>
         </motion.div>
 
@@ -57,7 +53,7 @@ export default function SpecializedCareSection() {
             viewport={{ once: true }}
           >
             <h3 className="text-2xl font-bold text-details mb-8">
-              Por que escolher meu atendimento?
+              {specializedCare.columnTitle}
             </h3>
 
             <div className="space-y-8">
@@ -95,15 +91,15 @@ export default function SpecializedCareSection() {
             viewport={{ once: true }}
             className="relative h-full"
           >
-            <div className="relative rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(247,_86,_124,_0.1)] border border-details/10 h-full min-h-[400px]">
-              <img
-                src="https://trae-api-us.mchost.guru/api/ide/v1/text_to_image?prompt=Warm%20pediatrician%20office%2C%20colorful%20toys%2C%20child-friendly%20environment%2C%20medical%20equipment%2C%20soft%20lighting%2C%20comfortable%20waiting%20area%2C%20educational%20posters%2C%20professional%20medical%20setting&image_size=landscape_4_3"
-                alt="Consultório Pediátrico"
+            <div className="relative rounded-2xl overflow-hidden border border-details/10 h-full min-h-[400px]">
+              <Image
+                src="/photos/specialized-care.jpeg"
+                alt={specializedCare.imageAlt}
                 className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
                 width={600}
                 height={600}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-details/20 to-transparent pointer-events-none"></div>
+              <div className="absolute inset-0 bg-linear-to-t from-details/10 to-transparent pointer-events-none"></div>
             </div>
           </motion.div>
         </div>

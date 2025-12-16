@@ -1,16 +1,19 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
 
+import { getContent } from '@/lib/content';
 import { motion } from 'framer-motion';
 import { Calendar, Menu, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
+const { navigation, hero } = getContent();
+
 const navItems = [
-  { href: '#inicio', label: 'Início' },
-  { href: '#sobre', label: 'Sobre' },
-  { href: '#servicos', label: 'Como posso te ajudar' },
-  { href: '#faq', label: 'Perguntas Frequentes' },
-  { href: '#contato', label: 'Contato' },
+  { href: '#inicio', label: navigation.items.home },
+  { href: '#sobre', label: navigation.items.about },
+  { href: '#servicos', label: navigation.items.services },
+  { href: '#faq', label: navigation.items.faq },
+  { href: '#contato', label: navigation.items.contact },
 ];
 
 export default function Navigation() {
@@ -75,7 +78,7 @@ export default function Navigation() {
         <div className="flex justify-between items-center h-16">
           <motion.img
             src="/brand/small-logo.svg"
-            alt="Gabriela Marinho - Pediatra"
+            alt={hero.altLogo}
             className="h-10 md:h-10 w-auto"
             variants={itemVariants}
           />
@@ -100,7 +103,7 @@ export default function Navigation() {
                 variants={itemVariants}
               >
                 <Calendar className="w-4 h-4 mr-2" />
-                Agendar
+                {navigation.cta}
               </motion.button>
             </motion.div>
           </div>
@@ -138,7 +141,7 @@ export default function Navigation() {
               variants={itemVariants}
             >
               <Calendar className="w-5 h-5 mr-2" />
-              Agendar
+              {navigation.cta}
             </motion.button>
           </div>
         </motion.div>

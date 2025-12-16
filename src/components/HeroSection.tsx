@@ -1,17 +1,18 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
 
+import { getContent } from '@/lib/content';
 import { motion } from 'framer-motion';
 import { Calendar, ChevronDown } from 'lucide-react';
 
 export default function HeroSection() {
+  const { hero } = getContent();
+
   const handleWhatsAppClick = () => {
-    window.open('https://wa.me/5511999999999?text=Olá! Gostaria de agendar uma consulta para meu filho.', '_blank');
+    window.open('https://wa.me/5531994766307?text=Olá! Gostaria de agendar uma consulta com a Pediatra Gabriela Marinho', '_blank');
   };
 
-  const handlePhoneClick = () => {
-    window.location.href = 'tel:+5511999999999';
-  };
+
 
   const handleScrollDown = () => {
     const next = document.getElementById('sobre');
@@ -35,15 +36,15 @@ export default function HeroSection() {
             className="text-center flex flex-col items-center"
           >
 
-            <div className="flex items-center justify-center mb-8 sm:mb-12">
+            <div className="flex items-center justify-center mb-20 sm:mb-30">
               <img
                 src="/brand/logo-gabriela-marinho.svg"
-                alt="Gabriela Marinho - Pediatra"
+                alt={hero.altLogo}
                 className="w-auto max-w-xs sm:max-w-md md:max-w-3xl"
               />
             </div>
             <p className="text-base md:text-xl text-center text-text-details mb-6 md:mb-8 leading-relaxed max-w-xl md:max-w-2xl px-4">
-              Pediatra especializada em acompanhamento infantil. Oferecemos consultas presenciais e online com foco no bem-estar e desenvolvimento saudável da sua criança.
+              {hero.description}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-center w-full max-w-xl">
@@ -58,7 +59,7 @@ export default function HeroSection() {
                  text-white bg-details transition-colors shadow-lg"
               >
                 <Calendar className="w-5 h-5 mr-2" />
-                Agendar Consulta
+                {hero.cta}
               </motion.button>
 
 
@@ -71,11 +72,11 @@ export default function HeroSection() {
 
       <motion.button
         onClick={handleScrollDown}
-        aria-label="Role para ver mais"
+        aria-label={hero.scrollLabel}
         className="absolute bottom-4 md:bottom-6 left-1/2 -translate-x-1/2 inline-flex items-center justify-center w-9 h-9 md:w-11 md:h-11 rounded-full border border-brand bg-white/80 backdrop-blur-sm text-brand shadow-custom cursor-pointer md:hover:scale-105 md:transition-transform"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: [0, 6, 0] }}
-        transition={{ duration: 1.2, repeat: Infinity, ease: 'easeInOut' }}
+        transition={{ duration: 1.2, repeat: Infinity, ease: 'anticipate' }}
       >
         <ChevronDown className="w-4 h-4 md:w-5 md:h-5" />
       </motion.button>

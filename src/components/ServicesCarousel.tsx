@@ -1,5 +1,6 @@
 'use client';
 
+import { getContent } from '@/lib/content';
 import { motion } from 'framer-motion';
 import { Check, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -13,6 +14,7 @@ type ServiceItem = {
 };
 
 export default function ServicesCarousel({ services }: { services: ServiceItem[]; }) {
+  const { services: servicesContent } = getContent();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(1);
   const touchStart = useRef(0);
@@ -120,7 +122,7 @@ export default function ServicesCarousel({ services }: { services: ServiceItem[]
               style={{ width: getItemWidth() }}
             >
               <div className="h-full bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/20 hover:bg-white/20 hover:border-white/40 transition-all duration-300 group/card flex flex-col hover:-translate-y-2">
-                
+
                 {/* Icon Header */}
                 <div className="mb-6 relative">
                   <div className="w-16 h-16 rounded-2xl bg-white/20 flex items-center justify-center text-white group-hover/card:scale-110 transition-transform duration-300 shadow-sm">
@@ -139,7 +141,7 @@ export default function ServicesCarousel({ services }: { services: ServiceItem[]
 
                   {/* Features */}
                   <div className="space-y-3">
-                    {service.features.slice(0, 3).map((feature, idx) => (
+                    {service.features.slice(0, 5).map((feature, idx) => (
                       <div key={idx} className="flex items-start gap-2 text-sm text-white/80">
                         <div className="mt-1 w-4 h-4 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
                           <Check className="w-2.5 h-2.5 text-white" />
@@ -161,7 +163,7 @@ export default function ServicesCarousel({ services }: { services: ServiceItem[]
         className={`absolute top-1/2 -translate-y-1/2 -left-4 lg:-left-6 w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white/20 hover:border-white/40 transition-all z-10 hidden md:flex hover:scale-110 active:scale-95 ${currentIndex === 0 ? 'opacity-50 cursor-not-allowed' : ''
           }`}
         disabled={currentIndex === 0}
-        aria-label="Serviço anterior"
+        aria-label={servicesContent.carousel.prev}
       >
         <ChevronLeft className="w-6 h-6" />
       </button>
@@ -171,7 +173,7 @@ export default function ServicesCarousel({ services }: { services: ServiceItem[]
         className={`absolute top-1/2 -translate-y-1/2 -right-4 lg:-right-6 w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white/20 hover:border-white/40 transition-all z-10 hidden md:flex hover:scale-110 active:scale-95 ${currentIndex === maxIndex ? 'opacity-50 cursor-not-allowed' : ''
           }`}
         disabled={currentIndex === maxIndex}
-        aria-label="Próximo serviço"
+        aria-label={servicesContent.carousel.next}
       >
         <ChevronRight className="w-6 h-6" />
       </button>
@@ -186,7 +188,7 @@ export default function ServicesCarousel({ services }: { services: ServiceItem[]
               ? 'w-8 bg-white'
               : 'w-2 bg-white/30 hover:bg-white/50'
               }`}
-            aria-label={`Ir para página ${idx + 1}`}
+            aria-label={`${servicesContent.carousel.page} ${idx + 1}`}
           />
         ))}
       </div>

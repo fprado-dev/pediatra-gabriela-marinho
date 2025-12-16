@@ -1,42 +1,30 @@
 'use client';
 
+import { getContent } from '@/lib/content';
 import { motion } from 'framer-motion';
 import { CheckCircle, Home, Laptop, MapPin } from 'lucide-react';
 
 export default function ConsultationModalitiesSection() {
+  const { consultationModalities } = getContent();
+
   const consultationTypes = [
     {
-      title: 'Presencial',
+      title: consultationModalities.items[0].title,
       icon: MapPin,
-      description: 'A experiência completa no consultório',
-      features: [
-        'Exame físico detalhado',
-        'Ambiente lúdico e seguro',
-        'Avaliação de crescimento',
-        'Equipamentos modernos'
-      ]
+      description: consultationModalities.items[0].description,
+      features: consultationModalities.items[0].features
     },
     {
-      title: 'Online',
+      title: consultationModalities.items[1].title,
       icon: Laptop,
-      description: 'Cuidado médico onde você estiver',
-      features: [
-        'Sem deslocamento',
-        'Horários flexíveis',
-        'Receitas digitais',
-        'Orientações rápidas'
-      ]
+      description: consultationModalities.items[1].description,
+      features: consultationModalities.items[1].features
     },
     {
-      title: 'Domiciliar',
+      title: consultationModalities.items[2].title,
       icon: Home,
-      description: 'Atendimento no conforto do seu lar',
-      features: [
-        'Conforto total para o bebê',
-        'Avaliação do ambiente',
-        'Menor exposição a riscos',
-        'Ideal para recém-nascidos'
-      ]
+      description: consultationModalities.items[2].description,
+      features: consultationModalities.items[2].features
     }
   ];
 
@@ -51,13 +39,13 @@ export default function ConsultationModalitiesSection() {
           className="text-center mb-16"
         >
           <span className="inline-block py-1 px-3 rounded-full bg-details/10 text-details text-sm font-bold tracking-wide uppercase mb-4">
-            Flexibilidade para você
+            {consultationModalities.badge}
           </span>
           <h2 className="text-3xl md:text-4xl font-bold text-details mb-6">
-            Modalidades de atendimento
+            {consultationModalities.title}
           </h2>
           <p className="text-lg text-text-details max-w-2xl mx-auto">
-            Escolha a opção que melhor se adapta à rotina da sua família, sem abrir mão da qualidade e segurança no atendimento.
+            {consultationModalities.subtitle}
           </p>
         </motion.div>
 
@@ -72,7 +60,7 @@ export default function ConsultationModalitiesSection() {
               className="group relative bg-white rounded-[2rem] p-8 border border-details/10 hover:border-details/30 shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col"
             >
               <div className="absolute top-0 inset-x-0 h-2 bg-gradient-to-r from-details/40 via-details to-details/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              
+
               <div className="w-20 h-20 rounded-2xl bg-details/5 flex items-center justify-center mb-8 mx-auto group-hover:bg-details group-hover:text-white text-details transition-all duration-300">
                 <type.icon className="w-10 h-10" />
               </div>
@@ -80,7 +68,7 @@ export default function ConsultationModalitiesSection() {
               <h3 className="text-2xl font-bold text-details text-center mb-2">
                 {type.title}
               </h3>
-              
+
               <p className="text-text-details text-center mb-8 text-sm">
                 {type.description}
               </p>
@@ -107,7 +95,7 @@ export default function ConsultationModalitiesSection() {
                 }}
                 className="w-full py-4 rounded-xl bg-details text-white font-bold text-sm uppercase tracking-wider hover:bg-details/90 transition-colors shadow-md hover:shadow-lg"
               >
-                Agendar {type.title}
+                {consultationModalities.ctaPrefix} {type.title}
               </motion.button>
             </motion.div>
           ))}

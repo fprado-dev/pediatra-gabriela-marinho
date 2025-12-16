@@ -1,39 +1,42 @@
 'use client';
 
+import { getContent } from '@/lib/content';
 import { motion } from 'framer-motion';
 import { Calendar, CheckCircle, FileText, MessageCircle, Stethoscope, User } from 'lucide-react';
 
 export default function ConsultationProcessSection() {
+  const { consultationProcess } = getContent();
+
   const consultationSteps = [
     {
       icon: Calendar,
-      title: 'Agendamento Fácil',
-      description: 'Escolha o melhor horário via WhatsApp ou telefone com total flexibilidade.'
+      title: consultationProcess.steps[0].title,
+      description: consultationProcess.steps[0].description
     },
     {
       icon: User,
-      title: 'Recepção Acolhedora',
-      description: 'Ambiente lúdico e seguro preparado especialmente para receber seu filho.'
+      title: consultationProcess.steps[1].title,
+      description: consultationProcess.steps[1].description
     },
     {
       icon: Stethoscope,
-      title: 'Avaliação Detalhada',
-      description: 'Exame físico minucioso e análise completa do desenvolvimento infantil.'
+      title: consultationProcess.steps[2].title,
+      description: consultationProcess.steps[2].description
     },
     {
       icon: FileText,
-      title: 'Plano de Cuidados',
-      description: 'Orientações personalizadas e prescrições claras para o tratamento.'
+      title: consultationProcess.steps[3].title,
+      description: consultationProcess.steps[3].description
     },
     {
       icon: MessageCircle,
-      title: 'Suporte Contínuo',
-      description: 'Acompanhamento pós-consulta para tirar dúvidas e monitorar a evolução.'
+      title: consultationProcess.steps[4].title,
+      description: consultationProcess.steps[4].description
     },
     {
       icon: CheckCircle,
-      title: 'Retorno Garantido',
-      description: 'Agendamento de retorno para avaliar o progresso e ajustar o tratamento.'
+      title: consultationProcess.steps[5].title,
+      description: consultationProcess.steps[5].description
     }
   ];
 
@@ -48,10 +51,10 @@ export default function ConsultationProcessSection() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            Como são minhas consultas
+            {consultationProcess.title}
           </h2>
           <p className="text-xl text-white/90 max-w-2xl mx-auto leading-relaxed">
-            Um processo estruturado para garantir que cada etapa do cuidado seja realizada com atenção, carinho e excelência técnica.
+            {consultationProcess.subtitle}
           </p>
         </motion.div>
 

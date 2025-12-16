@@ -1,0 +1,287 @@
+{
+  "meta": {
+    "title": "Pediatra Gabriela Marinho - Consultas Online e Presenciais",
+    "description": "Pediatra dedicada ao cuidado integral infantil. Consultas online e presenciais para acompanhar o crescimento saudável do seu filho."
+  },
+  "navigation": {
+    "items": {
+      "home": "Início",
+      "about": "Sobre",
+      "services": "Como posso te ajudar",
+      "faq": "Perguntas Frequentes",
+      "contact": "Contato"
+    },
+    "cta": "Agendar"
+  },
+  "hero": {
+    "altLogo": "Gabriela Marinho - Pediatra",
+    "description": "Cuido do desenvolvimento das crianças com carinho e ciência. Consultas presenciais e online focadas no bem-estar infantil e desenvolvimento saudável das crianças.",
+    "cta": "Agendar Consulta",
+    "scrollLabel": "Role para ver mais"
+  },
+  "about": {
+    "imageAlt": "Gabriela Marinho",
+    "title": "Sobre Gabriela Marinho",
+    "subtitle": "Minha missão é promover qualidade de vida em cada fase da infância",
+    "description1": "Sou médica pediatra formada pelo Centro Universitário Presidente Tancredo de Almeida Neves com experiência no acompanhamento de recém nascidos, crianças e adolescentes. Minha abordagem combina conhecimento médico atualizado com atendimento humanizado e acolhedor.",
+    "description2": "Acredito que o amor e a escuta são pilares da pediatria. Cada família merece atenção personalizada e uma relação de confiança.",
+    "credentials": [
+      {
+        "title": "CRM-MG 86962",
+        "description": "Registro no Conselho Regional de Medicina"
+      },
+      {
+        "title": "RQE 67366",
+        "description": "Registro de Qualificação de Especialista"
+      }
+    ]
+  },
+  "services": {
+    "title": "Como posso ajudar seu filho?",
+    "subtitle": "Cuidado médico humanizado e baseado em evidências, no conforto da sua casa, no consultório ou no hospital.",
+    "items": {
+      "pediatric-consultation": {
+        "title": "Consultoria Pediátrica",
+        "description": "Acompanhamento completo do desenvolvimento materno infantil, desde o pré natal até a adolescência",
+        "features": [
+          "Pré-natal pediátrico",
+          "Consultas de puericultura regulares",
+          "Material de apoio em cada etapa",
+          "Nutrição infantil",
+          "Desenvolvimento motor, cognitivo e da linguagem",
+          "Saúde emocional e comportamental",
+          "Prevenção de doenças",
+          "Acompanhamento do adolescente"
+        ]
+      },
+      "emergency-care": {
+        "title": "Atendimento de Urgência",
+        "description": "Orientação rápida para situações emergenciais",
+        "features": [
+          "Assistência rápida",
+          "Orientações e suporte remoto",
+          "Avaliação presencial",
+          "Encaminhamento hospitalar"
+        ]
+      },
+      "preventive-care": {
+        "title": "Medicina Preventiva",
+        "description": "Prevenção de doenças e promoção da saúde infantil",
+        "features": [
+          "Calendário vacinal atualizado e individualizado – diferenças entre rede pública e particular",
+          "Exames de rotina e rastreamentos preventivos",
+          "Infância desmedicalizada e cuidado baseado em evidências",
+          "Saúde do sono infantil",
+          "Prevenção de acidentes domésticos e escolares",
+          "Promoção da saúde emocional e mental"
+        ]
+      },
+      "online-consultation": {
+        "title": "Consultas Online",
+        "description": "Atendimento remoto para maior comodidade",
+        "features": [
+          "Orientação qualificada",
+          "Apoio em intercorrências",
+          "Seguimento de condições crônicas estáveis",
+          "Vídeo chamadas",
+          "Sem deslocamento",
+          "Prescrição digital válida pelo conselho federal de medicina"
+        ]
+      },
+      "specialized-follow-up": {
+        "title": "Acompanhamento Especializado",
+        "description": "Cuidado contínuo para crianças com condições especiais",
+        "features": [
+          "Planos e materiais personalizados",
+          "Monitoramento constante",
+          "Equipe multidisciplinar",
+          "Apoio familiar"
+        ]
+      }
+    },
+    "footer": "Cada criança é única e merece cuidado individualizado",
+    "cta": "Agendar Consulta",
+    "carousel": {
+      "prev": "Serviço anterior",
+      "next": "Próximo serviço",
+      "page": "Ir para página"
+    }
+  },
+  "specializedCare": {
+    "title": "Atendimento Especializado",
+    "subtitle": "Cuidado dedicado, reconhecendo a singularidade de cada criança e acompanhando cada fase com atenção personalizada.",
+    "columnTitle": "Por que escolher meu atendimento?",
+    "imageAlt": "Consultório Pediátrico",
+    "differentials": [
+      {
+        "title": "Atendimento Humanizado",
+        "description": "Cada criança é única e merece cuidado individualizado com amor e dedicação com escuta ativa e acolhimento"
+      },
+      {
+        "title": "Excelência Médica",
+        "description": "Atuação pautada nas melhores práticas da pediatria atual, baseado em evidências científicas e atualização constante"
+      },
+      {
+        "title": "Ambiente Seguro",
+        "description": "Consultório preparado para receber crianças com segurança, conforto e muita diversão"
+      }
+    ],
+    "careSteps": [
+      "Avaliação completa do desenvolvimento infantil",
+      "Anamnese detalhada com os pais",
+      "Exame físico cuidadoso e minucioso",
+      "Orientações personalizadas para cada família",
+      "Plano de cuidados específico para cada criança",
+      "Acompanhamento contínuo e suporte aos pais"
+    ]
+  },
+  "consultationProcess": {
+    "title": "Como são minhas consultas",
+    "subtitle": "Um processo estruturado para garantir que cada etapa do cuidado seja realizada com atenção, carinho e excelência técnica.",
+    "steps": [
+      {
+        "title": "Agendamento Fácil",
+        "description": "Escolha o melhor horário via WhatsApp ou telefone com total flexibilidade."
+      },
+      {
+        "title": "Recepção Acolhedora",
+        "description": "Ambiente lúdico e seguro preparado especialmente para receber seu filho."
+      },
+      {
+        "title": "Avaliação Detalhada",
+        "description": "Exame físico minucioso e análise completa do desenvolvimento infantil."
+      },
+      {
+        "title": "Plano de Cuidados",
+        "description": "Orientações personalizadas e prescrições claras para o tratamento."
+      },
+      {
+        "title": "Suporte Contínuo",
+        "description": "Acompanhamento pós-consulta para sanar possíveis dúvidas e monitorar a evolução."
+      },
+      {
+        "title": "Retorno Garantido",
+        "description": "Agendamento de retorno para avaliar o progresso e ajustar o tratamento."
+      }
+    ]
+  },
+  "consultationModalities": {
+    "badge": "Flexibilidade para cada família",
+    "title": "Modalidades de atendimento",
+    "subtitle": "Escolha a opção que melhor se adapta à rotina da sua família, sem abrir mão da qualidade e segurança no atendimento.",
+    "ctaPrefix": "Agendar",
+    "items": [
+      {
+        "title": "Presencial",
+        "description": "A experiência completa no consultório",
+        "features": [
+          "Exame físico detalhado",
+          "Ambiente lúdico e seguro",
+          "Avaliação de crescimento",
+          "Equipamentos modernos"
+        ]
+      },
+      {
+        "title": "Online",
+        "description": "Cuidado médico onde você estiver",
+        "features": [
+          "Sem deslocamento",
+          "Horários flexíveis",
+          "Receitas digitais",
+          "Orientações qualificadas"
+        ]
+      },
+      {
+        "title": "Domiciliar",
+        "description": "Atendimento no conforto do seu lar",
+        "features": [
+          "Praticidade, segurança e acolhimento.",
+          "Conforto à criança, reduz exposição a infecções",
+          "Sem deslocamentos, sem trânsito e com horários flexíveis",
+          "Ambiente familiar da criança, reduzindo estresse das crianças e dos pais"
+        ]
+      }
+    ]
+  },
+  "testimonials": {
+    "title": "O que dizem as famílias",
+    "subtitle": "A confiança é a base do meu trabalho. Veja o relato de quem já confia a saúde dos seus filhos aos meus cuidados.",
+    "items": [
+      {
+        "name": "Maria Silva",
+        "role": "Mãe de João (3 anos)",
+        "content": "A Dra. Gabriela é extremamente atenciosa e cuidadosa. Meu filho adora as consultas! Ela explica tudo com muito cuidado e paciência."
+      },
+      {
+        "name": "Pedro Santos",
+        "role": "Pai da Ana (1 ano)",
+        "content": "Excelente profissional! Nos ajudou muito com as dúvidas sobre a alimentação da nossa filha. Super recomendo!"
+      },
+      {
+        "name": "Juliana Oliveira",
+        "role": "Mãe do Lucas (5 meses)",
+        "content": "A consulta online foi perfeita! Muito prática e a Dra. Gabriela foi super atenciosa com nosso bebê."
+      },
+      {
+        "name": "Ricardo Mendes",
+        "role": "Pai da Beatriz (2 anos)",
+        "content": "Profissional muito competente e carinhosa com as crianças. A consulta é tranquila e o ambiente é acolhedor."
+      },
+      {
+        "name": "Camila Ferreira",
+        "role": "Mãe do Enzo (8 meses)",
+        "content": "Amei o atendimento! A Dra. Gabriela é muito paciente e explica tudo direitinho. Meu bebê ficou super tranquilo."
+      }
+    ]
+  },
+  "faq": {
+    "title": "Perguntas Frequentes",
+    "subtitle": "Tire suas dúvidas sobre consultas pediátricas e cuidados infantis",
+    "ctaText": "Ainda tem dúvidas? Entre em contato comigo!",
+    "ctaButton": "Falar comigo",
+    "items": [
+      {
+        "question": "Qual a idade ideal para a primeira consulta?",
+        "answer": "Recomendo a primeira consulta ainda dentro da barriga da mamãe, a consulta pré-natal é essencial para monitorar a saúde da gestante e do bebê, detectando riscos precocemente como hipertensão e diabetes gestacional.​ Inclui orientações práticas sobre hábitos saudáveis, vias de parto, possíveis desafios da amamentação, o que levar para a maternidade (como enxoval básico, documentos e itens de higiene e cosméticos adequados para recém nascidos)  e em seguida consultas de puericultura para avaliar o desenvolvimento inicial, verificar o peso, altura e identificar possíveis problemas precocemente, como icterícia."
+      },
+      {
+        "question": "Como funciona a consulta online?",
+        "answer": "A consulta online é realizada por vídeo chamada. Os pais devem estar em um local tranquilo com boa iluminação. É ideal que a criança esteja presente para uma melhor avaliação. Uma orientação adequada pode substituir consultas presenciais."
+      },
+      {
+        "question": "Quais documentos levar na primeira consulta?",
+        "answer": "Cartão de vacina, caderneta de saúde, exames recentes se já realizados, e qualquer receita médica que a criança esteja usando. Se primeira consulta do recém nascido a caderneta da gestante e exames maternos são importantes. Também é relevante trazer uma lista de dúvidas, no momento da consulta é comum esquecimento de dúvidas importantes."
+      },
+      {
+        "question": "Vocês atendem emergências?",
+        "answer": "Sim, ofereço atendimento de urgência para meus pacientes. Em caso de emergência, contate inclusive com ligações. Ao avaliar a criança, Se necessário for, encaminho imediatamente ao hospital ou para o laboratório para coleta de exames."
+      }
+    ]
+  },
+  "contact": {
+    "address": {
+      "title": "Endereço",
+      "lines": [
+        "Marinho Clínica Avançada",
+        "Avenida Patriótica - Número 80, Sala 103",
+        "Ouro Branco - MG, CEP 36492-258"
+      ]
+    },
+    "hours": {
+      "title": "Horário de Atendimento",
+      "lines": [
+        "Segunda a Sexta: 8h às 18h",
+        "Sábado: 8h às 12h"
+      ]
+    },
+    "social": {
+      "instagram": "pediatragabrielamarinho",
+      "linkedin": "gabriela-marinho-543034194"
+    },
+    "actions": {
+      "whatsapp": "Agendar pelo WhatsApp",
+      "phone": "(31) 99476-6307",
+      "email": "contato@gabrielamarinho.com.br"
+    }
+  }
+}
