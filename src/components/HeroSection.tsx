@@ -16,10 +16,10 @@ export default function HeroSection() {
   return (
     <section
       id="inicio"
-      className="relative h-screen h-[100svh] grid grid-rows-[1fr_auto] pt-nav overflow-hidden bg-home-pattern"
+      className="relative h-screen h-[100svh] grid grid-cols-[minmax(0,1fr)] grid-rows-[1fr_auto] pt-nav overflow-hidden bg-home-pattern"
     >
       <div className="max-w-[1240px] w-full mx-auto px-5 sm:px-8 lg:px-20 grid content-center">
-        <div className="grid grid-cols-1 md:grid-cols-[1.05fr_.95fr] gap-8 lg:gap-16 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-[1.05fr_.95fr] gap-6 lg:gap-16 items-center">
           <motion.div
             initial={{ opacity: 0, y: 32 }}
             animate={{ opacity: 1, y: 0 }}
@@ -28,10 +28,10 @@ export default function HeroSection() {
             <img
               src="/brand/logo-gabriela-marinho.svg"
               alt={hero.altLogo}
-              className="w-full max-w-[500px] h-auto mb-7"
+              className="w-[76%] md:w-full max-w-[500px] h-auto mb-5 md:mb-7"
             />
 
-            <p className="text-base lg:text-lg text-muted leading-relaxed max-w-[62ch] mb-8">
+            <p className="text-[.9rem] md:text-base lg:text-lg text-muted leading-relaxed max-w-[62ch] mb-6 md:mb-8">
               {hero.description}
             </p>
 
@@ -42,7 +42,7 @@ export default function HeroSection() {
                 rel="noopener noreferrer"
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: .98 }}
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-coral text-white text-sm font-semibold tracking-wide hover:bg-coral-deep transition-colors"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 md:py-3.5 rounded-full bg-coral text-white text-sm font-semibold tracking-wide hover:bg-coral-deep transition-colors"
               >
                 <Calendar className="w-4 h-4" />
                 {hero.cta}
@@ -52,7 +52,7 @@ export default function HeroSection() {
                 onClick={() => document.getElementById('servicos')?.scrollIntoView({ behavior: 'smooth' })}
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: .98 }}
-                className="inline-flex items-center justify-center px-6 py-3.5 rounded-full border border-line-strong text-sm font-semibold text-ink hover:border-ink transition-colors cursor-pointer"
+                className="inline-flex items-center justify-center px-6 py-3 md:py-3.5 rounded-full border border-line-strong text-sm font-semibold text-ink hover:border-ink transition-colors cursor-pointer"
               >
                 {services.label}
               </motion.button>
@@ -60,7 +60,7 @@ export default function HeroSection() {
           </motion.div>
 
           <motion.figure
-            className="relative m-0 max-w-[460px] w-full mx-auto md:max-w-none photo-arch-frame"
+            className="relative m-0 max-w-[260px] md:max-w-none w-full mx-auto photo-arch-frame"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: .9, delay: .15, ease: [.2, .8, .3, 1] }}
@@ -68,7 +68,7 @@ export default function HeroSection() {
             <img
               src="/photos/consultorio.jpg"
               alt={hero.altLogo}
-              className="relative z-[1] w-full aspect-[4/5] max-h-[66vh] object-cover object-[50%_22%] photo-arch"
+              className="relative z-[1] w-full aspect-[4/5] max-h-[30vh] md:max-h-[66vh] object-cover object-[50%_22%] photo-arch"
               width={1067}
               height={1600}
             />

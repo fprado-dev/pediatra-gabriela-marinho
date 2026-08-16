@@ -2,26 +2,30 @@
 
 import Reveal from '@/components/Reveal';
 import { getContent } from '@/lib/content';
+import { useIsMobile } from '@/lib/useIsMobile';
 import { whatsappUrl } from '@/lib/whatsapp';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
 
 export default function FAQSection() {
   const { faq } = getContent();
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const isMobile = useIsMobile();
+  // null = intocado; a primeira resposta é longa, então abre por padrão só onde cabe
+  const [touched, setTouched] = useState<number | null>(null);
+  const openIndex = touched ?? (isMobile ? -1 : 0);
 
   return (
     <section id="faq" className="screen relative bg-ground bg-home-pattern">
       <div className="max-w-[1240px] w-full mx-auto px-5 sm:px-8 lg:px-20">
-        <div className="grid grid-cols-1 md:grid-cols-[.8fr_1.2fr] gap-10 lg:gap-20 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-[.8fr_1.2fr] gap-6 lg:gap-20 items-start">
           <Reveal from="left" className="md:sticky md:top-[calc(var(--nav-height)+2rem)]">
             <span className="label block mb-3.5">{faq.label}</span>
-            <h2 className="text-[clamp(1.85rem,3.6vw,2.9rem)] font-bold leading-[1.12] text-ink mb-4">
+            <h2 className="text-[clamp(1.5rem,3.6vw,2.9rem)] font-bold leading-[1.12] text-ink mb-4">
               {faq.title}
             </h2>
-            <p className="text-base lg:text-lg text-muted max-w-[40ch] mb-8">{faq.subtitle}</p>
+            <p className="text-[.88rem] md:text-base lg:text-lg text-muted max-w-[40ch] mb-5 md:mb-8">{faq.subtitle}</p>
 
-            <p className="pull text-lg mb-5">{faq.ctaText}</p>
+            <p className="pull text-[.95rem] md:text-lg mb-4 md:mb-5">{faq.ctaText}</p>
 
             <motion.a
               href={whatsappUrl()}
@@ -41,12 +45,12 @@ export default function FAQSection() {
               return (
                 <div key={item.question} className="border-b border-line">
                   <button
-                    onClick={() => setOpenIndex(open ? null : index)}
+                    onClick={() => setTouched(open ? -1 : index)}
                     aria-expanded={open}
                     aria-controls={`faq-answer-${index}`}
-                    className="w-full flex items-start justify-between gap-6 py-5 text-left cursor-pointer hover:text-brand-deep transition-colors"
+                    className="w-full flex items-start justify-between gap-6 py-4 md:py-5 text-left cursor-pointer hover:text-brand-deep transition-colors"
                   >
-                    <h3 className="text-base lg:text-lg font-medium leading-snug">{item.question}</h3>
+                    <h3 className="text-[.88rem] md:text-base lg:text-lg font-medium leading-snug">{item.question}</h3>
 
                     {/* + que vira − */}
                     <span aria-hidden="true" className="relative shrink-0 w-5.5 h-5.5 mt-1">
@@ -69,7 +73,7 @@ export default function FAQSection() {
                         transition={{ duration: .35, ease: 'easeInOut' }}
                         className="overflow-hidden"
                       >
-                        <p className="pb-6 pr-8 text-[.94rem] text-muted leading-relaxed">
+                        <p className="pb-5 md:pb-6 pr-4 md:pr-8 text-[.88rem] md:text-[.94rem] text-muted leading-relaxed">
                           {item.answer}
                         </p>
                       </motion.div>

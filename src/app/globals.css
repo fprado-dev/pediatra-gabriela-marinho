@@ -100,12 +100,20 @@ h3 { letter-spacing: -.005em; }
   height: 100vh;
   height: 100svh;
   display: grid;
+  /* coluna presa à largura da tela: sem isto o track implícito vira max-content
+     dentro do container rolável e o conteúdo estoura na horizontal */
+  grid-template-columns: minmax(0, 1fr);
   /* "safe" evita o conteúdo centrado ficar inacessível quando transborda */
   align-content: safe center;
-  padding-block: clamp(2rem, 5vh, 4rem);
+  padding-block: clamp(1.25rem, 3.5vh, 4rem);
+  /* overflow-y sozinho faria o eixo x computar como auto: a seção nunca rola na horizontal */
+  overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior: contain;
 }
+
+/* sem isto o item de grid usa min-width:auto e é esticado por filhos roláveis */
+.screen > * { min-width: 0; }
 
 /* a barra de rolagem interna não aparece: quem transborda é a própria tela */
 .screen::-webkit-scrollbar { width: 0; height: 0; }

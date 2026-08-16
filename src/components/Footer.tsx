@@ -18,9 +18,9 @@ export default function Footer() {
       <div className="max-w-[1240px] w-full mx-auto px-5 sm:px-8 lg:px-20 py-8 flex flex-wrap items-center justify-between gap-6">
         <small className="text-[.74rem]">{footer.credentials}</small>
 
-        <nav className="flex flex-wrap gap-6 text-[.78rem]">
+        <nav className="flex flex-wrap gap-x-6 text-[.78rem]">
           {links.map((link) => (
-            <a key={link.href} href={link.href} className="hover:text-on-ink transition-colors">
+            <a key={link.href} href={link.href} className="py-2.5 hover:text-on-ink transition-colors">
               {link.label}
             </a>
           ))}
@@ -28,7 +28,7 @@ export default function Footer() {
             href={LATTES_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-on-ink transition-colors"
+            className="py-2.5 hover:text-on-ink transition-colors"
           >
             {footer.lattes}
           </a>

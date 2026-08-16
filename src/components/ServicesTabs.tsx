@@ -2,18 +2,24 @@
 
 import { services } from '@/data/services';
 import { getContent } from '@/lib/content';
+import { useIsMobile } from '@/lib/useIsMobile';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
 
 export default function ServicesTabs() {
   const { services: content } = getContent();
-  const [active, setActive] = useState(0);
+  const isMobile = useIsMobile();
+  // null = intocado; no mobile o acordeão abre vazio (5 painéis não cabem numa tela),
+  // no desktop o índice sempre mostra o primeiro serviço
+  const [touched, setTouched] = useState<number | null>(null);
+  const active = touched ?? (isMobile ? -1 : 0);
+  const setActive = setTouched;
 
-  const onKeyDown = (e: React.KeyboardEvent, i: number) => {
+  const onKeyDown = (e: React.KeyboardEvent) => {
     const step = e.key === 'ArrowDown' ? 1 : e.key === 'ArrowUp' ? -1 : 0;
     if (!step) return;
     e.preventDefault();
-    const next = (i + step + services.length) % services.length;
+    const next = (Math.max(active, 0) + step + services.length) % services.length;
     setActive(next);
     document.getElementById(`svc-tab-${next}`)?.focus();
   };
@@ -35,9 +41,9 @@ export default function ServicesTabs() {
               aria-selected={active === i}
               aria-controls={`svc-panel-${i}`}
               tabIndex={active === i ? 0 : -1}
-              onClick={() => setActive(i)}
-              onKeyDown={(e) => onKeyDown(e, i)}
-              className={`relative w-full text-left text-[.95rem] py-4 pl-6 pr-8 border-b border-on-ink/10 cursor-pointer transition-colors ${active === i
+              onClick={() => setActive(active === i && isMobile ? -1 : i)}
+              onKeyDown={onKeyDown}
+              className={`relative w-full text-left text-[.95rem] py-3 md:py-4 pl-5 md:pl-6 pr-6 md:pr-8 border-b border-on-ink/10 cursor-pointer transition-colors ${active === i
                 ? 'text-on-ink font-semibold bg-on-ink/5'
                 : 'text-on-ink/55 font-medium hover:text-on-ink/85'
                 }`}
@@ -62,7 +68,7 @@ export default function ServicesTabs() {
                   transition={{ duration: .35, ease: 'easeInOut' }}
                   className="md:hidden overflow-hidden border-b border-on-ink/10"
                 >
-                  <div className="px-6 py-6">
+                  <div className="px-5 md:px-6 py-5 md:py-6">
                     <Panel service={service} />
                   </div>
                 </motion.div>
@@ -76,16 +82,16 @@ export default function ServicesTabs() {
       <div className="hidden md:block md:p-7 lg:p-10 md:min-h-[21rem]">
         <AnimatePresence mode="wait" initial={false}>
           <motion.div
-            key={services[active].id}
-            id={`svc-panel-${active}`}
+            key={services[Math.max(active, 0)].id}
+            id={`svc-panel-${Math.max(active, 0)}`}
             role="tabpanel"
-            aria-labelledby={`svc-tab-${active}`}
+            aria-labelledby={`svc-tab-${Math.max(active, 0)}`}
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: .3, ease: [.2, .8, .3, 1] }}
           >
-            <Panel service={services[active]} />
+            <Panel service={services[Math.max(active, 0)]} />
           </motion.div>
         </AnimatePresence>
       </div>

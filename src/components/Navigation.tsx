@@ -78,7 +78,7 @@ export default function Navigation() {
       transition={{ duration: .4, ease: [.2, .8, .3, 1] }}
     >
       <div className="max-w-[1240px] mx-auto px-5 sm:px-8 lg:px-20 w-full flex items-center gap-6">
-        <button onClick={() => scrollToSection('#inicio')} aria-label={hero.altLogo} className="cursor-pointer">
+        <button onClick={() => scrollToSection('#inicio')} aria-label={hero.altLogo} className="cursor-pointer -ml-2 px-2 py-1">
           <img src="/brand/small-logo.svg" alt={hero.altLogo} className="h-10 w-auto" />
         </button>
 

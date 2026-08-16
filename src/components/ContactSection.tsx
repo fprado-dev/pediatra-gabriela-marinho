@@ -25,15 +25,15 @@ export default function ContactSection() {
   return (
     <section id="contato" className="screen bg-ink text-on-ink">
       <div className="max-w-[1240px] w-full mx-auto px-5 sm:px-8 lg:px-20">
-        <Reveal className="mb-8 lg:mb-13">
+        <Reveal className="mb-5 lg:mb-13">
           <span className="label block mb-3.5 !text-brand">{contact.label}</span>
-          <h2 className="text-[clamp(1.85rem,3.6vw,2.9rem)] font-bold leading-[1.12]">
+          <h2 className="text-[clamp(1.5rem,3.6vw,2.9rem)] font-bold leading-[1.12]">
             {contact.title}
           </h2>
         </Reveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-[1.1fr_.9fr] gap-10 lg:gap-20">
-          <Reveal from="left" className="flex flex-col gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-[1.1fr_.9fr] gap-6 lg:gap-20">
+          <Reveal from="left" className="flex flex-col gap-3.5 md:gap-8">
             {blocks.map(({ icon: Icon, title, lines }) => (
               <div key={title} className="grid grid-cols-[auto_1fr] gap-4.5">
                 <Icon className="w-5.5 h-5.5 text-brand mt-1 shrink-0" />
@@ -41,7 +41,7 @@ export default function ContactSection() {
                   <h3 className="text-[.68rem] font-semibold uppercase tracking-[.16em] text-on-ink/55 mb-1.5">
                     {title}
                   </h3>
-                  <p className="text-[.96rem] leading-relaxed">
+                  <p className="text-[.88rem] md:text-[.96rem] leading-relaxed">
                     {lines.map((line) => (
                       <span key={line} className="block">{line}</span>
                     ))}
@@ -50,7 +50,7 @@ export default function ContactSection() {
               </div>
             ))}
 
-            <div className="flex gap-2.5">
+            <div className="flex gap-2.5 pt-1">
               {socials.map(({ icon: Icon, href, label }) => (
                 <motion.a
                   key={href}
@@ -67,14 +67,14 @@ export default function ContactSection() {
             </div>
           </Reveal>
 
-          <Reveal from="right" className="flex flex-col gap-3 self-center">
+          <Reveal from="right" className="flex flex-col gap-2.5 md:gap-3 self-center">
             <motion.a
               href={whatsappUrl()}
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ y: -2 }}
               whileTap={{ scale: .98 }}
-              className="w-full inline-flex items-center justify-center gap-3 px-6 py-4 rounded-full bg-ground text-ink text-[.88rem] font-semibold"
+              className="w-full inline-flex items-center justify-center gap-3 px-6 py-3 md:py-4 rounded-full bg-ground text-ink text-[.88rem] font-semibold"
             >
               <MessageCircle className="w-5 h-5" />
               {contact.actions.whatsapp}
@@ -83,7 +83,7 @@ export default function ContactSection() {
             <motion.a
               href={`tel:+${PHONE}`}
               whileHover={{ y: -2 }}
-              className="w-full inline-flex items-center justify-center px-6 py-4 rounded-full border border-on-ink/40 text-[.88rem] font-semibold hover:border-on-ink transition-colors"
+              className="w-full inline-flex items-center justify-center px-6 py-3 md:py-4 rounded-full border border-on-ink/40 text-[.88rem] font-semibold hover:border-on-ink transition-colors"
             >
               {contact.actions.phone}
             </motion.a>
@@ -91,12 +91,12 @@ export default function ContactSection() {
             <motion.a
               href={`mailto:${EMAIL}`}
               whileHover={{ y: -2 }}
-              className="w-full inline-flex items-center justify-center px-6 py-4 rounded-full border border-on-ink/40 text-[.88rem] font-semibold hover:border-on-ink transition-colors"
+              className="w-full inline-flex items-center justify-center px-6 py-3 md:py-4 rounded-full border border-on-ink/40 text-[.82rem] md:text-[.88rem] font-semibold hover:border-on-ink transition-colors"
             >
               {EMAIL}
             </motion.a>
 
-            <p className="text-center text-[.78rem] text-on-ink/50 mt-2">{contact.note}</p>
+            <p className="text-center text-[.72rem] md:text-[.78rem] text-on-ink/50 mt-1 md:mt-2">{contact.note}</p>
           </Reveal>
         </div>
       </div>
