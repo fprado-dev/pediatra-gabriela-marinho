@@ -2,6 +2,7 @@
 'use client';
 
 import { LATTES_URL } from '@/lib/links';
+import { isNavigating, scrollToSection as scrollTo } from '@/lib/scroll';
 import { whatsappUrl } from '@/lib/whatsapp';
 import { getContent } from '@/lib/content';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -24,6 +25,7 @@ export default function Navigation() {
   // solta no topo do hero; vira fixa e só reaparece quando o scroll sobe
   const [pinned, setPinned] = useState(false);
   const [hidden, setHidden] = useState(false);
+  const [pendingTarget, setPendingTarget] = useState<string | null>(null);
 
   useEffect(() => {
     let lastY = window.scrollY;
@@ -37,7 +39,9 @@ export default function Navigation() {
         setHidden(false);
       } else {
         setPinned(true);
-        setHidden(!isMenuOpen && y >= lastY);
+        // navegação por clique sempre esconde a barra: ela só volta quando o
+        // usuário rola para cima por conta própria
+        setHidden(isNavigating() || (!isMenuOpen && y > lastY));
       }
       lastY = y;
 
@@ -56,9 +60,17 @@ export default function Navigation() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isMenuOpen]);
 
+  // Rolar enquanto o menu se fecha cancela a rolagem suave: a remoção do
+  // item clicado interrompe a animação do navegador. Por isso o destino fica
+  // pendente e só é acionado quando o menu termina de sair.
   const scrollToSection = (href: string) => {
-    document.getElementById(href.substring(1))?.scrollIntoView({ behavior: 'smooth' });
-    setIsMenuOpen(false);
+    const id = href.substring(1);
+    if (isMenuOpen) {
+      setPendingTarget(id);
+      setIsMenuOpen(false);
+      return;
+    }
+    scrollTo(id);
   };
 
   const linkClass = (href: string) =>
@@ -120,14 +132,20 @@ export default function Navigation() {
         </button>
       </div>
 
-      <AnimatePresence>
+      <AnimatePresence
+        onExitComplete={() => {
+          if (!pendingTarget) return;
+          scrollTo(pendingTarget);
+          setPendingTarget(null);
+        }}
+      >
         {isMenuOpen && (
           <motion.div
             className="lg:hidden absolute top-[var(--nav-height)] inset-x-0 bg-ground border-b border-line overflow-hidden"
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: .3, ease: 'easeInOut' }}
+            transition={{ duration: .22, ease: 'easeInOut' }}
           >
             <div className="px-5 sm:px-8 pb-6 pt-2">
               {navItems.map((item) => (

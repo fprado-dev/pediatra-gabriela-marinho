@@ -9,10 +9,11 @@ import { useState } from 'react';
 export default function ServicesTabs() {
   const { services: content } = getContent();
   const isMobile = useIsMobile();
-  // null = intocado; no mobile o acordeão abre vazio (5 painéis não cabem numa tela),
-  // no desktop o índice sempre mostra o primeiro serviço
+  // null = intocado. No mobile o acordeão abre em Acompanhamento Especializado;
+  // no desktop o índice mostra o primeiro serviço.
+  const OPEN_ON_MOBILE = services.length - 1;
   const [touched, setTouched] = useState<number | null>(null);
-  const active = touched ?? (isMobile ? -1 : 0);
+  const active = touched ?? (isMobile ? OPEN_ON_MOBILE : 0);
   const setActive = setTouched;
 
   const onKeyDown = (e: React.KeyboardEvent) => {
@@ -43,7 +44,7 @@ export default function ServicesTabs() {
               tabIndex={active === i ? 0 : -1}
               onClick={() => setActive(active === i && isMobile ? -1 : i)}
               onKeyDown={onKeyDown}
-              className={`relative w-full text-left text-[.95rem] py-3 md:py-4 pl-5 md:pl-6 pr-6 md:pr-8 border-b border-on-ink/10 cursor-pointer transition-colors ${active === i
+              className={`relative w-full text-left text-[.85rem] md:text-[.95rem] py-2 md:py-4 pl-4 md:pl-6 pr-5 md:pr-8 border-b border-on-ink/10 cursor-pointer transition-colors ${active === i
                 ? 'text-on-ink font-semibold bg-on-ink/5'
                 : 'text-on-ink/55 font-medium hover:text-on-ink/85'
                 }`}
@@ -68,7 +69,7 @@ export default function ServicesTabs() {
                   transition={{ duration: .35, ease: 'easeInOut' }}
                   className="md:hidden overflow-hidden border-b border-on-ink/10"
                 >
-                  <div className="px-5 md:px-6 py-5 md:py-6">
+                  <div className="px-4 md:px-6 py-3.5 md:py-6">
                     <Panel service={service} />
                   </div>
                 </motion.div>
@@ -105,14 +106,14 @@ function Panel({ service }: { service: (typeof services)[number]; }) {
       <h3 className="text-[clamp(1.35rem,2.2vw,1.9rem)] font-bold text-on-ink mb-2.5 md:block hidden">
         {service.title}
       </h3>
-      <p className="text-[.98rem] text-on-ink/65 max-w-[54ch] mb-6 md:mb-8">
+      <p className="text-[.8rem] md:text-[.98rem] text-on-ink/65 max-w-[54ch] mb-3.5 md:mb-8">
         {service.description}
       </p>
       <ul className="list-none p-0 m-0 columns-1 xl:columns-2 gap-10">
         {service.features.map((feature) => (
           <li
             key={feature}
-            className="relative pl-[1.15rem] mb-3 text-[.88rem] leading-relaxed text-on-ink/90 break-inside-avoid"
+            className="relative pl-[1.05rem] mb-2 md:mb-3 text-[.76rem] md:text-[.88rem] leading-[1.4] md:leading-relaxed text-on-ink/90 break-inside-avoid"
           >
             <span className="absolute left-0 top-[.55em] w-[5px] h-[5px] rounded-full bg-coral" />
             {feature}

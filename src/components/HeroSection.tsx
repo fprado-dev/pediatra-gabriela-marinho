@@ -2,6 +2,7 @@
 'use client';
 
 import { getContent } from '@/lib/content';
+import { scrollToSection } from '@/lib/scroll';
 import { whatsappUrl } from '@/lib/whatsapp';
 import { motion } from 'framer-motion';
 import { Calendar, ChevronDown } from 'lucide-react';
@@ -12,7 +13,7 @@ export default function HeroSection() {
   return (
     <section
       id="inicio"
-      className="relative h-screen h-[100svh] grid grid-cols-[minmax(0,1fr)] grid-rows-[1fr_auto] pt-nav pb-[calc(var(--cta-height)+env(safe-area-inset-bottom,0px))] overflow-hidden bg-ground md:bg-home-pattern"
+      className="relative h-screen h-[100svh] grid grid-cols-[minmax(0,1fr)] grid-rows-[1fr_auto] pt-nav overflow-hidden bg-ground md:bg-home-pattern"
     >
       {/* mobile: a foto é o fundo da tela inteira */}
       <motion.div
@@ -25,7 +26,7 @@ export default function HeroSection() {
         <img src="/photos/consultorio.jpg" alt="" aria-hidden="true" className="object-[50%_16%]" />
       </motion.div>
 
-      <div className="relative z-[1] max-w-[1240px] w-full mx-auto px-5 sm:px-8 lg:px-20 grid content-end md:content-center">
+      <div className="relative z-[1] max-w-[1240px] w-full mx-auto px-5 sm:px-8 lg:px-20 grid content-end md:content-center text-center md:text-left">
         <div className="grid grid-cols-1 md:grid-cols-[1.05fr_.95fr] gap-6 lg:gap-16 items-center">
           <motion.div
             initial={{ opacity: 0, y: 28 }}
@@ -35,29 +36,28 @@ export default function HeroSection() {
             <img
               src="/brand/logo-gabriela-marinho.svg"
               alt={hero.altLogo}
-              className="w-[88%] md:w-full max-w-[500px] h-auto mb-5 md:mb-7"
+              className="w-[88%] md:w-full max-w-[500px] h-auto mb-5 md:mb-7 mx-auto md:mx-0"
             />
 
-            <p className="text-[.92rem] md:text-base lg:text-lg text-on-ink/85 md:text-muted leading-relaxed max-w-[62ch] mb-6 md:mb-8">
+            <p className="text-[.92rem] md:text-base lg:text-lg text-on-ink/85 md:text-muted leading-relaxed max-w-[62ch] mx-auto md:mx-0 mb-6 md:mb-8">
               {hero.description}
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-3">
-              {/* no mobile o agendamento mora na barra fixa do polegar */}
+            <div className="flex flex-col sm:flex-row gap-3 items-stretch md:items-start">
               <motion.a
                 href={whatsappUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: .98 }}
-                className="hidden md:inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-coral text-white text-sm font-semibold tracking-wide hover:bg-coral-deep transition-colors"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 md:py-3.5 rounded-full bg-coral text-white text-sm font-semibold tracking-wide hover:bg-coral-deep transition-colors"
               >
                 <Calendar className="w-4 h-4" />
                 {hero.cta}
               </motion.a>
 
               <motion.button
-                onClick={() => document.getElementById('servicos')?.scrollIntoView({ behavior: 'smooth' })}
+                onClick={() => scrollToSection('servicos')}
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: .98 }}
                 className="inline-flex items-center justify-center px-6 py-3 md:py-3.5 rounded-full border border-on-ink/45 md:border-line-strong text-sm font-semibold text-on-ink md:text-ink md:hover:border-ink transition-colors cursor-pointer"
@@ -86,7 +86,7 @@ export default function HeroSection() {
       </div>
 
       <motion.button
-        onClick={() => document.getElementById('sobre')?.scrollIntoView({ behavior: 'smooth' })}
+        onClick={() => scrollToSection('sobre')}
         className="relative z-[1] flex items-center justify-center gap-2.5 w-full pt-4 pb-3 md:pt-5 md:pb-7 text-[.62rem] md:text-[.66rem] uppercase tracking-[.18em] text-on-ink/55 md:text-muted-2 cursor-pointer"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

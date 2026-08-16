@@ -10,10 +10,10 @@ export default function AboutSection() {
   const { about } = getContent();
 
   return (
-    <section id="sobre" className="screen relative bg-ink md:bg-ground overflow-hidden">
+    <section id="sobre" className="screen is-bleed relative bg-[#5b4335] md:bg-ground overflow-hidden">
       {/* mobile: retrato em sangria, texto assentado sobre o véu */}
       <div
-        className="bleed-photo md:hidden">
+        className="bleed-photo scrim-warm md:hidden">
         <img src="/photos/sobre.jpg" alt="" aria-hidden="true" className="object-[50%_4%]" />
       </div>
 
@@ -38,14 +38,14 @@ export default function AboutSection() {
               {about.subtitle}
             </h2>
 
-            <p className="text-[.71rem] md:text-base lg:text-lg text-on-ink/75 md:text-muted leading-[1.45] md:leading-relaxed max-w-[62ch] mb-2 md:mb-3">
+            <p className="text-[.71rem] md:text-base lg:text-lg text-on-ink/75 md:text-muted leading-[1.45] md:leading-relaxed max-w-[62ch] mx-auto md:mx-0 mb-2 md:mb-3">
               {about.description1}
             </p>
-            <p className="text-[.71rem] md:text-base lg:text-lg text-on-ink/75 md:text-muted leading-[1.45] md:leading-relaxed max-w-[62ch]">
+            <p className="text-[.71rem] md:text-base lg:text-lg text-on-ink/75 md:text-muted leading-[1.45] md:leading-relaxed max-w-[62ch] mx-auto md:mx-0">
               {about.description2}
             </p>
 
-            <div className="grid grid-cols-2 gap-3 mt-3 md:mt-7">
+            <div className="hidden md:grid grid-cols-2 gap-3 mt-3 md:mt-7">
               {about.credentials.map((credential) => (
                 <div key={credential.title} className="border-t-2 border-coral pt-3 md:pt-3.5">
                   <strong className="block text-[.85rem] md:text-lg font-semibold tabular-nums text-on-ink md:text-ink mb-0.5 md:mb-1">
@@ -62,7 +62,7 @@ export default function AboutSection() {
               href={LATTES_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 mt-3 md:mt-6 pb-0.5 text-[.78rem] md:text-sm font-semibold text-brand md:text-brand-deep border-b border-current"
+              className="inline-flex items-center gap-2 mt-3 md:mt-6 pb-0.5 mx-auto md:mx-0 text-[.78rem] md:text-sm font-semibold text-brand md:text-brand-deep border-b border-current"
             >
               {about.lattesCta}
               <ArrowUpRight className="w-3 h-3" />

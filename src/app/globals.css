@@ -8,8 +8,6 @@
   --details: #F7567C;
   --text-details: #5D576B;
   --nav-height: 72px;
-  /* barra fixa de agendamento: só existe no mobile */
-  --cta-height: 0px;
 
   /* derivados: neutros com viés malva, a partir de --text-details */
   --ground: #FDFAF1;
@@ -58,8 +56,6 @@ html {
 }
 
 @media (max-width: 767px) {
-  :root { --cta-height: 68px; }
-
   /* cada deslize para exatamente em uma seção */
   html {
     scroll-snap-type: y mandatory;
@@ -128,7 +124,7 @@ h3 { letter-spacing: -.005em; }
   /* "safe" evita o conteúdo centrado ficar inacessível quando transborda */
   align-content: safe center;
   padding-top: clamp(1.25rem, 3.5vh, 4rem);
-  padding-bottom: calc(clamp(1.25rem, 3.5vh, 4rem) + var(--cta-height) + env(safe-area-inset-bottom, 0px));
+  padding-bottom: calc(clamp(1.25rem, 3.5vh, 4rem) + env(safe-area-inset-bottom, 0px));
   /* overflow-y sozinho faria o eixo x computar como auto: a seção nunca rola na horizontal */
   overflow-x: hidden;
   /* auto (não scroll) e sem overscroll-behavior: contain — "contain" corta o
@@ -164,6 +160,14 @@ h3 { letter-spacing: -.005em; }
   z-index: 1;
 }
 
+/* seção com foto de fundo: no mobile o texto desce para o rodapé, liberando
+   o topo da tela para o rosto. align-content, não align-self: a linha do grid
+   é dimensionada pelo conteúdo, então self-end sozinho não move nada. */
+@media (max-width: 767px) {
+  .screen.is-bleed { align-content: safe end; text-align: center; }
+  .screen.is-bleed .label { display: block; }
+}
+
 /* ---------- foto em sangria: composição do mobile ---------- */
 .bleed-photo {
   position: absolute;
@@ -188,6 +192,19 @@ h3 { letter-spacing: -.005em; }
     color-mix(in srgb, var(--ink) 97%, transparent) var(--scrim-solid, 58%),
     color-mix(in srgb, var(--ink) 80%, transparent) var(--scrim-mid, 76%),
     color-mix(in srgb, var(--ink) 32%, transparent) var(--scrim-soft, 89%),
+    transparent 100%
+  );
+}
+
+/* véu quente: mesma cor do fundo do estúdio no retrato do Sobre (#5b4335),
+   para o degradê continuar a foto em vez de contrastar com ela */
+.bleed-photo.scrim-warm::after {
+  background: linear-gradient(
+    to top,
+    #5b4335 0%,
+    rgba(91, 67, 53, .97) var(--scrim-solid, 58%),
+    rgba(91, 67, 53, .82) var(--scrim-mid, 76%),
+    rgba(91, 67, 53, .34) var(--scrim-soft, 89%),
     transparent 100%
   );
 }

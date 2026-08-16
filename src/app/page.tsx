@@ -6,7 +6,6 @@ import FAQSection from '@/components/FAQSection';
 import Footer from '@/components/Footer';
 import FullpageScroll from '@/components/FullpageScroll';
 import HeroSection from '@/components/HeroSection';
-import MobileCta from '@/components/MobileCta';
 import Navigation from '@/components/Navigation';
 import ScrollProgress from '@/components/ScrollProgress';
 import ServicesSection from '@/components/ServicesSection';
@@ -31,7 +30,6 @@ export default function Home() {
         <ContactSection />
       </main>
       <Footer />
-      <MobileCta />
     </>
   );
 }
