@@ -21,18 +21,24 @@ const navItems = [
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('inicio');
+  // solta no topo do hero; vira fixa e só reaparece quando o scroll sobe
+  const [pinned, setPinned] = useState(false);
   const [hidden, setHidden] = useState(false);
-  const [stuck, setStuck] = useState(false);
 
   useEffect(() => {
     let lastY = window.scrollY;
 
     const handleScroll = () => {
       const y = window.scrollY;
+      const heroHeight = document.getElementById('inicio')?.offsetHeight ?? window.innerHeight;
 
-      setStuck(y > 8);
-      // esconde ao descer, revela ao subir
-      setHidden(!isMenuOpen && y > 140 && y > lastY);
+      if (y < heroHeight * .5) {
+        setPinned(false);
+        setHidden(false);
+      } else {
+        setPinned(true);
+        setHidden(!isMenuOpen && y >= lastY);
+      }
       lastY = y;
 
       for (const { href } of navItems) {
@@ -63,7 +69,9 @@ export default function Navigation() {
 
   return (
     <motion.nav
-      className={`fixed top-0 inset-x-0 z-50 h-[var(--nav-height)] flex items-center bg-ground/90 backdrop-blur-md backdrop-saturate-150 border-b transition-colors ${stuck ? 'border-line' : 'border-transparent'
+      className={`top-0 inset-x-0 z-50 h-[var(--nav-height)] flex items-center border-b transition-colors ${pinned
+        ? 'fixed bg-ground/90 backdrop-blur-md backdrop-saturate-150 border-line'
+        : 'absolute bg-transparent border-transparent'
         }`}
       initial={{ y: -24, opacity: 0 }}
       animate={{ y: hidden ? '-100%' : 0, opacity: 1 }}

@@ -16,7 +16,7 @@ export default function HeroSection() {
   return (
     <section
       id="inicio"
-      className="relative min-h-screen grid grid-rows-[1fr_auto] pt-nav overflow-hidden bg-home-pattern"
+      className="relative h-screen h-[100svh] grid grid-rows-[1fr_auto] pt-nav overflow-hidden bg-home-pattern"
     >
       <div className="max-w-[1240px] w-full mx-auto px-5 sm:px-8 lg:px-20 grid content-center">
         <div className="grid grid-cols-1 md:grid-cols-[1.05fr_.95fr] gap-8 lg:gap-16 items-center">

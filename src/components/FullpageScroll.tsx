@@ -1,72 +1,94 @@
-'use client'
+'use client';
 
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react';
+
+/** Tempo mínimo que a animação de uma seção leva antes de aceitar o próximo passo. */
+const MIN_ANIMATION_MS = 700;
+/** Silêncio de roda necessário para considerar a inércia do trackpad drenada. */
+const IDLE_MS = 180;
+/** Ruído de trackpad abaixo disso não conta como intenção de navegar. */
+const MIN_DELTA = 6;
 
 export default function FullpageScroll() {
-  const animatingRef = useRef(false)
-
   useEffect(() => {
-    const isFinePointer = window.matchMedia('(pointer: fine)').matches
-    if (!isFinePointer) return
+    if (!window.matchMedia('(pointer: fine)').matches) return;
 
-    let sections: HTMLElement[] = Array.from(document.querySelectorAll('main section[id]')) as HTMLElement[]
+    let sections = Array.from(document.querySelectorAll<HTMLElement>('main section[id]'));
+    let locked = false;
+    let startedAt = 0;
+    let idleTimer = 0;
 
-    const refreshSections = () => {
-      sections = Array.from(document.querySelectorAll('main section[id]')) as HTMLElement[]
-    }
+    const refresh = () => {
+      sections = Array.from(document.querySelectorAll<HTMLElement>('main section[id]'));
+    };
 
-    const getCurrentIndex = () => {
-      const viewportHeight = window.innerHeight
-      let bestIndex = 0
-      let bestScore = Number.POSITIVE_INFINITY
+    const currentIndex = () => {
+      // a seção cujo topo está mais perto do topo da viewport
+      let best = 0;
+      let bestScore = Number.POSITIVE_INFINITY;
       sections.forEach((el, i) => {
-        const rect = el.getBoundingClientRect()
-        const score = Math.abs(rect.top)
-        if (score < bestScore && rect.top < viewportHeight) {
-          bestScore = score
-          bestIndex = i
+        const score = Math.abs(el.getBoundingClientRect().top);
+        if (score < bestScore) {
+          bestScore = score;
+          best = i;
         }
-      })
-      return bestIndex
-    }
+      });
+      return best;
+    };
 
-    const wheelHandler = (e: WheelEvent) => {
-      if (animatingRef.current) {
-        e.preventDefault()
-        return
+    /**
+     * Só libera quando a roda ficou quieta E a animação teve tempo de terminar.
+     * Sem isso a inércia do trackpad chega depois do timeout e pula uma seção extra.
+     */
+    const unlockWhenIdle = () => {
+      window.clearTimeout(idleTimer);
+      const remaining = Math.max(IDLE_MS, MIN_ANIMATION_MS - (performance.now() - startedAt));
+      idleTimer = window.setTimeout(() => { locked = false; }, remaining);
+    };
+
+    /** Seção que rola por dentro (conteúdo mais alto que a tela) fica com o controle. */
+    const scrollsInternally = (target: EventTarget | null, delta: number) => {
+      const section = (target as HTMLElement)?.closest?.('section[id]');
+      if (!section) return false;
+      const { scrollTop, scrollHeight, clientHeight } = section;
+      if (scrollHeight <= clientHeight + 1) return false;
+      return delta > 0
+        ? scrollTop + clientHeight < scrollHeight - 1
+        : scrollTop > 1;
+    };
+
+    const onWheel = (e: WheelEvent) => {
+      const delta = e.deltaY;
+      if (delta === 0) return;
+      if (scrollsInternally(e.target, delta)) return;
+
+      e.preventDefault();
+
+      if (locked) {
+        unlockWhenIdle();
+        return;
       }
-      const delta = e.deltaY
-      if (delta === 0) return
+      if (Math.abs(delta) < MIN_DELTA) return;
 
-      const target = (() => {
-        const current = getCurrentIndex()
-        if (delta > 0) return Math.min(current + 1, sections.length - 1)
-        return Math.max(current - 1, 0)
-      })()
+      const current = currentIndex();
+      const target = Math.min(Math.max(current + (delta > 0 ? 1 : -1), 0), sections.length - 1);
+      if (target === current) return;
 
-      const current = getCurrentIndex()
-      if (target === current) return
+      locked = true;
+      startedAt = performance.now();
+      sections[target].scrollIntoView({ behavior: 'smooth' });
+      unlockWhenIdle();
+    };
 
-      e.preventDefault()
-      animatingRef.current = true
-      sections[target].scrollIntoView({ behavior: 'smooth' })
-
-      window.setTimeout(() => {
-        animatingRef.current = false
-      }, 900)
-    }
-
-    const resizeHandler = () => refreshSections()
-
-    window.addEventListener('wheel', wheelHandler, { passive: false })
-    window.addEventListener('resize', resizeHandler)
+    window.addEventListener('wheel', onWheel, { passive: false });
+    window.addEventListener('resize', refresh);
 
     return () => {
-      window.removeEventListener('wheel', wheelHandler as EventListener)
-      window.removeEventListener('resize', resizeHandler)
-    }
-  }, [])
+      window.clearTimeout(idleTimer);
+      window.removeEventListener('wheel', onWheel);
+      window.removeEventListener('resize', refresh);
+    };
+  }, []);
 
-  return null
+  return null;
 }
-
