@@ -196,16 +196,17 @@ h3 { letter-spacing: -.005em; }
   );
 }
 
-/* véu quente: mesma cor do fundo do estúdio no retrato do Sobre (#5b4335),
-   para o degradê continuar a foto em vez de contrastar com ela */
+/* véu quente do Sobre: mesma cor do fundo do estúdio no retrato (#5b4335).
+   Sobe só até a metade da tela, chegando lá com 30% de opacidade, para o
+   rosto ficar completamente limpo. */
 .bleed-photo.scrim-warm::after {
   background: linear-gradient(
     to top,
-    #5b4335 0%,
-    rgba(91, 67, 53, .97) var(--scrim-solid, 58%),
-    rgba(91, 67, 53, .82) var(--scrim-mid, 76%),
-    rgba(91, 67, 53, .34) var(--scrim-soft, 89%),
-    transparent 100%
+    rgb(91, 67, 53) 0%,
+    rgba(91, 67, 53, .97) 34%,
+    rgba(91, 67, 53, .74) 44%,
+    rgba(91, 67, 53, .3) 50%,
+    rgba(91, 67, 53, 0) 57%
   );
 }
 
