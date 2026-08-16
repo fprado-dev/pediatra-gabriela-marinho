@@ -71,7 +71,7 @@ export default function Navigation() {
     <motion.nav
       className={`top-0 inset-x-0 z-50 h-[var(--nav-height)] flex items-center border-b transition-colors ${pinned
         ? 'fixed bg-ground/90 backdrop-blur-md backdrop-saturate-150 border-line'
-        : 'absolute bg-transparent border-transparent'
+        : 'absolute bg-transparent border-transparent text-on-ink md:text-ink'
         }`}
       initial={{ y: -24, opacity: 0 }}
       animate={{ y: hidden ? '-100%' : 0, opacity: 1 }}
@@ -112,7 +112,7 @@ export default function Navigation() {
 
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="lg:hidden ml-auto p-2 text-ink cursor-pointer"
+          className={`lg:hidden ml-auto p-2 cursor-pointer ${pinned ? 'text-ink' : 'text-on-ink md:text-ink'}`}
           aria-label={isMenuOpen ? navigation.menuClose : navigation.menuOpen}
           aria-expanded={isMenuOpen}
         >

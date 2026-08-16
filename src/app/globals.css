@@ -8,6 +8,8 @@
   --details: #F7567C;
   --text-details: #5D576B;
   --nav-height: 72px;
+  /* barra fixa de agendamento: só existe no mobile */
+  --cta-height: 0px;
 
   /* derivados: neutros com viés malva, a partir de --text-details */
   --ground: #FDFAF1;
@@ -55,15 +57,35 @@ html {
   scroll-behavior: smooth;
 }
 
+@media (max-width: 767px) {
+  :root { --cta-height: 68px; }
+
+  /* cada deslize para exatamente em uma seção */
+  html {
+    scroll-snap-type: y mandatory;
+    scroll-padding-top: 0;
+  }
+  main > section {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+  footer { scroll-snap-align: end; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-snap-type: none; }
+}
+
 body {
   background: var(--ground);
   color: var(--ink);
-  overflow-x: hidden;
 }
 
+/* clip, não hidden: "hidden" transformaria o html em contêiner de rolagem
+   e o scroll-snap da viewport deixaria de valer */
 html,
 body {
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -105,11 +127,13 @@ h3 { letter-spacing: -.005em; }
   grid-template-columns: minmax(0, 1fr);
   /* "safe" evita o conteúdo centrado ficar inacessível quando transborda */
   align-content: safe center;
-  padding-block: clamp(1.25rem, 3.5vh, 4rem);
+  padding-top: clamp(1.25rem, 3.5vh, 4rem);
+  padding-bottom: calc(clamp(1.25rem, 3.5vh, 4rem) + var(--cta-height) + env(safe-area-inset-bottom, 0px));
   /* overflow-y sozinho faria o eixo x computar como auto: a seção nunca rola na horizontal */
   overflow-x: hidden;
+  /* auto (não scroll) e sem overscroll-behavior: contain — "contain" corta o
+     encadeamento e faz a seção engolir o gesto em vez de passar para a página */
   overflow-y: auto;
-  overscroll-behavior: contain;
 }
 
 /* sem isto o item de grid usa min-width:auto e é esticado por filhos roláveis */
@@ -138,6 +162,34 @@ h3 { letter-spacing: -.005em; }
 .bg-home-pattern > * {
   position: relative;
   z-index: 1;
+}
+
+/* ---------- foto em sangria: composição do mobile ---------- */
+.bleed-photo {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+.bleed-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* véu: transparente em cima, sólido onde o texto assenta.
+   Cada seção regula onde a transição acontece conforme o volume de texto. */
+.bleed-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    var(--ink) 0%,
+    color-mix(in srgb, var(--ink) 97%, transparent) var(--scrim-solid, 58%),
+    color-mix(in srgb, var(--ink) 80%, transparent) var(--scrim-mid, 76%),
+    color-mix(in srgb, var(--ink) 32%, transparent) var(--scrim-soft, 89%),
+    transparent 100%
+  );
 }
 
 /* ---------- arco: assinatura das fotos ---------- */

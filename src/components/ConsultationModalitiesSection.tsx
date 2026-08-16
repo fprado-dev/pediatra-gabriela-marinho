@@ -14,7 +14,7 @@ export default function ConsultationModalitiesSection() {
   return (
     <section id="modalidades" className="screen bg-ground">
       <div className="max-w-[1240px] w-full mx-auto px-5 sm:px-8 lg:px-20">
-        <Reveal className="max-w-[46rem] mb-7 lg:mb-10">
+        <Reveal className="max-w-[46rem] mb-4 lg:mb-10">
           <span className="label block mb-3.5">{consultationModalities.badge}</span>
           <h2 className="text-[clamp(1.5rem,3.6vw,2.9rem)] font-bold leading-[1.12] text-ink mb-4">
             {consultationModalities.title}
@@ -32,18 +32,18 @@ export default function ConsultationModalitiesSection() {
                 <motion.article
                   whileHover={{ y: -4 }}
                   transition={{ duration: .3, ease: [.2, .8, .3, 1] }}
-                  className="h-full flex flex-col gap-3 md:gap-3.5 p-5 md:p-6 lg:p-7 rounded bg-card border border-card-line hover:border-brand hover:shadow-[var(--shadow)] transition-colors"
+                  className="h-full flex flex-col gap-2.5 md:gap-3.5 p-4 md:p-6 lg:p-7 rounded bg-card border border-card-line hover:border-brand hover:shadow-[var(--shadow)] transition-colors"
                 >
-                  <div className="flex items-baseline justify-between gap-4 pb-4 border-b border-line">
-                    <h3 className="text-xl lg:text-[1.75rem] font-bold text-ink">{item.title}</h3>
+                  <div className="flex items-baseline justify-between gap-4 pb-3 md:pb-4 border-b border-line">
+                    <h3 className="text-lg md:text-xl lg:text-[1.75rem] font-bold text-ink">{item.title}</h3>
                     <Icon className="w-6 h-6 text-brand-deep shrink-0 self-center" />
                   </div>
 
-                  <p className="text-[.85rem] md:text-[.9rem] text-muted">{item.description}</p>
+                  <p className="text-[.78rem] md:text-[.9rem] text-muted">{item.description}</p>
 
-                  <ul className="list-none p-0 m-0 flex flex-col gap-2.5 flex-1">
+                  <ul className="list-none p-0 m-0 flex flex-col gap-1.5 md:gap-2.5 flex-1">
                     {item.features.map((feature) => (
-                      <li key={feature} className="relative pl-[1.15rem] text-[.85rem] leading-relaxed text-muted">
+                      <li key={feature} className="relative pl-[1.15rem] text-[.78rem] md:text-[.85rem] leading-relaxed text-muted">
                         <span className="absolute left-0 top-[.5em] w-[7px] h-[7px] rounded-full border border-coral" />
                         {feature}
                       </li>
@@ -54,7 +54,7 @@ export default function ConsultationModalitiesSection() {
                     href={whatsappUrl(`uma consulta ${item.title}`)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full inline-flex items-center justify-center px-6 py-3.5 rounded-full bg-coral text-white text-sm font-semibold hover:bg-coral-deep transition-colors"
+                    className="w-full inline-flex items-center justify-center px-6 py-2.5 md:py-3.5 rounded-full bg-coral text-white text-[.8rem] md:text-sm font-semibold hover:bg-coral-deep transition-colors"
                   >
                     {consultationModalities.ctaPrefix} {item.title}
                   </a>

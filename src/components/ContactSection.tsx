@@ -25,7 +25,7 @@ export default function ContactSection() {
   return (
     <section id="contato" className="screen bg-ink text-on-ink">
       <div className="max-w-[1240px] w-full mx-auto px-5 sm:px-8 lg:px-20">
-        <Reveal className="mb-5 lg:mb-13">
+        <Reveal className="mb-4 lg:mb-13">
           <span className="label block mb-3.5 !text-brand">{contact.label}</span>
           <h2 className="text-[clamp(1.5rem,3.6vw,2.9rem)] font-bold leading-[1.12]">
             {contact.title}
@@ -33,7 +33,7 @@ export default function ContactSection() {
         </Reveal>
 
         <div className="grid grid-cols-1 md:grid-cols-[1.1fr_.9fr] gap-6 lg:gap-20">
-          <Reveal from="left" className="flex flex-col gap-3.5 md:gap-8">
+          <Reveal from="left" className="flex flex-col gap-3 md:gap-8">
             {blocks.map(({ icon: Icon, title, lines }) => (
               <div key={title} className="grid grid-cols-[auto_1fr] gap-4.5">
                 <Icon className="w-5.5 h-5.5 text-brand mt-1 shrink-0" />
@@ -74,7 +74,7 @@ export default function ContactSection() {
               rel="noopener noreferrer"
               whileHover={{ y: -2 }}
               whileTap={{ scale: .98 }}
-              className="w-full inline-flex items-center justify-center gap-3 px-6 py-3 md:py-4 rounded-full bg-ground text-ink text-[.88rem] font-semibold"
+              className="hidden md:inline-flex w-full items-center justify-center gap-3 px-6 py-3 md:py-4 rounded-full bg-ground text-ink text-[.88rem] font-semibold"
             >
               <MessageCircle className="w-5 h-5" />
               {contact.actions.whatsapp}
