@@ -1,17 +1,25 @@
 import SchemaMarkup from '@/components/SchemaMarkup';
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Montserrat } from 'next/font/google';
 import './globals.css';
-;
 
-const montserrat = Montserrat({ subsets: ['latin'] });
+const montserrat = Montserrat({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+  display: 'swap',
+});
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: '#A8C9F5',
+};
 
 export const metadata: Metadata = {
   title: 'Pediatra Gabriela Marinho - Consultas Online e Presenciais',
   description: 'Pediatra especializada em acompanhamento infantil. Consultas online e presenciais. Agende sua consulta com quem entende de crianças.',
   keywords: ['pediatra', 'pediatra online', 'consulta pediatra', 'gabriela marinho', 'pediatra mg', 'mg', 'ouro branco'],
   authors: [{ name: 'Pediatra Gabriela Marinho' }],
-  viewport: 'width=device-width, initial-scale=1',
   robots: 'index, follow',
   icons: {
     icon: '/icon1.png',

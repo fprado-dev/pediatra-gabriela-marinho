@@ -1,9 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
 
+import { LATTES_URL } from '@/lib/links';
+import { whatsappUrl } from '@/lib/whatsapp';
 import { getContent } from '@/lib/content';
-import { motion } from 'framer-motion';
-import { Calendar, Menu, X } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { ArrowUpRight, Calendar, Menu, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 const { navigation, hero } = getContent();
@@ -19,133 +21,141 @@ const navItems = [
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('inicio');
-
-  const containerVariants = {
-    hidden: { opacity: 0, y: -10 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { staggerChildren: 0.07, delayChildren: 0.1 },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: -8 },
-    visible: { opacity: 1, y: 0 },
-  };
+  const [hidden, setHidden] = useState(false);
+  const [stuck, setStuck] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const sections = navItems.map(item => item.href.substring(1));
-      const scrollPosition = window.scrollY + 100;
+    let lastY = window.scrollY;
 
-      for (const sectionId of sections) {
-        const element = document.getElementById(sectionId);
-        if (element) {
-          const { offsetTop, offsetHeight } = element;
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            setActiveSection(sectionId);
-            break;
-          }
+    const handleScroll = () => {
+      const y = window.scrollY;
+
+      setStuck(y > 8);
+      // esconde ao descer, revela ao subir
+      setHidden(!isMenuOpen && y > 140 && y > lastY);
+      lastY = y;
+
+      for (const { href } of navItems) {
+        const element = document.getElementById(href.substring(1));
+        if (!element) continue;
+        const { offsetTop, offsetHeight } = element;
+        if (y + 100 >= offsetTop && y + 100 < offsetTop + offsetHeight) {
+          setActiveSection(href.substring(1));
+          break;
         }
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isMenuOpen]);
 
   const scrollToSection = (href: string) => {
-    const element = document.getElementById(href.substring(1));
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+    document.getElementById(href.substring(1))?.scrollIntoView({ behavior: 'smooth' });
     setIsMenuOpen(false);
   };
 
-  const handleWhatsAppClick = () => {
-    window.open('https://wa.me/5511999999999?text=Olá! Gostaria de agendar uma consulta para meu filho.', '_blank');
-  };
+  const linkClass = (href: string) =>
+    `px-3 py-2 rounded-full text-sm font-medium transition-colors cursor-pointer ${activeSection === href.substring(1)
+      ? 'text-brand-deep'
+      : 'text-muted hover:text-ink hover:bg-brand-wash'
+    }`;
 
   return (
     <motion.nav
-      className="fixed top-0 left-0 right-0 bg-white shadow-md z-50"
-      initial={{ opacity: 0, y: -24 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, ease: 'easeOut' }}
+      className={`fixed top-0 inset-x-0 z-50 h-[var(--nav-height)] flex items-center bg-ground/90 backdrop-blur-md backdrop-saturate-150 border-b transition-colors ${stuck ? 'border-line' : 'border-transparent'
+        }`}
+      initial={{ y: -24, opacity: 0 }}
+      animate={{ y: hidden ? '-100%' : 0, opacity: 1 }}
+      transition={{ duration: .4, ease: [.2, .8, .3, 1] }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          <motion.img
-            src="/brand/small-logo.svg"
-            alt={hero.altLogo}
-            className="h-10 md:h-10 w-auto"
-            variants={itemVariants}
-          />
-          <div className="hidden md:block">
-            <motion.div className="ml-10 flex items-baseline space-x-4" variants={containerVariants} initial="hidden" animate="visible">
-              {navItems.map((item) => (
-                <motion.button
-                  key={item.href}
-                  onClick={() => scrollToSection(item.href)}
-                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors cursor-pointer ${activeSection === item.href.substring(1)
-                    ? 'text-brand bg-brand-soft'
-                    : 'text-brand hover:bg-brand-soft'
-                    }`}
-                  variants={itemVariants}
-                >
-                  {item.label}
-                </motion.button>
-              ))}
-              <motion.button
-                onClick={handleWhatsAppClick}
-                className="ml-4 inline-flex items-center px-4 py-2 rounded-full bg-details text-white text-sm font-semibold hover:bg-details/90 transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-details/30"
-                variants={itemVariants}
-              >
-                <Calendar className="w-4 h-4 mr-2" />
-                {navigation.cta}
-              </motion.button>
-            </motion.div>
-          </div>
+      <div className="max-w-[1240px] mx-auto px-5 sm:px-8 lg:px-20 w-full flex items-center gap-6">
+        <button onClick={() => scrollToSection('#inicio')} aria-label={hero.altLogo} className="cursor-pointer">
+          <img src="/brand/small-logo.svg" alt={hero.altLogo} className="h-10 w-auto" />
+        </button>
 
-          <div className="md:hidden">
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 cursor-pointer focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
-            >
-              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+        <div className="hidden lg:flex items-center gap-1 ml-auto">
+          {navItems.map((item) => (
+            <button key={item.href} onClick={() => scrollToSection(item.href)} className={linkClass(item.href)}>
+              {item.label}
             </button>
-          </div>
+          ))}
+
+          <a
+            href={LATTES_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="ml-1 inline-flex items-center gap-1.5 px-3 py-2 rounded-full border border-line-strong text-sm font-medium text-muted hover:text-ink hover:bg-brand-wash transition-colors"
+          >
+            {navigation.lattes}
+            <ArrowUpRight className="w-3 h-3" />
+          </a>
+
+          <a
+            href={whatsappUrl()}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="ml-2 inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-coral text-white text-sm font-semibold hover:bg-coral-deep transition-colors"
+          >
+            <Calendar className="w-4 h-4" />
+            {navigation.cta}
+          </a>
         </div>
+
+        <button
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          className="lg:hidden ml-auto p-2 text-ink cursor-pointer"
+          aria-label={isMenuOpen ? navigation.menuClose : navigation.menuOpen}
+          aria-expanded={isMenuOpen}
+        >
+          {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+        </button>
       </div>
 
-      {isMenuOpen && (
-        <motion.div className="md:hidden" variants={containerVariants} initial="hidden" animate="visible">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t">
-            {navItems.map((item) => (
-              <motion.button
-                key={item.href}
-                onClick={() => scrollToSection(item.href)}
-                className={`block px-3 py-2 rounded-md text-base font-medium w-full text-left transition-colors cursor-pointer ${activeSection === item.href.substring(1)
-                  ? 'text-brand bg-brand-soft'
-                  : 'text-brand hover:bg-brand-soft'
-                  }`}
-                variants={itemVariants}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            className="lg:hidden absolute top-[var(--nav-height)] inset-x-0 bg-ground border-b border-line overflow-hidden"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: .3, ease: 'easeInOut' }}
+          >
+            <div className="px-5 sm:px-8 pb-6 pt-2">
+              {navItems.map((item) => (
+                <button
+                  key={item.href}
+                  onClick={() => scrollToSection(item.href)}
+                  className={`block w-full text-left py-3.5 border-b border-line text-base font-medium cursor-pointer transition-colors ${activeSection === item.href.substring(1) ? 'text-brand-deep' : 'text-muted'
+                    }`}
+                >
+                  {item.label}
+                </button>
+              ))}
+
+              <a
+                href={LATTES_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1.5 py-3.5 border-b border-line text-base font-medium text-muted"
               >
-                {item.label}
-              </motion.button>
-            ))}
-            <motion.button
-              onClick={handleWhatsAppClick}
-              className="mt-2 w-full inline-flex items-center justify-center px-4 py-2 rounded-full bg-details text-white text-base font-semibold hover:bg-details/90 transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-details/30"
-              variants={itemVariants}
-            >
-              <Calendar className="w-5 h-5 mr-2" />
-              {navigation.cta}
-            </motion.button>
-          </div>
-        </motion.div>
-      )}
+                {navigation.lattes}
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </a>
+
+              <a
+                href={whatsappUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-5 w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-full bg-coral text-white text-base font-semibold"
+              >
+                <Calendar className="w-5 h-5" />
+                {navigation.cta}
+              </a>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.nav>
   );
 }

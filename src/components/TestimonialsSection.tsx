@@ -1,89 +1,52 @@
 'use client';
 
-import { testimonials } from '@/data/testimonials';
+import Marquee from '@/components/Marquee';
+import Reveal from '@/components/Reveal';
 import { getContent } from '@/lib/content';
-import { motion } from 'framer-motion';
-import { Heart, Quote, Star } from 'lucide-react';
-import Marquee from './Marquee';
 
 export default function TestimonialsSection() {
-  const { testimonials: testimonialsContent } = getContent();
-
-  const renderStars = (rating: number) => {
-    return Array.from({ length: 5 }, (_, index) => (
-      <Star
-        key={index}
-        className={`w-4 h-4 ${index < rating ? 'text-yellow-400 fill-current' : 'text-white/30'}`}
-      />
-    ));
-  };
+  const { testimonials } = getContent();
 
   return (
-    <section id="depoimentos" className="py-20 bg-brand min-h-screen pt-nav scroll-margin-nav flex flex-col justify-center overflow-hidden">
-      <div className="w-full">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center mb-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
-        >
-          <div className="inline-flex items-center justify-center p-3 bg-white/10 backdrop-blur-sm rounded-full mb-6">
-            <Heart className="w-6 h-6 text-white fill-current animate-pulse" />
-          </div>
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-            {testimonialsContent.title}
+    <section id="depoimentos" className="screen bg-ink text-on-ink overflow-hidden">
+      <div className="max-w-[1240px] w-full mx-auto px-5 sm:px-8 lg:px-20">
+        <Reveal className="max-w-[46rem] mb-8 lg:mb-12">
+          <span className="label block mb-3.5 !text-brand">{testimonials.label}</span>
+          <h2 className="text-[clamp(1.85rem,3.6vw,2.9rem)] font-bold leading-[1.12] mb-4">
+            {testimonials.title}
           </h2>
-          <p className="text-xl text-white/90 max-w-2xl mx-auto leading-relaxed">
-            {testimonialsContent.subtitle}
+          <p className="text-base lg:text-lg text-on-ink/70 max-w-[56ch]">
+            {testimonials.subtitle}
           </p>
-        </motion.div>
-
-        <div className="mb-16">
-          <Marquee speed={50} pauseOnHover={true}>
-            {testimonials.map((testimonial, index) => (
-              <div
-                key={index}
-                className="bg-white/10 backdrop-blur-md rounded-[2rem] p-8 border border-white/20 hover:bg-white/20 hover:border-white/40 transition-all duration-300 relative group w-[350px] md:w-[400px] flex-shrink-0"
-              >
-                <Quote className="absolute top-8 right-8 w-10 h-10 text-white/10 group-hover:text-white/20 transition-colors duration-300" />
-
-                <div className="flex mb-4">
-                  {renderStars(testimonial.rating)}
-                </div>
-
-                <blockquote className="text-white/90 text-lg leading-relaxed mb-6 min-h-[120px]">
-                  &quot;{testimonial.content}&quot;
-                </blockquote>
-
-                <div className="flex items-center gap-4 border-t border-white/10 pt-6">
-                  <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center text-white font-bold text-lg">
-                    {testimonial.name.charAt(0)}
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-white text-lg">
-                      {testimonial.name}
-                    </h4>
-                    <p className="text-white/70 text-sm font-medium">
-                      {testimonial.role}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </Marquee>
-        </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          viewport={{ once: true }}
-          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
-        >
-
-        </motion.div>
+        </Reveal>
       </div>
+
+      <Marquee speed={55}>
+        {testimonials.items.map((item) => (
+          <figure
+            key={item.name}
+            className="w-[340px] shrink-0 m-0 flex flex-col gap-5 p-7 rounded border border-on-ink/20"
+          >
+            <span aria-hidden="true" className="text-[2.6rem] font-semibold leading-[.5] h-3.5 text-coral">
+              &ldquo;
+            </span>
+
+            <blockquote className="m-0 flex-1 text-[1.02rem] font-light leading-relaxed tracking-[-.01em]">
+              {item.content}
+            </blockquote>
+
+            <figcaption className="flex items-center gap-3 pt-4 border-t border-on-ink/15">
+              <span className="grid place-items-center w-9 h-9 rounded-full bg-brand/20 text-brand text-sm font-semibold">
+                {item.name.charAt(0)}
+              </span>
+              <span>
+                <strong className="block text-[.88rem] font-semibold">{item.name}</strong>
+                <span className="text-[.78rem] text-on-ink/60">{item.role}</span>
+              </span>
+            </figcaption>
+          </figure>
+        ))}
+      </Marquee>
     </section>
   );
 }

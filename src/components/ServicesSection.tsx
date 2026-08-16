@@ -1,56 +1,44 @@
 'use client';
-import ServicesCarousel from '@/components/ServicesCarousel';
-import { services } from '@/data/services';
+
+import Reveal from '@/components/Reveal';
+import ServicesTabs from '@/components/ServicesTabs';
 import { getContent } from '@/lib/content';
+import { whatsappUrl } from '@/lib/whatsapp';
 import { motion } from 'framer-motion';
 
 export default function ServicesSection() {
-  const { services: servicesContent } = getContent();
+  const { services } = getContent();
 
   return (
-    <section id="servicos" className="py-20 bg-brand min-h-screen pt-nav scroll-margin-nav flex flex-col justify-center overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center mb-4"
-        >
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            {servicesContent.title}
+    <section id="servicos" className="screen bg-ink text-on-ink">
+      <div className="max-w-[1240px] w-full mx-auto px-5 sm:px-8 lg:px-20">
+        <Reveal className="max-w-[46rem] mb-7 lg:mb-10">
+          <span className="label block mb-3.5 !text-brand">{services.label}</span>
+          <h2 className="text-[clamp(1.85rem,3.6vw,2.9rem)] font-bold leading-[1.12] mb-4">
+            {services.title}
           </h2>
-          <p className="text-xl text-white/90 max-w-2xl mx-auto leading-relaxed">
-            {servicesContent.subtitle}
+          <p className="text-base lg:text-lg text-on-ink/70 max-w-[56ch]">
+            {services.subtitle}
           </p>
-        </motion.div>
+        </Reveal>
 
-        <ServicesCarousel services={services} />
+        <Reveal delay={.1}>
+          <ServicesTabs />
+        </Reveal>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          viewport={{ once: true }}
-          className="text-center mt-8"
-        >
-          <p className="text-lg text-white/90 mb-6">
-            {servicesContent.footer}
-          </p>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => {
-              const element = document.getElementById('contato');
-              if (element) {
-                element.scrollIntoView({ behavior: 'smooth' });
-              }
-            }}
-            className="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-brand bg-white hover:bg-white/90 transition-colors shadow-lg"
+        <Reveal delay={.15} className="flex flex-wrap items-center justify-between gap-6 mt-8">
+          <p className="pull text-xl lg:text-2xl">{services.footer}</p>
+          <motion.a
+            href={whatsappUrl()}
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ y: -2 }}
+            whileTap={{ scale: .98 }}
+            className="inline-flex items-center px-6 py-3.5 rounded-full bg-ground text-ink text-sm font-semibold"
           >
-            {servicesContent.cta}
-          </motion.button>
-        </motion.div>
+            {services.cta}
+          </motion.a>
+        </Reveal>
       </div>
     </section>
   );
