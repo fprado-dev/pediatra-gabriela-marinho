@@ -1,72 +1,101 @@
-'use client'
+'use client';
 
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react';
+
+/** Tempo que a animação de uma seção leva antes de aceitar o próximo passo. */
+const MIN_ANIMATION_MS = 620;
+/** Silêncio de roda que indica inércia de trackpad drenada. */
+const IDLE_MS = 140;
+/**
+ * Teto absoluto da trava. Sem ele, uma roda que dispara mais rápido que
+ * IDLE_MS nunca deixa o silêncio acontecer e a página congela.
+ */
+const MAX_LOCK_MS = 800;
+/** Abaixo disso é ruído de trackpad, não intenção de navegar. */
+const MIN_DELTA = 16;
 
 export default function FullpageScroll() {
-  const animatingRef = useRef(false)
-
   useEffect(() => {
-    const isFinePointer = window.matchMedia('(pointer: fine)').matches
-    if (!isFinePointer) return
+    if (!window.matchMedia('(pointer: fine)').matches) return;
 
-    let sections: HTMLElement[] = Array.from(document.querySelectorAll('main section[id]')) as HTMLElement[]
+    let sections = Array.from(document.querySelectorAll<HTMLElement>('main section[id]'));
+    let locked = false;
+    let lockStart = 0;
+    let lastWheelAt = 0;
 
-    const refreshSections = () => {
-      sections = Array.from(document.querySelectorAll('main section[id]')) as HTMLElement[]
-    }
+    const refresh = () => {
+      sections = Array.from(document.querySelectorAll<HTMLElement>('main section[id]'));
+    };
 
-    const getCurrentIndex = () => {
-      const viewportHeight = window.innerHeight
-      let bestIndex = 0
-      let bestScore = Number.POSITIVE_INFINITY
+    const currentIndex = () => {
+      let best = 0;
+      let bestScore = Number.POSITIVE_INFINITY;
       sections.forEach((el, i) => {
-        const rect = el.getBoundingClientRect()
-        const score = Math.abs(rect.top)
-        if (score < bestScore && rect.top < viewportHeight) {
-          bestScore = score
-          bestIndex = i
+        const score = Math.abs(el.getBoundingClientRect().top);
+        if (score < bestScore) {
+          bestScore = score;
+          best = i;
         }
-      })
-      return bestIndex
-    }
+      });
+      return best;
+    };
 
-    const wheelHandler = (e: WheelEvent) => {
-      if (animatingRef.current) {
-        e.preventDefault()
-        return
+    /** Libera quando a animação terminou E a roda calou — ou no teto, sempre. */
+    const tick = () => {
+      if (!locked) return;
+      const now = performance.now();
+      const animationDone = now - lockStart >= MIN_ANIMATION_MS;
+      const wheelQuiet = now - lastWheelAt >= IDLE_MS;
+      if ((animationDone && wheelQuiet) || now - lockStart >= MAX_LOCK_MS) {
+        locked = false;
+        return;
       }
-      const delta = e.deltaY
-      if (delta === 0) return
+      requestAnimationFrame(tick);
+    };
 
-      const target = (() => {
-        const current = getCurrentIndex()
-        if (delta > 0) return Math.min(current + 1, sections.length - 1)
-        return Math.max(current - 1, 0)
-      })()
+    /** Seção que rola por dentro (conteúdo mais alto que a tela) fica com o gesto. */
+    const scrollsInternally = (target: EventTarget | null, delta: number) => {
+      const section = (target as HTMLElement)?.closest?.('section[id]');
+      if (!section) return false;
+      const { scrollTop, scrollHeight, clientHeight } = section;
+      if (scrollHeight <= clientHeight + 1) return false;
+      return delta > 0
+        ? scrollTop + clientHeight < scrollHeight - 1
+        : scrollTop > 1;
+    };
 
-      const current = getCurrentIndex()
-      if (target === current) return
+    const onWheel = (e: WheelEvent) => {
+      const delta = e.deltaY;
+      if (delta === 0) return;
+      if (scrollsInternally(e.target, delta)) return;
 
-      e.preventDefault()
-      animatingRef.current = true
-      sections[target].scrollIntoView({ behavior: 'smooth' })
+      e.preventDefault();
+      lastWheelAt = performance.now();
 
-      window.setTimeout(() => {
-        animatingRef.current = false
-      }, 900)
-    }
+      // durante a trava o evento é apenas descartado: estender o prazo aqui
+      // era o que fazia a página congelar com roda contínua
+      if (locked) return;
+      if (Math.abs(delta) < MIN_DELTA) return;
 
-    const resizeHandler = () => refreshSections()
+      const current = currentIndex();
+      const target = Math.min(Math.max(current + (delta > 0 ? 1 : -1), 0), sections.length - 1);
+      if (target === current) return;
 
-    window.addEventListener('wheel', wheelHandler, { passive: false })
-    window.addEventListener('resize', resizeHandler)
+      locked = true;
+      lockStart = performance.now();
+      sections[target].scrollIntoView({ behavior: 'smooth' });
+      requestAnimationFrame(tick);
+    };
+
+    window.addEventListener('wheel', onWheel, { passive: false });
+    window.addEventListener('resize', refresh);
 
     return () => {
-      window.removeEventListener('wheel', wheelHandler as EventListener)
-      window.removeEventListener('resize', resizeHandler)
-    }
-  }, [])
+      locked = false;
+      window.removeEventListener('wheel', onWheel);
+      window.removeEventListener('resize', refresh);
+    };
+  }, []);
 
-  return null
+  return null;
 }
-

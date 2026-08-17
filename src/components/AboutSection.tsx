@@ -1,95 +1,81 @@
-/* eslint-disable @next/next/no-img-element */
 'use client';
 
+import Reveal from '@/components/Reveal';
 import { getContent } from '@/lib/content';
-import { motion } from 'framer-motion';
-import { Award, BookOpen } from 'lucide-react';
+import Image from 'next/image';
+import { LATTES_URL } from '@/lib/links';
+import { ArrowUpRight } from 'lucide-react';
 
 export default function AboutSection() {
   const { about } = getContent();
 
-  const credentials = [
-    {
-      icon: Award,
-      title: about.credentials[0].title,
-      description: about.credentials[0].description
-    },
-    {
-      icon: BookOpen,
-      title: about.credentials[1].title,
-      description: about.credentials[1].description
-    }
-  ];
-
   return (
-    <section id="sobre" className="py-20 bg-white bg-home-pattern min-h-screen-offset pt-nav scroll-margin-nav">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="sobre" className="screen is-bleed relative bg-[#5b4335] md:bg-ground overflow-hidden">
+      {/* mobile: retrato em sangria, texto assentado sobre o véu */}
+      <div
+        className="bleed-photo scrim-warm md:hidden">
+        <Image
+          src="/photos/sobre.jpg"
+          alt=""
+          aria-hidden="true"
+          fill
+          sizes="100vw"
+          className="object-cover object-[50%_4%]"
+        />
+      </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="relative flex items-center max-h-section-content"
-          >
-            <div className="relative rounded-2xl overflow-hidden shadow-xl w-full max-h-section-content border border-details/10">
-              <img
-                src="/photos/sobre.JPG"
-                alt={about.imageAlt}
-                className="w-full h-full md:object-cover object-contain"
-                width={600}
-                height={800}
-              />
-              <div className="absolute inset-0 bg-linear-to-t from-details/20 to-transparent pointer-events-none"></div>
-            </div>
-          </motion.div>
+      <div className="relative z-[1] w-full self-end md:self-auto">
+        <div className="max-w-[1240px] mx-auto px-5 sm:px-8 lg:px-20 grid grid-cols-1 md:grid-cols-[.85fr_1.15fr] gap-4 lg:gap-20 items-center">
+          {/* desktop: o arco com a moldura deslocada */}
+          <Reveal from="left" className="hidden md:block relative max-w-[420px] w-full pr-5 pb-5 photo-arch-frame">
+            <Image
+              src="/photos/sobre.jpg"
+              alt={about.imageAlt}
+              width={1067}
+              height={1600}
+              sizes="(min-width: 768px) 35vw, 0px"
+              className="relative z-[1] w-full aspect-[3/4] max-h-[56vh] object-cover object-[50%_18%] photo-arch"
+            />
+            <span className="absolute left-0 bottom-5 z-[2] w-[42%] h-[2px] bg-coral" />
+          </Reveal>
 
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="space-y-6"
-          >
-            <div className="space-y-2">
-              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-details">
-                {about.title}
-              </h2>
-            </div>
-            <div className="space-y-4">
-              <h3 className="text-xl md:text-2xl font-bold text-details/90">
-                {about.subtitle}
-              </h3>
+          <Reveal from="right">
+            <span className="label block mb-2.5 md:mb-3.5">{about.label}</span>
 
-              <p className="text-text-details leading-relaxed max-w-xl">
-                {about.description1}
-              </p>
+            <h2 className="text-[clamp(1.05rem,3.6vw,2.9rem)] font-bold leading-[1.22] text-on-ink md:text-ink mb-2 md:mb-5">
+              {about.subtitle}
+            </h2>
 
-              <p className="text-text-details leading-relaxed max-w-xl">
-                {about.description2}
-              </p>
-            </div>
+            <p className="text-[.71rem] md:text-base lg:text-lg text-on-ink/75 md:text-muted leading-[1.45] md:leading-relaxed max-w-[62ch] mx-auto md:mx-0 mb-2 md:mb-3">
+              {about.description1}
+            </p>
+            <p className="text-[.71rem] md:text-base lg:text-lg text-on-ink/75 md:text-muted leading-[1.45] md:leading-relaxed max-w-[62ch] mx-auto md:mx-0">
+              {about.description2}
+            </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-              {credentials.map((credential, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="flex items-start space-x-3 p-4 rounded-lg bg-details/10 border border-details/5"
-                >
-                  <credential.icon className="w-6 h-6 text-details flex-shrink-0 mt-1" />
-                  <div>
-                    <h4 className="font-bold text-details">{credential.title}</h4>
-                    <p className="text-sm text-text-details">{credential.description}</p>
-                  </div>
-                </motion.div>
+            <div className="hidden md:grid grid-cols-2 gap-3 mt-3 md:mt-7">
+              {about.credentials.map((credential) => (
+                <div key={credential.title} className="border-t-2 border-coral pt-3 md:pt-3.5">
+                  <strong className="block text-[.85rem] md:text-lg font-semibold tabular-nums text-on-ink md:text-ink mb-0.5 md:mb-1">
+                    {credential.title}
+                  </strong>
+                  <span className="text-[.66rem] md:text-sm text-on-ink/60 md:text-muted">
+                    {credential.description}
+                  </span>
+                </div>
               ))}
             </div>
-          </motion.div>
+
+            <a
+              href={LATTES_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 mt-3 md:mt-6 pb-0.5 mx-auto md:mx-0 text-[.78rem] md:text-sm font-semibold text-brand md:text-brand-deep border-b border-current"
+            >
+              {about.lattesCta}
+              <ArrowUpRight className="w-3 h-3" />
+            </a>
+          </Reveal>
         </div>
       </div>
     </section>

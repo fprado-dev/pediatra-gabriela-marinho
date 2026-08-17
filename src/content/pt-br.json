@@ -11,7 +11,10 @@
       "faq": "Perguntas Frequentes",
       "contact": "Contato"
     },
-    "cta": "Agendar"
+    "cta": "Agendar",
+    "lattes": "Currículo Lattes",
+    "menuOpen": "Abrir menu",
+    "menuClose": "Fechar menu"
   },
   "hero": {
     "altLogo": "Gabriela Marinho - Pediatra",
@@ -34,7 +37,9 @@
         "title": "RQE 67366",
         "description": "Registro de Qualificação de Especialista"
       }
-    ]
+    ],
+    "label": "Sobre Gabriela Marinho",
+    "lattesCta": "Ver currículo completo na Plataforma Lattes"
   },
   "services": {
     "title": "Como posso ajudar seu filho?",
@@ -105,7 +110,9 @@
       "prev": "Serviço anterior",
       "next": "Próximo serviço",
       "page": "Ir para página"
-    }
+    },
+    "label": "Como posso te ajudar",
+    "tablistLabel": "Serviços"
   },
   "specializedCare": {
     "title": "Atendimento Especializado",
@@ -133,7 +140,8 @@
       "Orientações personalizadas para cada família",
       "Plano de cuidados específico para cada criança",
       "Acompanhamento contínuo e suporte aos pais"
-    ]
+    ],
+    "label": "Atendimento Especializado"
   },
   "consultationProcess": {
     "title": "Como são minhas consultas",
@@ -163,7 +171,8 @@
         "title": "Retorno Garantido",
         "description": "Agendamento de retorno para avaliar o progresso e ajustar o tratamento."
       }
-    ]
+    ],
+    "label": "Passo a passo"
   },
   "consultationModalities": {
     "badge": "Flexibilidade para cada família",
@@ -232,7 +241,8 @@
         "role": "Mãe do Enzo (8 meses)",
         "content": "Amei o atendimento! A Dra. Gabriela é muito paciente e explica tudo direitinho. Meu bebê ficou super tranquilo."
       }
-    ]
+    ],
+    "label": "Depoimentos"
   },
   "faq": {
     "title": "Perguntas Frequentes",
@@ -256,7 +266,8 @@
         "question": "Vocês atendem emergências?",
         "answer": "Sim, ofereço atendimento de urgência para meus pacientes. Em caso de emergência, contate inclusive com ligações. Ao avaliar a criança, Se necessário for, encaminho imediatamente ao hospital ou para o laboratório para coleta de exames."
       }
-    ]
+    ],
+    "label": "Perguntas Frequentes"
   },
   "contact": {
     "address": {
@@ -276,12 +287,23 @@
     },
     "social": {
       "instagram": "pediatragabrielamarinho",
-      "linkedin": "gabriela-marinho-543034194"
+      "linkedin": "gabriela-marinho-543034194",
+      "lattes": "Currículo Lattes"
     },
     "actions": {
       "whatsapp": "Agendar pelo WhatsApp",
       "phone": "(31) 99476-6307",
       "email": "contato@gabrielamarinho.com.br"
+    },
+    "label": "Contato",
+    "title": "Vamos cuidar do seu filho juntos",
+    "note": "Resposta em até 1 dia útil · Urgências pelo telefone",
+    "phone": {
+      "title": "Telefone"
     }
+  },
+  "footer": {
+    "credentials": "Gabriela Marinho · Pediatra · CRM-MG 86962 · RQE 67366",
+    "lattes": "Currículo Lattes"
   }
 }

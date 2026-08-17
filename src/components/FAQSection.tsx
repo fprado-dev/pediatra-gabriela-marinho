@@ -1,112 +1,89 @@
 'use client';
 
-import { faqs } from '@/data/faq';
+import Reveal from '@/components/Reveal';
 import { getContent } from '@/lib/content';
+import { useIsMobile } from '@/lib/useIsMobile';
+import { whatsappUrl } from '@/lib/whatsapp';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 
 export default function FAQSection() {
-  const { faq: faqContent } = getContent();
-  const [openItemId, setOpenItemId] = useState<number | null>(1);
-
-  const toggleItem = (id: number) => {
-    setOpenItemId(prevId => (prevId === id ? null : id));
-  };
+  const { faq } = getContent();
+  const isMobile = useIsMobile();
+  // null = intocado; a primeira resposta é longa, então abre por padrão só onde cabe
+  const [touched, setTouched] = useState<number | null>(null);
+  const openIndex = touched ?? (isMobile ? -1 : 0);
 
   return (
-    <section id="faq" className="py-20 bg-white bg-home-pattern min-h-screen-offset pt-nav scroll-margin-nav">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-3xl md:text-4xl font-bold text-details mb-4">
-            {faqContent.title}
-          </h2>
-          <p className="text-xl text-text-details">
-            {faqContent.subtitle}
-          </p>
-        </motion.div>
+    <section id="faq" className="screen relative bg-ground bg-home-pattern">
+      <div className="max-w-[1240px] w-full mx-auto px-5 sm:px-8 lg:px-20">
+        <div className="grid grid-cols-1 md:grid-cols-[.8fr_1.2fr] gap-6 lg:gap-20 items-start">
+          <Reveal from="left" className="md:sticky md:top-[calc(var(--nav-height)+2rem)]">
+            <span className="label block mb-3.5">{faq.label}</span>
+            <h2 className="text-[clamp(1.5rem,3.6vw,2.9rem)] font-bold leading-[1.12] text-ink mb-4">
+              {faq.title}
+            </h2>
+            <p className="text-[.88rem] md:text-base lg:text-lg text-muted max-w-[40ch] mb-5 md:mb-8">{faq.subtitle}</p>
 
-        <div className="space-y-4">
-          {faqs.map((faq, index) => (
-            <motion.div
-              key={faq.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              viewport={{ once: true }}
-              className="bg-white rounded-2xl shadow-sm border border-details/10 overflow-hidden hover:shadow-md transition-shadow duration-300"
+            <p className="pull text-[.95rem] md:text-lg mb-4 md:mb-5">{faq.ctaText}</p>
+
+            <motion.a
+              href={whatsappUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: .98 }}
+              className="inline-flex items-center px-6 py-3.5 rounded-full bg-coral text-white text-sm font-semibold hover:bg-coral-deep transition-colors"
             >
-              <button
-                onClick={() => toggleItem(faq.id)}
-                className="w-full px-6 py-5 text-left flex items-center justify-between hover:bg-details/5 transition-colors duration-200 group"
-                aria-expanded={openItemId === faq.id}
-                aria-controls={`faq-answer-${faq.id}`}
-              >
-                <h3 className="text-lg font-bold text-details pr-4 group-hover:text-details/80 transition-colors">
-                  {faq.question}
-                </h3>
-                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-details/10 flex items-center justify-center group-hover:bg-details/20 transition-colors">
-                  <motion.div
-                    animate={{ rotate: openItemId === faq.id ? 180 : 0 }}
-                    transition={{ duration: 0.3 }}
+              {faq.ctaButton}
+            </motion.a>
+          </Reveal>
+
+          <Reveal from="right" className="border-t border-line">
+            {faq.items.map((item, index) => {
+              const open = openIndex === index;
+              return (
+                <div key={item.question} className="border-b border-line">
+                  <button
+                    onClick={() => setTouched(open ? -1 : index)}
+                    aria-expanded={open}
+                    aria-controls={`faq-answer-${index}`}
+                    className="w-full flex items-start justify-between gap-6 py-4 md:py-5 text-left cursor-pointer hover:text-brand-deep transition-colors"
                   >
-                    <ChevronDown className="w-5 h-5 text-details" />
-                  </motion.div>
+                    <h3 className="text-[.88rem] md:text-base lg:text-lg font-medium leading-snug">{item.question}</h3>
+
+                    {/* + que vira − */}
+                    <span aria-hidden="true" className="relative shrink-0 w-5.5 h-5.5 mt-1">
+                      <span className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-[1.5px] rounded-sm bg-coral" />
+                      <motion.span
+                        className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-[1.5px] rounded-sm bg-coral"
+                        animate={{ scaleY: open ? 0 : 1, opacity: open ? 0 : 1 }}
+                        transition={{ duration: .3, ease: [.2, .8, .3, 1] }}
+                      />
+                    </span>
+                  </button>
+
+                  <AnimatePresence initial={false}>
+                    {open && (
+                      <motion.div
+                        id={`faq-answer-${index}`}
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: .35, ease: 'easeInOut' }}
+                        className="overflow-hidden"
+                      >
+                        <p className="pb-5 md:pb-6 pr-4 md:pr-8 text-[.88rem] md:text-[.94rem] text-muted leading-relaxed">
+                          {item.answer}
+                        </p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
-              </button>
-
-              <AnimatePresence>
-                {openItemId === faq.id && (
-                  <motion.div
-                    id={`faq-answer-${faq.id}`}
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3, ease: "easeInOut" }}
-                    className="overflow-hidden"
-                  >
-                    <div className="px-6 pb-6 pt-2">
-                      <p className="text-text-details leading-relaxed">
-                        {faq.answer}
-                      </p>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.div>
-          ))}
+              );
+            })}
+          </Reveal>
         </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          viewport={{ once: true }}
-          className="text-center mt-12"
-        >
-          <p className="text-lg text-gray-600 mb-6">
-            {faqContent.ctaText}
-          </p>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => {
-              const element = document.getElementById('contato');
-              if (element) {
-                element.scrollIntoView({ behavior: 'smooth' });
-              }
-            }}
-            className="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-details hover:bg-details/90 transition-colors shadow-lg"
-          >
-            {faqContent.ctaButton}
-          </motion.button>
-        </motion.div>
       </div>
     </section>
   );

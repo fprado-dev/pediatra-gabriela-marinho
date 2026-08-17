@@ -1,113 +1,104 @@
 'use client';
 
+import Reveal from '@/components/Reveal';
 import { getContent } from '@/lib/content';
+import { EMAIL, INSTAGRAM_URL, LATTES_URL, LINKEDIN_URL } from '@/lib/links';
+import { PHONE, whatsappUrl } from '@/lib/whatsapp';
 import { motion } from 'framer-motion';
-import { Clock, Instagram, Linkedin, Mail, MapPin, MessageCircle } from 'lucide-react';
+import { Clock, FileText, Instagram, Linkedin, MapPin, MessageCircle, Phone } from 'lucide-react';
 
 export default function ContactSection() {
   const { contact } = getContent();
 
-  const handleWhatsAppClick = () => {
-    window.open('https://wa.me/5531994766307?text=Olá! Gostaria de agendar uma consulta com a Pediatra Gabriela Marinho', '_blank');
-  };
+  const blocks = [
+    { icon: MapPin, title: contact.address.title, lines: contact.address.lines },
+    { icon: Clock, title: contact.hours.title, lines: contact.hours.lines },
+    { icon: Phone, title: contact.phone.title, lines: [contact.actions.phone] },
+  ];
 
-
-
-  const handleEmailClick = () => {
-    window.location.href = 'mailto:contato@pediatragabrielamarinho.com.br';
-  };
-
-  const socialLinks = [
-    { icon: Instagram, href: 'https://instagram.com', label: contact.social.instagram },
-    { icon: Linkedin, href: 'https://linkedin.com', label: contact.social.linkedin },
+  const socials = [
+    { icon: Instagram, href: INSTAGRAM_URL, label: contact.social.instagram },
+    { icon: Linkedin, href: LINKEDIN_URL, label: contact.social.linkedin },
+    { icon: FileText, href: LATTES_URL, label: contact.social.lattes },
   ];
 
   return (
-    <section id="contato" className="min-h-screen bg-brand flex flex-col justify-center overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="bg-white/10 backdrop-blur-md rounded-[3rem] p-10 md:p-16 border border-white/20 max-w-5xl mx-auto "
-        >
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+    <section id="contato" className="screen bg-ink text-on-ink">
+      <div className="max-w-[1240px] w-full mx-auto px-5 sm:px-8 lg:px-20">
+        <Reveal className="mb-4 lg:mb-13">
+          <span className="label block mb-3.5 !text-brand">{contact.label}</span>
+          <h2 className="text-[clamp(1.5rem,3.6vw,2.9rem)] font-bold leading-[1.12]">
+            {contact.title}
+          </h2>
+        </Reveal>
 
-            {/* Coluna da Esquerda: Informações */}
-            <div className="space-y-10">
-              <div className="space-y-8">
-                <div className="flex items-start space-x-6 group">
-                  <div className="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center flex-shrink-0 group-hover:bg-white/30 transition-colors">
-                    <MapPin className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-bold text-white mb-1">{contact.address.title}</h4>
-                    <p className="text-white/80 leading-relaxed">
-                      {contact.address.lines[0]}<br />
-                      {contact.address.lines[1]}<br />
-                      {contact.address.lines[2]}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start space-x-6 group">
-                  <div className="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center flex-shrink-0 group-hover:bg-white/30 transition-colors">
-                    <Clock className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-bold text-white mb-1">{contact.hours.title}</h4>
-                    <p className="text-white/80 leading-relaxed">
-                      {contact.hours.lines[0]}<br />
-                      {contact.hours.lines[1]}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-center space-x-6 pt-4">
-                  {socialLinks.map((social, index) => (
-                    <a
-                      key={index}
-                      href={social.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-white hover:text-brand transition-all duration-300 hover:scale-110"
-                      aria-label={social.label}
-                    >
-                      <social.icon className="w-5 h-5" />
-                    </a>
-                  ))}
+        <div className="grid grid-cols-1 md:grid-cols-[1.1fr_.9fr] gap-6 lg:gap-20">
+          <Reveal from="left" className="flex flex-col gap-3 md:gap-8">
+            {blocks.map(({ icon: Icon, title, lines }) => (
+              <div key={title} className="grid grid-cols-[auto_1fr] gap-4.5">
+                <Icon className="w-5.5 h-5.5 text-brand mt-1 shrink-0" />
+                <div>
+                  <h3 className="text-[.68rem] font-semibold uppercase tracking-[.16em] text-on-ink/55 mb-1.5">
+                    {title}
+                  </h3>
+                  <p className="text-[.88rem] md:text-[.96rem] leading-relaxed">
+                    {lines.map((line) => (
+                      <span key={line} className="block">{line}</span>
+                    ))}
+                  </p>
                 </div>
               </div>
+            ))}
+
+            <div className="flex gap-2.5 pt-1">
+              {socials.map(({ icon: Icon, href, label }) => (
+                <motion.a
+                  key={href}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  whileHover={{ y: -2 }}
+                  className="grid place-items-center w-10.5 h-10.5 rounded-full border border-on-ink/30 hover:bg-on-ink hover:text-ink transition-colors"
+                >
+                  <Icon className="w-4 h-4" />
+                </motion.a>
+              ))}
             </div>
+          </Reveal>
 
-            {/* Coluna da Direita: Ações Rápidas */}
-            <div className="flex flex-col gap-4">
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={handleWhatsAppClick}
-                className="w-full flex items-center justify-center px-8 py-5 bg-white text-brand rounded-2xl font-bold text-base hover:bg-white/90 transition-all shadow-lg group"
-              >
-                <MessageCircle className="w-6 h-6 mr-3 group-hover:scale-110 transition-transform" />
-                {contact.actions.whatsapp}
-              </motion.button>
+          <Reveal from="right" className="flex flex-col gap-2.5 md:gap-3 self-center">
+            <motion.a
+              href={whatsappUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: .98 }}
+              className="w-full inline-flex items-center justify-center gap-3 px-6 py-3 md:py-4 rounded-full bg-ground text-ink text-[.88rem] font-semibold"
+            >
+              <MessageCircle className="w-5 h-5" />
+              {contact.actions.whatsapp}
+            </motion.a>
 
+            <motion.a
+              href={`tel:+${PHONE}`}
+              whileHover={{ y: -2 }}
+              className="w-full inline-flex items-center justify-center px-6 py-3 md:py-4 rounded-full border border-on-ink/40 text-[.88rem] font-semibold hover:border-on-ink transition-colors"
+            >
+              {contact.actions.phone}
+            </motion.a>
 
+            <motion.a
+              href={`mailto:${EMAIL}`}
+              whileHover={{ y: -2 }}
+              className="w-full inline-flex items-center justify-center px-6 py-3 md:py-4 rounded-full border border-on-ink/40 text-[.82rem] md:text-[.88rem] font-semibold hover:border-on-ink transition-colors"
+            >
+              {EMAIL}
+            </motion.a>
 
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={handleEmailClick}
-                className="w-full flex items-center justify-center px-8 py-5 bg-transparent text-white/80 hover:text-white rounded-2xl font-medium text-base hover:bg-white/5 transition-all"
-              >
-                <Mail className="w-5 h-5 mr-3" />
-                {contact.actions.email}
-              </motion.button>
-            </div>
-
-          </div>
-        </motion.div>
+            <p className="text-center text-[.72rem] md:text-[.78rem] text-on-ink/50 mt-1 md:mt-2">{contact.note}</p>
+          </Reveal>
+        </div>
       </div>
     </section>
   );

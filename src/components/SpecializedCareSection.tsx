@@ -1,107 +1,80 @@
 'use client';
 
+import Reveal from '@/components/Reveal';
 import { getContent } from '@/lib/content';
-import { motion } from 'framer-motion';
-import { Heart, Shield, Star } from 'lucide-react';
 import Image from 'next/image';
+import { Heart, Shield, Star } from 'lucide-react';
+
+const icons = [Heart, Star, Shield];
 
 export default function SpecializedCareSection() {
   const { specializedCare } = getContent();
 
-  const differentials = [
-    {
-      icon: Heart,
-      title: specializedCare.differentials[0].title,
-      description: specializedCare.differentials[0].description
-    },
-    {
-      icon: Star,
-      title: specializedCare.differentials[1].title,
-      description: specializedCare.differentials[1].description
-    },
-    {
-      icon: Shield,
-      title: specializedCare.differentials[2].title,
-      description: specializedCare.differentials[2].description
-    }
-  ];
-
-
   return (
-    <section id="atendimento" className="py-20 bg-white min-h-screen-offset pt-nav scroll-margin-nav flex flex-col justify-center overflow-hidden bg-home-pattern">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center mb-12"
-        >
-          <h2 className="text-3xl md:text-4xl font-bold text-details mb-4">
-            {specializedCare.title}
+    <section id="atendimento" className="screen is-bleed relative bg-ink md:bg-ground md:bg-home-pattern overflow-hidden">
+      {/* mobile: o consultório em sangria */}
+      <div
+        className="bleed-photo scrim-half md:hidden">
+        <Image
+          src="/photos/atendimento.jpg"
+          alt=""
+          aria-hidden="true"
+          fill
+          sizes="100vw"
+          className="object-cover scale-[1.45] origin-[50%_38%]"
+        />
+      </div>
+
+      <div className="relative z-[1] w-full self-end md:self-auto">
+        <Reveal className="max-w-[1240px] mx-auto px-5 sm:px-8 lg:px-20 mb-3 lg:mb-13">
+          <span className="label block mb-2.5 md:mb-3.5">{specializedCare.label}</span>
+          <h2 className="text-[clamp(1.05rem,3.6vw,2.9rem)] font-bold leading-[1.2] text-on-ink md:text-ink mb-1.5 md:mb-4 md:whitespace-nowrap">
+            {specializedCare.columnTitle}
           </h2>
-          <p className="text-xl text-text-details max-w-3xl mx-auto">
+          <p className="text-[.7rem] md:text-base lg:text-lg text-on-ink/70 md:text-muted max-w-[46ch] mx-auto md:mx-0 leading-[1.4] md:leading-relaxed">
             {specializedCare.subtitle}
           </p>
-        </motion.div>
+        </Reveal>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center mb-16">
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <h3 className="text-2xl font-bold text-details mb-8">
-              {specializedCare.columnTitle}
-            </h3>
-
-            <div className="space-y-8">
-              {differentials.map((differential, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="flex items-start space-x-5 group"
-                >
-                  <div className="flex-shrink-0">
-                    <div className="w-14 h-14 rounded-2xl bg-white shadow-sm border border-details/10 flex items-center justify-center transition-all duration-300 group-hover:bg-details group-hover:shadow-md">
-                      <differential.icon className="w-7 h-7 text-details transition-colors duration-300 group-hover:text-white" />
+        <div className="max-w-[1240px] mx-auto px-5 sm:px-8 lg:px-20 grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-18 items-stretch">
+          {/* mobile: carrossel deslizante; desktop: lista vertical */}
+          <Reveal from="left" className="md:flex md:flex-col md:justify-start">
+            <div className="flex md:flex-col gap-3 md:gap-0 overflow-x-auto md:overflow-visible snap-x snap-mandatory -mx-5 px-5 md:mx-0 md:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+              {specializedCare.differentials.map((differential, index) => {
+                const Icon = icons[index];
+                return (
+                  <div
+                    key={differential.title}
+                    className="snap-center shrink-0 w-[78vw] md:w-auto rounded-xl md:rounded-none bg-on-ink/8 md:bg-transparent border border-on-ink/15 md:border-0 md:border-b md:border-line p-4 md:p-0 md:grid md:grid-cols-[auto_1fr] md:gap-5 md:py-6 md:first:border-t"
+                  >
+                    <Icon className="w-5 h-5 md:w-6.5 md:h-6.5 text-coral mx-auto md:mx-0 md:mt-1 shrink-0 mb-2 md:mb-0" />
+                    <div>
+                      <h3 className="text-[.88rem] md:text-lg font-bold text-on-ink md:text-ink mb-1 md:mb-1">
+                        {differential.title}
+                      </h3>
+                      <p className="text-[.72rem] md:text-[.92rem] text-on-ink/70 md:text-muted leading-[1.45] md:leading-relaxed">
+                        {differential.description}
+                      </p>
                     </div>
                   </div>
-                  <div>
-                    <h4 className="text-lg font-bold text-details mb-2 group-hover:text-details/80 transition-colors">
-                      {differential.title}
-                    </h4>
-                    <p className="text-text-details leading-relaxed bg-white/60 p-2 rounded-lg backdrop-blur-sm">
-                      {differential.description}
-                    </p>
-                  </div>
-                </motion.div>
-              ))}
+                );
+              })}
             </div>
-          </motion.div>
+          </Reveal>
 
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="relative h-full"
-          >
-            <div className="relative rounded-2xl overflow-hidden border border-details/10 h-full min-h-[400px]">
+          {/* desktop: o arco ao lado da lista */}
+          <Reveal from="right" className="hidden md:flex items-center">
+            <figure className="relative w-full m-0 photo-arch-frame">
               <Image
-                src="/photos/specialized-care.jpeg"
+                src="/photos/atendimento.jpg"
                 alt={specializedCare.imageAlt}
-                className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
-                width={600}
-                height={600}
+                width={1067}
+                height={1600}
+                sizes="(min-width: 768px) 45vw, 0px"
+                className="relative z-[1] w-full max-h-[44vh] object-cover object-[50%_30%] photo-arch"
               />
-              <div className="absolute inset-0 bg-linear-to-t from-details/10 to-transparent pointer-events-none"></div>
-            </div>
-          </motion.div>
+            </figure>
+          </Reveal>
         </div>
       </div>
     </section>

@@ -1,104 +1,67 @@
 'use client';
 
+import Reveal from '@/components/Reveal';
 import { getContent } from '@/lib/content';
+import { whatsappUrl } from '@/lib/whatsapp';
 import { motion } from 'framer-motion';
-import { CheckCircle, Home, Laptop, MapPin } from 'lucide-react';
+import { Home, Laptop, MapPin } from 'lucide-react';
+
+const icons = [MapPin, Laptop, Home];
 
 export default function ConsultationModalitiesSection() {
   const { consultationModalities } = getContent();
 
-  const consultationTypes = [
-    {
-      title: consultationModalities.items[0].title,
-      icon: MapPin,
-      description: consultationModalities.items[0].description,
-      features: consultationModalities.items[0].features
-    },
-    {
-      title: consultationModalities.items[1].title,
-      icon: Laptop,
-      description: consultationModalities.items[1].description,
-      features: consultationModalities.items[1].features
-    },
-    {
-      title: consultationModalities.items[2].title,
-      icon: Home,
-      description: consultationModalities.items[2].description,
-      features: consultationModalities.items[2].features
-    }
-  ];
-
   return (
-    <section id="modalidades" className="py-20 bg-white min-h-screen pt-nav scroll-margin-nav flex flex-col justify-center overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <span className="inline-block py-1 px-3 rounded-full bg-details/10 text-details text-sm font-bold tracking-wide uppercase mb-4">
-            {consultationModalities.badge}
-          </span>
-          <h2 className="text-3xl md:text-4xl font-bold text-details mb-6">
+    <section id="modalidades" className="screen bg-ground">
+      <div className="max-w-[1240px] w-full mx-auto px-5 sm:px-8 lg:px-20">
+        <Reveal className="max-w-[46rem] mb-4 lg:mb-10">
+          <span className="label block mb-3.5">{consultationModalities.badge}</span>
+          <h2 className="text-[clamp(1.5rem,3.6vw,2.9rem)] font-bold leading-[1.12] text-ink mb-4">
             {consultationModalities.title}
           </h2>
-          <p className="text-lg text-text-details max-w-2xl mx-auto">
+          <p className="text-[.88rem] md:text-base lg:text-lg text-muted max-w-[56ch]">
             {consultationModalities.subtitle}
           </p>
-        </motion.div>
+        </Reveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {consultationTypes.map((type, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              viewport={{ once: true }}
-              className="group relative bg-white rounded-[2rem] p-8 border border-details/10 hover:border-details/30 shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col"
-            >
-              <div className="absolute top-0 inset-x-0 h-2 bg-gradient-to-r from-details/40 via-details to-details/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-              <div className="w-20 h-20 rounded-2xl bg-details/5 flex items-center justify-center mb-8 mx-auto group-hover:bg-details group-hover:text-white text-details transition-all duration-300">
-                <type.icon className="w-10 h-10" />
-              </div>
-
-              <h3 className="text-2xl font-bold text-details text-center mb-2">
-                {type.title}
-              </h3>
-
-              <p className="text-text-details text-center mb-8 text-sm">
-                {type.description}
-              </p>
-
-              <div className="space-y-4 mb-8 flex-grow">
-                {type.features.map((feature, idx) => (
-                  <div key={idx} className="flex items-center gap-3 text-sm text-text-details/80">
-                    <div className="w-6 h-6 rounded-full bg-details/10 flex items-center justify-center flex-shrink-0">
-                      <CheckCircle className="w-3.5 h-3.5 text-details" />
-                    </div>
-                    <span>{feature}</span>
+        <div className="flex md:grid md:grid-cols-3 gap-4 md:gap-5 overflow-x-auto md:overflow-visible snap-x snap-mandatory -mx-5 px-5 md:mx-0 md:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {consultationModalities.items.map((item, index) => {
+            const Icon = icons[index];
+            return (
+              <Reveal key={item.title} delay={index * .08} className="snap-center shrink-0 w-[78vw] md:w-auto">
+                <motion.article
+                  whileHover={{ y: -4 }}
+                  transition={{ duration: .3, ease: [.2, .8, .3, 1] }}
+                  className="h-full flex flex-col gap-2.5 md:gap-3.5 p-4 md:p-6 lg:p-7 rounded bg-card border border-card-line hover:border-brand hover:shadow-[var(--shadow)] transition-colors"
+                >
+                  <div className="flex items-baseline justify-between gap-4 pb-3 md:pb-4 border-b border-line">
+                    <h3 className="text-lg md:text-xl lg:text-[1.75rem] font-bold text-ink">{item.title}</h3>
+                    <Icon className="w-6 h-6 text-brand-deep shrink-0 self-center" />
                   </div>
-                ))}
-              </div>
 
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => {
-                  const element = document.getElementById('contato');
-                  if (element) {
-                    element.scrollIntoView({ behavior: 'smooth' });
-                  }
-                }}
-                className="w-full py-4 rounded-xl bg-details text-white font-bold text-sm uppercase tracking-wider hover:bg-details/90 transition-colors shadow-md hover:shadow-lg"
-              >
-                {consultationModalities.ctaPrefix} {type.title}
-              </motion.button>
-            </motion.div>
-          ))}
+                  <p className="text-[.78rem] md:text-[.9rem] text-muted">{item.description}</p>
+
+                  <ul className="list-none p-0 m-0 flex flex-col gap-1.5 md:gap-2.5 flex-1">
+                    {item.features.map((feature) => (
+                      <li key={feature} className="relative pl-[1.15rem] text-[.78rem] md:text-[.85rem] leading-relaxed text-muted">
+                        <span className="absolute left-0 top-[.5em] w-[7px] h-[7px] rounded-full border border-coral" />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <a
+                    href={whatsappUrl(`uma consulta ${item.title}`)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full inline-flex items-center justify-center px-6 py-2.5 md:py-3.5 rounded-full bg-coral text-white text-[.8rem] md:text-sm font-semibold hover:bg-coral-deep transition-colors"
+                  >
+                    {consultationModalities.ctaPrefix} {item.title}
+                  </a>
+                </motion.article>
+              </Reveal>
+            );
+          })}
         </div>
       </div>
     </section>

@@ -1,148 +1,118 @@
-'use client'
+import { getContent } from '@/lib/content';
+import { EMAIL, INSTAGRAM_URL, LATTES_URL, LINKEDIN_URL, SITE_URL } from '@/lib/links';
+import { PHONE } from '@/lib/whatsapp';
+import type { FAQPage, Person, Physician, WithContext } from 'schema-dts';
 
-import { MedicalOrganization, Person, FAQPage, WithContext } from 'schema-dts'
+const CLINIC_NAME = 'Marinho Clínica Avançada';
+const DOCTOR_NAME = 'Gabriela Marinho';
+const TELEPHONE = `+${PHONE}`;
 
 export default function SchemaMarkup() {
-  const medicalOrganizationSchema: WithContext<MedicalOrganization> = {
-    '@context': 'https://schema.org',
-    '@type': 'MedicalOrganization',
-    name: 'Dra. Gabriela Marinho - Pediatra',
-    description: 'Pediatra especializada em acompanhamento infantil. Consultas online e presenciais em São Paulo.',
-    url: 'https://gabrielamartinho.com.br',
-    telephone: '+5511999999999',
-    email: 'contato@gabrielamartinho.com.br',
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: 'Rua das Flores, 123',
-      addressLocality: 'São Paulo',
-      addressRegion: 'SP',
-      postalCode: '01415-000',
-      addressCountry: 'BR'
-    },
-    medicalSpecialty: 'Pediatric',
-    areaServed: {
-      '@type': 'City',
-      name: 'São Paulo'
-    },
-    hasOfferCatalog: {
-      '@type': 'OfferCatalog',
-      name: 'Serviços de Pediatria',
-      itemListElement: [
-        {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'Service',
-            name: 'Consulta Pediátrica',
-            description: 'Acompanhamento completo do desenvolvimento infantil'
-          }
-        },
-        {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'Service',
-            name: 'Consulta Online',
-            description: 'Atendimento remoto para maior comodidade'
-          }
-        },
-        {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'Service',
-            name: 'Atendimento de Urgência',
-            description: 'Orientação rápida para situações emergenciais'
-          }
-        }
-      ]
-    }
-  }
+  const { about, services, faq, contact, specializedCare } = getContent();
 
-  const doctorSchema: WithContext<Person> = {
+  const address = {
+    '@type': 'PostalAddress',
+    streetAddress: 'Avenida Patriótica, 80, Sala 103',
+    addressLocality: 'Ouro Branco',
+    addressRegion: 'MG',
+    postalCode: '36492-258',
+    addressCountry: 'BR',
+  } as const;
+
+  const openingHours = [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      opens: '08:00',
+      closes: '18:00',
+    },
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: 'Saturday',
+      opens: '08:00',
+      closes: '12:00',
+    },
+  ] as const;
+
+  const practice: WithContext<Physician> = {
+    '@context': 'https://schema.org',
+    '@type': 'Physician',
+    '@id': `${SITE_URL}/#consultorio`,
+    name: `${DOCTOR_NAME} — Pediatra`,
+    description: getContent().meta.description,
+    url: SITE_URL,
+    telephone: TELEPHONE,
+    email: EMAIL,
+    image: `${SITE_URL}/photos/consultorio.jpg`,
+    address,
+    medicalSpecialty: 'Pediatric',
+    parentOrganization: {
+      '@type': 'MedicalClinic',
+      name: CLINIC_NAME,
+      address,
+    },
+    areaServed: [
+      { '@type': 'City', name: 'Ouro Branco' },
+      { '@type': 'State', name: 'Minas Gerais' },
+    ],
+    openingHoursSpecification: [...openingHours],
+    availableService: Object.values(services.items).map((service) => ({
+      '@type': 'MedicalProcedure',
+      name: service.title,
+      description: service.description,
+    })),
+  };
+
+  const doctor: WithContext<Person> = {
     '@context': 'https://schema.org',
     '@type': 'Person',
-    name: 'Dra. Gabriela Marinho',
-    jobTitle: 'Pediatra',
-    description: 'Médica pediatra com mais de 10 anos de experiência em acompanhamento infantil',
-    url: 'https://gabrielamartinho.com.br',
-    telephone: '+5511999999999',
-    email: 'contato@gabrielamartinho.com.br',
-    worksFor: {
-      '@type': 'MedicalOrganization',
-      name: 'Dra. Gabriela Marinho - Pediatra',
-      url: 'https://gabrielamartinho.com.br'
-    },
+    '@id': `${SITE_URL}/#gabriela-marinho`,
+    name: DOCTOR_NAME,
+    jobTitle: 'Médica Pediatra',
+    description: about.description1,
+    url: SITE_URL,
+    telephone: TELEPHONE,
+    email: EMAIL,
+    image: `${SITE_URL}/photos/sobre.jpg`,
+    sameAs: [INSTAGRAM_URL, LINKEDIN_URL, LATTES_URL],
+    worksFor: { '@type': 'MedicalClinic', name: CLINIC_NAME, url: SITE_URL },
+    workLocation: { '@type': 'Place', address },
     alumniOf: {
-      '@type': 'Organization',
-      name: 'Universidade Federal de São Paulo',
-      url: 'https://unifesp.br'
+      '@type': 'CollegeOrUniversity',
+      name: 'Centro Universitário Presidente Tancredo de Almeida Neves',
     },
-    knowsAbout: [
-      'Pediatria',
-      'Desenvolvimento Infantil',
-      'Medicina Preventiva',
-      'Nutrição Infantil',
-      'Vacinação'
-    ]
-  }
+    // CRM e RQE vêm do conteúdo, para não divergirem do que a página mostra
+    identifier: about.credentials.map((credential) => ({
+      '@type': 'PropertyValue',
+      name: credential.description,
+      value: credential.title,
+    })),
+    knowsAbout: specializedCare.differentials.map((d) => d.title),
+  };
 
-  const faqSchema: WithContext<FAQPage> = {
+  const faqPage: WithContext<FAQPage> = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: [
-      {
-        '@type': 'Question',
-        name: 'Qual a idade ideal para a primeira consulta?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Recomendo a primeira consulta entre 15-30 dias de vida do bebê. É fundamental para avaliar o desenvolvimento inicial, verificar o peso, altura e identificar possíveis problemas precocemente.'
-        }
-      },
-      {
-        '@type': 'Question',
-        name: 'Quais documentos levar na primeira consulta?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Cartão de vacina, caderneta de saúde, exames recentes, documentos dos pais e qualquer receita médica que o bebê esteja usando. Também é importante trazer uma lista de dúvidas.'
-        }
-      },
-      {
-        '@type': 'Question',
-        name: 'Como funciona a consulta online?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'A consulta online é realizada por vídeo chamada. Os pais devem estar em um local tranquilo com boa iluminação. É ideal que a criança esteja presente e acordada para uma melhor avaliação.'
-        }
-      },
-      {
-        '@type': 'Question',
-        name: 'Quais são os horários de atendimento?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Atendo de segunda a sexta-feira, das 8h às 18h. Consultas online podem ser agendadas com maior flexibilidade, incluindo alguns finais de semana para casos urgentes.'
-        }
-      }
-    ]
-  }
+    '@id': `${SITE_URL}/#faq`,
+    mainEntity: faq.items.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: { '@type': 'Answer', text: item.answer },
+    })),
+  };
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(medicalOrganizationSchema)
-        }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(doctorSchema)
-        }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(faqSchema)
-        }}
-      />
+      {[practice, doctor, faqPage].map((schema, index) => (
+        <script
+          key={index}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+      ))}
+      {/* contact é lido para manter o endereço em um só lugar */}
+      <meta name="format-detection" content="telephone=no" />
+      <meta name="geo.placename" content={contact.address.lines[2]} />
     </>
-  )
+  );
 }
