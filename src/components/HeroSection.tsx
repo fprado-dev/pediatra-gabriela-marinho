@@ -14,7 +14,7 @@ export default function HeroSection() {
   return (
     <section
       id="inicio"
-      className="relative h-screen h-[100svh] grid grid-cols-[minmax(0,1fr)] grid-rows-[1fr_auto] pt-nav overflow-hidden bg-ground md:bg-home-pattern"
+      className="relative h-screen h-[100dvh] grid grid-cols-[minmax(0,1fr)] grid-rows-[1fr_auto] pt-nav overflow-hidden bg-ground md:bg-home-pattern"
     >
       {/* mobile: a foto é o fundo da tela inteira */}
       <motion.div
