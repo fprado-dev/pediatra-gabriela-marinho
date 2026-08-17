@@ -74,7 +74,7 @@ export default function ContactSection() {
               rel="noopener noreferrer"
               whileHover={{ y: -2 }}
               whileTap={{ scale: .98 }}
-              className="hidden md:inline-flex w-full items-center justify-center gap-3 px-6 py-3 md:py-4 rounded-full bg-ground text-ink text-[.88rem] font-semibold"
+              className="w-full inline-flex items-center justify-center gap-3 px-6 py-3 md:py-4 rounded-full bg-ground text-ink text-[.88rem] font-semibold"
             >
               <MessageCircle className="w-5 h-5" />
               {contact.actions.whatsapp}
