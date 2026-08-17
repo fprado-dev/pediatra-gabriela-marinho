@@ -55,18 +55,10 @@ html {
   scroll-behavior: smooth;
 }
 
-@media (max-width: 767px) {
-  /* cada deslize para exatamente em uma seção */
-  html {
-    scroll-snap-type: y mandatory;
-    scroll-padding-top: 0;
-  }
-  main > section {
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-  }
-  footer { scroll-snap-align: end; }
-}
+/* O scroll-snap do mobile mora em src/app/page.tsx, não aqui: aqui ele valeria
+   em toda rota e o /bio travava no <footer>, único alvo de snap da página.
+   Escopar com html:has(#inicio) não resolve — o compilador de CSS descarta o
+   :has() e o seletor volta a ser "html". */
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-snap-type: none; }
@@ -116,7 +108,10 @@ h3 { letter-spacing: -.005em; }
 /* ---------- cada seção ocupa exatamente uma tela ---------- */
 .screen {
   height: 100vh;
-  height: 100svh;
+  /* dvh, não svh: svh é a tela COM a barra de endereço aberta. Assim que ela
+     recolhe no scroll, a viewport cresce e sobra uma faixa da próxima seção
+     no rodapé — o snap encaixava certo, a seção é que era curta demais. */
+  height: 100dvh;
   display: grid;
   /* coluna presa à largura da tela: sem isto o track implícito vira max-content
      dentro do container rolável e o conteúdo estoura na horizontal */
