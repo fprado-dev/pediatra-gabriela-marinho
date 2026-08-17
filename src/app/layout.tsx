@@ -1,4 +1,5 @@
 import SchemaMarkup from '@/components/SchemaMarkup';
+import { SITE_URL } from '@/lib/links';
 import type { Metadata, Viewport } from 'next';
 import { Montserrat } from 'next/font/google';
 import './globals.css';
@@ -16,6 +17,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: 'Pediatra Gabriela Marinho - Consultas Online e Presenciais',
   description: 'Pediatra especializada em acompanhamento infantil. Consultas online e presenciais. Agende sua consulta com quem entende de crianças.',
   keywords: ['pediatra', 'pediatra online', 'consulta pediatra', 'gabriela marinho', 'pediatra mg', 'mg', 'ouro branco'],
@@ -29,13 +31,13 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'pt_BR',
-    url: 'https://pediatragabrielamarinho.com.br',
+    url: SITE_URL,
     siteName: 'Pediatra Gabriela Marinho',
     title: 'Pediatra Gabriela Marinho - Consultas Online e Presenciais',
     description: 'Pediatra especializada em acompanhamento infantil. Consultas online e presenciais.',
     images: [
       {
-        url: 'https://pediatragabrielamarinho.com.br/og-image.jpg',
+        url: '/og-image.jpg',
         width: 1200,
         height: 630,
         alt: 'Pediatra Gabriela Marinho',
@@ -47,10 +49,10 @@ export const metadata: Metadata = {
     site: '@pediatragabrielamarinho',
     title: 'Pediatra Gabriela Marinho - Consultas Online e Presenciais',
     description: 'Pediatra especializada em acompanhamento infantil. Consultas online e presenciais.',
-    images: ['https://pediatragabrielamarinho.com.br/og-image.jpg'],
+    images: ['/og-image.jpg'],
   },
   alternates: {
-    canonical: 'https://pediatragabrielamarinho.com.br',
+    canonical: SITE_URL,
   },
 };
 

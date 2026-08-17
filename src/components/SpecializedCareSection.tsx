@@ -1,8 +1,8 @@
-/* eslint-disable @next/next/no-img-element */
 'use client';
 
 import Reveal from '@/components/Reveal';
 import { getContent } from '@/lib/content';
+import Image from 'next/image';
 import { Heart, Shield, Star } from 'lucide-react';
 
 const icons = [Heart, Star, Shield];
@@ -15,7 +15,14 @@ export default function SpecializedCareSection() {
       {/* mobile: o consultório em sangria */}
       <div
         className="bleed-photo scrim-half md:hidden">
-        <img src="/photos/atendimento.jpg" alt="" aria-hidden="true" className="scale-[1.45] origin-[50%_38%]" />
+        <Image
+          src="/photos/atendimento.jpg"
+          alt=""
+          aria-hidden="true"
+          fill
+          sizes="100vw"
+          className="object-cover scale-[1.45] origin-[50%_38%]"
+        />
       </div>
 
       <div className="relative z-[1] w-full self-end md:self-auto">
@@ -58,12 +65,13 @@ export default function SpecializedCareSection() {
           {/* desktop: o arco ao lado da lista */}
           <Reveal from="right" className="hidden md:flex items-center">
             <figure className="relative w-full m-0 photo-arch-frame">
-              <img
+              <Image
                 src="/photos/atendimento.jpg"
                 alt={specializedCare.imageAlt}
-                className="relative z-[1] w-full max-h-[44vh] object-cover object-[50%_30%] photo-arch"
                 width={1067}
                 height={1600}
+                sizes="(min-width: 768px) 45vw, 0px"
+                className="relative z-[1] w-full max-h-[44vh] object-cover object-[50%_30%] photo-arch"
               />
             </figure>
           </Reveal>

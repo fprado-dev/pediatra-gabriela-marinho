@@ -1,8 +1,8 @@
-/* eslint-disable @next/next/no-img-element */
 'use client';
 
 import Reveal from '@/components/Reveal';
 import { getContent } from '@/lib/content';
+import Image from 'next/image';
 import { LATTES_URL } from '@/lib/links';
 import { ArrowUpRight } from 'lucide-react';
 
@@ -14,19 +14,27 @@ export default function AboutSection() {
       {/* mobile: retrato em sangria, texto assentado sobre o véu */}
       <div
         className="bleed-photo scrim-warm md:hidden">
-        <img src="/photos/sobre.jpg" alt="" aria-hidden="true" className="object-[50%_4%]" />
+        <Image
+          src="/photos/sobre.jpg"
+          alt=""
+          aria-hidden="true"
+          fill
+          sizes="100vw"
+          className="object-cover object-[50%_4%]"
+        />
       </div>
 
       <div className="relative z-[1] w-full self-end md:self-auto">
         <div className="max-w-[1240px] mx-auto px-5 sm:px-8 lg:px-20 grid grid-cols-1 md:grid-cols-[.85fr_1.15fr] gap-4 lg:gap-20 items-center">
           {/* desktop: o arco com a moldura deslocada */}
           <Reveal from="left" className="hidden md:block relative max-w-[420px] w-full pr-5 pb-5 photo-arch-frame">
-            <img
+            <Image
               src="/photos/sobre.jpg"
               alt={about.imageAlt}
-              className="relative z-[1] w-full aspect-[3/4] max-h-[56vh] object-cover object-[50%_18%] photo-arch"
               width={1067}
               height={1600}
+              sizes="(min-width: 768px) 35vw, 0px"
+              className="relative z-[1] w-full aspect-[3/4] max-h-[56vh] object-cover object-[50%_18%] photo-arch"
             />
             <span className="absolute left-0 bottom-5 z-[2] w-[42%] h-[2px] bg-coral" />
           </Reveal>

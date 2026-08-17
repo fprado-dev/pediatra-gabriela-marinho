@@ -5,6 +5,7 @@ import { getContent } from '@/lib/content';
 import { scrollToSection } from '@/lib/scroll';
 import { whatsappUrl } from '@/lib/whatsapp';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { Calendar, ChevronDown } from 'lucide-react';
 
 export default function HeroSection() {
@@ -23,7 +24,15 @@ export default function HeroSection() {
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 1.5, ease: [.2, .8, .3, 1] }}
       >
-        <img src="/photos/consultorio.jpg" alt="" aria-hidden="true" className="object-[50%_16%]" />
+        <Image
+          src="/photos/consultorio.jpg"
+          alt=""
+          aria-hidden="true"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-[50%_16%]"
+        />
       </motion.div>
 
       <div className="relative z-[1] max-w-[1240px] w-full mx-auto px-5 sm:px-8 lg:px-20 grid content-end md:content-center text-center md:text-left">
@@ -33,11 +42,15 @@ export default function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: .8, delay: .3, ease: [.2, .8, .3, 1] }}
           >
-            <img
-              src="/brand/logo-gabriela-marinho.svg"
-              alt={hero.altLogo}
-              className="w-[88%] md:w-full max-w-[500px] h-auto mb-5 md:mb-7 mx-auto md:mx-0"
-            />
+            {/* a logo É o título da página: dentro de um h1 ela dá o heading
+                de nível 1 que a página não tinha, sem mudar nada visualmente */}
+            <h1 className="mb-5 md:mb-7">
+              <img
+                src="/brand/logo-gabriela-marinho.svg"
+                alt={hero.altLogo}
+                className="w-[88%] md:w-full max-w-[500px] h-auto mx-auto md:mx-0"
+              />
+            </h1>
 
             <p className="text-[.92rem] md:text-base lg:text-lg text-on-ink/85 md:text-muted leading-relaxed max-w-[62ch] mx-auto md:mx-0 mb-6 md:mb-8">
               {hero.description}
@@ -74,12 +87,14 @@ export default function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: .9, delay: .15, ease: [.2, .8, .3, 1] }}
           >
-            <img
+            <Image
               src="/photos/consultorio.jpg"
               alt={hero.altLogo}
-              className="relative z-[1] w-full aspect-[4/5] max-h-[66vh] object-cover object-[50%_22%] photo-arch"
               width={1067}
               height={1600}
+              priority
+              sizes="(min-width: 768px) 45vw, 0px"
+              className="relative z-[1] w-full aspect-[4/5] max-h-[66vh] object-cover object-[50%_22%] photo-arch"
             />
           </motion.figure>
         </div>
