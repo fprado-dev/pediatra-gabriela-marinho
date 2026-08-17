@@ -2,12 +2,17 @@
 
 import { useEffect } from 'react';
 
-/** Tempo mínimo que a animação de uma seção leva antes de aceitar o próximo passo. */
-const MIN_ANIMATION_MS = 700;
-/** Silêncio de roda necessário para considerar a inércia do trackpad drenada. */
-const IDLE_MS = 180;
-/** Ruído de trackpad abaixo disso não conta como intenção de navegar. */
-const MIN_DELTA = 6;
+/** Tempo que a animação de uma seção leva antes de aceitar o próximo passo. */
+const MIN_ANIMATION_MS = 620;
+/** Silêncio de roda que indica inércia de trackpad drenada. */
+const IDLE_MS = 140;
+/**
+ * Teto absoluto da trava. Sem ele, uma roda que dispara mais rápido que
+ * IDLE_MS nunca deixa o silêncio acontecer e a página congela.
+ */
+const MAX_LOCK_MS = 800;
+/** Abaixo disso é ruído de trackpad, não intenção de navegar. */
+const MIN_DELTA = 16;
 
 export default function FullpageScroll() {
   useEffect(() => {
@@ -15,15 +20,14 @@ export default function FullpageScroll() {
 
     let sections = Array.from(document.querySelectorAll<HTMLElement>('main section[id]'));
     let locked = false;
-    let startedAt = 0;
-    let idleTimer = 0;
+    let lockStart = 0;
+    let lastWheelAt = 0;
 
     const refresh = () => {
       sections = Array.from(document.querySelectorAll<HTMLElement>('main section[id]'));
     };
 
     const currentIndex = () => {
-      // a seção cujo topo está mais perto do topo da viewport
       let best = 0;
       let bestScore = Number.POSITIVE_INFINITY;
       sections.forEach((el, i) => {
@@ -36,17 +40,20 @@ export default function FullpageScroll() {
       return best;
     };
 
-    /**
-     * Só libera quando a roda ficou quieta E a animação teve tempo de terminar.
-     * Sem isso a inércia do trackpad chega depois do timeout e pula uma seção extra.
-     */
-    const unlockWhenIdle = () => {
-      window.clearTimeout(idleTimer);
-      const remaining = Math.max(IDLE_MS, MIN_ANIMATION_MS - (performance.now() - startedAt));
-      idleTimer = window.setTimeout(() => { locked = false; }, remaining);
+    /** Libera quando a animação terminou E a roda calou — ou no teto, sempre. */
+    const tick = () => {
+      if (!locked) return;
+      const now = performance.now();
+      const animationDone = now - lockStart >= MIN_ANIMATION_MS;
+      const wheelQuiet = now - lastWheelAt >= IDLE_MS;
+      if ((animationDone && wheelQuiet) || now - lockStart >= MAX_LOCK_MS) {
+        locked = false;
+        return;
+      }
+      requestAnimationFrame(tick);
     };
 
-    /** Seção que rola por dentro (conteúdo mais alto que a tela) fica com o controle. */
+    /** Seção que rola por dentro (conteúdo mais alto que a tela) fica com o gesto. */
     const scrollsInternally = (target: EventTarget | null, delta: number) => {
       const section = (target as HTMLElement)?.closest?.('section[id]');
       if (!section) return false;
@@ -63,11 +70,11 @@ export default function FullpageScroll() {
       if (scrollsInternally(e.target, delta)) return;
 
       e.preventDefault();
+      lastWheelAt = performance.now();
 
-      if (locked) {
-        unlockWhenIdle();
-        return;
-      }
+      // durante a trava o evento é apenas descartado: estender o prazo aqui
+      // era o que fazia a página congelar com roda contínua
+      if (locked) return;
       if (Math.abs(delta) < MIN_DELTA) return;
 
       const current = currentIndex();
@@ -75,16 +82,16 @@ export default function FullpageScroll() {
       if (target === current) return;
 
       locked = true;
-      startedAt = performance.now();
+      lockStart = performance.now();
       sections[target].scrollIntoView({ behavior: 'smooth' });
-      unlockWhenIdle();
+      requestAnimationFrame(tick);
     };
 
     window.addEventListener('wheel', onWheel, { passive: false });
     window.addEventListener('resize', refresh);
 
     return () => {
-      window.clearTimeout(idleTimer);
+      locked = false;
       window.removeEventListener('wheel', onWheel);
       window.removeEventListener('resize', refresh);
     };
