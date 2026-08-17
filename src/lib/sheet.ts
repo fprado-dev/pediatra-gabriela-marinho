@@ -6,11 +6,11 @@
  *   Titulo | Imagem | Descricao | Link | Preco | Categoria
  *
  * Nada é raspado das lojas: Shopee bloqueia robô (testado) e preço muda toda semana,
- * então quem manda é a planilha.
+ * então quem manda é a planilha. E nada de cache: cada visita lê a versão atual,
+ * então uma correção dela aparece no próximo refresh.
  */
 const SHEET_ID = '1SFeMNMe0zt8rw3JOMU6x4PoE2oOSD8o9hNoJqb3aUyg';
 const SHEET_CSV = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
-const REVALIDATE = 60 * 30; // meia hora: ela edita a planilha, o site pega sozinho
 
 export type Recommendation = {
   title: string;
@@ -106,7 +106,8 @@ export function rowsToRecommendations(rows: string[][]): Recommendation[] {
 
 export async function getRecommendations(): Promise<Recommendation[]> {
   try {
-    const res = await fetch(SHEET_CSV, { next: { revalidate: REVALIDATE } });
+    // sem cache: cada carregamento da página lê a planilha como ela está agora
+    const res = await fetch(SHEET_CSV, { cache: 'no-store' });
     if (!res.ok) return [];
     return rowsToRecommendations(parseCsv(await res.text()));
   } catch {

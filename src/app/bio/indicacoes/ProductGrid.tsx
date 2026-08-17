@@ -83,10 +83,13 @@ function ProductCard({ title, description, price, href, image, category, store }
       rel="noopener noreferrer sponsored"
       className="flex w-full flex-col overflow-hidden rounded-[18px] border border-line bg-card shadow-[var(--shadow)] transition-transform active:scale-[.99] md:hover:-translate-y-[3px]"
     >
-      <div className="relative grid aspect-[16/10] place-items-center bg-ground-2 md:aspect-[4/3]">
+      <div className="relative grid aspect-[16/10] place-items-center overflow-hidden bg-ground-2 md:aspect-[4/3]">
         {image ? (
-          /* eslint-disable-next-line @next/next/no-img-element -- domínio da loja é variável, next/image exigiria whitelist */
-          <img src={image} alt="" loading="lazy" className="h-full w-full object-cover" />
+          /* absolute inset-0, não h-full: dentro de uma caixa com aspect-ratio o
+             Safari não resolve altura percentual, a foto ia para o tamanho
+             natural e cobria o título do produto. */
+          // eslint-disable-next-line @next/next/no-img-element -- domínio da loja é variável, next/image exigiria whitelist
+          <img src={image} alt="" loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
         ) : (
           <span className="flex flex-col items-center gap-1.5 text-muted-2">
             <ImageOff className="h-6 w-6 opacity-50" />
