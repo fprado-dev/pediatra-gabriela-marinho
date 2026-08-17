@@ -1,6 +1,20 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
+  /** bio.pediatragabrielamarinho.com.br serve /bio sem expor o path. */
+  async rewrites() {
+    return {
+      beforeFiles: [
+        {
+          source: '/',
+          has: [{ type: 'host', value: 'bio.pediatragabrielamarinho.com.br' }],
+          destination: '/bio',
+        },
+      ],
+      afterFiles: [],
+      fallback: [],
+    }
+  },
   images: {
     formats: ['image/avif', 'image/webp'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
