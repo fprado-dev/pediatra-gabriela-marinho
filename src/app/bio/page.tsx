@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 
 export default function BioPage() {
   return (
-    <main className="min-h-dvh bg-ground px-5 py-12 sm:py-16">
+    <main className="min-h-dvh bg-white px-5 py-12 sm:py-16">
       <div className="mx-auto w-full max-w-[420px] flex flex-col items-center text-center">
         <Image
           src="/photos/sobre.jpg"
@@ -66,11 +66,11 @@ export default function BioPage() {
         <footer className="mt-12 flex flex-col items-center gap-2.5">
           <a href={SITE_URL} target="_blank" rel="noopener noreferrer" aria-label="Pediatra Gabriela Marinho">
             <Image
-              src="/brand/logo-gabriela-marinho.svg"
+              src="/brand/small-logo.svg"
               alt="Gabriela Marinho"
-              width={1411}
-              height={269}
-              className="h-7 w-auto opacity-70"
+              width={115}
+              height={220}
+              className="h-14 w-auto opacity-70"
             />
           </a>
           <p className="text-[.7rem] text-muted-2">
