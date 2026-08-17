@@ -210,6 +210,19 @@ h3 { letter-spacing: -.005em; }
   );
 }
 
+/* mesma construção do véu quente, na tinta: sobe até a metade da tela
+   chegando lá com 30% de opacidade, deixando a cena limpa acima disso. */
+.bleed-photo.scrim-half::after {
+  background: linear-gradient(
+    to top,
+    var(--ink) 0%,
+    color-mix(in srgb, var(--ink) 97%, transparent) 34%,
+    color-mix(in srgb, var(--ink) 74%, transparent) 44%,
+    color-mix(in srgb, var(--ink) 30%, transparent) 50%,
+    transparent 57%
+  );
+}
+
 /* ---------- arco: assinatura das fotos ---------- */
 .photo-arch {
   border-radius: 220px 220px 12px 12px;

@@ -14,7 +14,7 @@ export default function SpecializedCareSection() {
     <section id="atendimento" className="screen is-bleed relative bg-ink md:bg-ground md:bg-home-pattern overflow-hidden">
       {/* mobile: o consultório em sangria */}
       <div
-        className="bleed-photo md:hidden">
+        className="bleed-photo scrim-half md:hidden">
         <img src="/photos/atendimento.jpg" alt="" aria-hidden="true" className="scale-[1.45] origin-[50%_38%]" />
       </div>
 
